@@ -2,7 +2,7 @@
   "_readme": "Edit the values below, then commit the change. No coding needed — you can edit this file right in the GitHub website. Note: your ntfy topic name is NOT set here — it lives in a repo Secret instead, so it stays hidden even though this file (and this repo) is public.",
 
   "_lead_times_note": "Lead-time reminders (3 hours / 24 hours before launch) are no longer set here — they're fixed in notifier.py as OFFERED_LEAD_TIMES_HOURS, since visitors pick their own lead time on the dashboard by choosing which ntfy sub-topic to subscribe to (e.g. CoolRockets-3h vs CoolRockets-24h).",
-
+ 
   "rocket_keywords": ["Falcon 9", "Falcon Heavy", "Starship"],
   "_rocket_keywords_help": "Only launches whose rocket name contains one of these words get notifications. Set to [] (empty) to get notified about every launch on the site, not just SpaceX.",
 
