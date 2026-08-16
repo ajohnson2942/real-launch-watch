@@ -1,17 +1,14 @@
 {
   "_readme": "Edit the values below, then commit the change. No coding needed — you can edit this file right in the GitHub website. Note: your ntfy topic name is NOT set here — it lives in a repo Secret instead, so it stays hidden even though this file (and this repo) is public.",
-  "lead_times_hours": [
-    3
-  ],
-  "_lead_times_help": "How many hours before each launch you want a notification. 72 = 3 days before, 24 = 1 day before, 3 = 3 hours before.",
-  "rocket_keywords": [
-    "Falcon 9",
-    "Falcon Heavy",
-    "Starship"
-  ],
+
+  "_lead_times_note": "Lead-time reminders (3 hours / 24 hours before launch) are no longer set here — they're fixed in notifier.py as OFFERED_LEAD_TIMES_HOURS, since visitors pick their own lead time on the dashboard by choosing which ntfy sub-topic to subscribe to (e.g. CoolRockets-3h vs CoolRockets-24h).",
+
+  "rocket_keywords": ["Falcon 9", "Falcon Heavy", "Starship"],
   "_rocket_keywords_help": "Only launches whose rocket name contains one of these words get notifications. Set to [] (empty) to get notified about every launch on the site, not just SpaceX.",
+
   "notify_on_new_launch_added": true,
-  "_notify_on_new_launch_added_help": "If true, you'll also get a one-time notification whenever a brand new launch first appears on the schedule, in addition to the lead-time reminders.",
+  "_notify_on_new_launch_added_help": "If true, subscribers to the base topic get a one-time notification whenever a brand new launch first appears on the schedule.",
+
   "notify_on_time_change": true,
-  "_notify_on_time_change_help": "If true, you'll get notified when a launch you're tracking gets delayed or moved to a new date/time."
+  "_notify_on_time_change_help": "If true, subscribers to the base topic get notified when a launch gets delayed or moved to a new date/time."
 }
