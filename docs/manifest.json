@@ -1,7 +1,7 @@
 {
   "name": "Watch-A-Launch",
   "short_name": "Watch-A-Launch",
-  "description": "Shows when the next SpaceX launch will occur and sends you notifications before it happens.",
+  "description": "Shows when the next SpaceX launch will occur and sends you notifications before it happens.", 
   "start_url": ".",
   "display": "standalone",
   "background_color": "#151B54",
