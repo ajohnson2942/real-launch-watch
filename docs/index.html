@@ -3,77 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Launch Watch</title>
-<meta name="description" content="Upcoming rocket launches, tracked automatically.">
-<meta name="theme-color" content="#0A0F1E">
+<title>Watch-A-Launch</title>
+<meta name="description" content="Shows when the next SpaceX launch will occur and sends you notifications before it happens.">
+<meta name="theme-color" content="#151B54">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0A0F1E;
+    --bg-top:#151B54;
+    --bg-bottom:#d16002;
     --panel:#121A30;
     --panel-2:#182242;
-    --hairline:#26325A;
-    --text:#E8ECF4;
-    --muted:#8291B5;
-    --ignition:#FF5A2E;
-    --ignition-dim:#7A3320;
+    --hairline:#3a3160;
+    --text:#F3F1FA;
+    --muted:#C9C3E0;
+    --accent:#35063E;
+    --accent-bright:#6b1a7a;
     --confirmed:#3DDC97;
     --net:#FFC857;
-    --tbd:#6B7DA6;
+    --tbd:#a89fc9;
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
+  html,body{margin:0;padding:0;}
   body{
-    font-family:'Inter',system-ui,sans-serif;
+    font-family:'Work Sans',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
-    padding-bottom:4rem;
-    background-image:
-      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.35) 0, transparent 40%),
-      radial-gradient(1px 1px at 70% 15%, rgba(255,255,255,.25) 0, transparent 40%),
-      radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,.3) 0, transparent 40%),
-      radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,.2) 0, transparent 40%),
-      radial-gradient(1px 1px at 55% 85%, rgba(255,255,255,.25) 0, transparent 40%);
-    background-repeat:no-repeat;
-    background-size:100% 600px;
-    background-attachment:fixed;
+    padding-bottom:5rem;
+    color:var(--text);
+    background:linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    min-height:100vh;
+    position:relative;
   }
+  .stars{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background-image:
+      radial-gradient(1px 1px at 20% 15%, rgba(255,255,255,.45) 0, transparent 40%),
+      radial-gradient(1px 1px at 70% 8%, rgba(255,255,255,.3) 0, transparent 40%),
+      radial-gradient(1.5px 1.5px at 40% 25%, rgba(255,255,255,.35) 0, transparent 40%),
+      radial-gradient(1px 1px at 85% 20%, rgba(255,255,255,.25) 0, transparent 40%),
+      radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,.3) 0, transparent 40%),
+      radial-gradient(1px 1px at 10% 45%, rgba(255,255,255,.2) 0, transparent 40%),
+      radial-gradient(1px 1px at 90% 55%, rgba(255,255,255,.18) 0, transparent 40%);
+    background-repeat:no-repeat;
+  }
+  header, .hero, main, footer{ position:relative; z-index:1; }
+
   header{
-    padding:2.25rem 1.5rem 1rem;
+    padding:2.25rem 1.5rem .5rem;
     max-width:760px;
     margin:0 auto;
   }
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
-    font-size:.72rem;
-    letter-spacing:.14em;
+    font-size:.7rem;
+    letter-spacing:.16em;
     text-transform:uppercase;
-    color:var(--ignition);
+    color:var(--muted);
     display:flex;
     align-items:center;
     gap:.5rem;
+    margin-bottom:.6rem;
   }
   .eyebrow::before{
     content:"";
     width:7px;height:7px;border-radius:50%;
-    background:var(--ignition);
-    box-shadow:0 0 8px 2px var(--ignition);
+    background:#ff8a3d;
+    box-shadow:0 0 8px 2px rgba(255,138,61,.7);
     animation:pulse 2s ease-in-out infinite;
   }
   @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-  h1{
-    font-family:'Barlow Condensed',sans-serif;
-    font-weight:700;
-    font-size:clamp(2.1rem,7vw,3rem);
+
+  h1.app-title{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    font-size:clamp(3.2rem,13vw,5.2rem);
     text-transform:uppercase;
-    letter-spacing:.02em;
-    margin:.25rem 0 .1rem;
+    letter-spacing:.01em;
+    line-height:.95;
+    margin:0 0 .3rem;
+    color:var(--text);
   }
-  .sub{color:var(--muted);font-size:.95rem;max-width:52ch;line-height:1.5;}
+  h2.liftoff-subtitle{
+    font-family:'Orbitron',sans-serif;
+    font-weight:600;
+    font-size:clamp(1rem,4vw,1.35rem);
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    color:#ffb37a;
+    margin:0 0 1rem;
+  }
+  .sub{
+    font-family:'Lora',serif;
+    color:var(--text);
+    font-size:1.02rem;
+    max-width:56ch;
+    line-height:1.6;
+    margin:0 0 .5rem;
+  }
 
   .hero{
     max-width:760px;margin:1.5rem auto 0;padding:0 1.5rem;
@@ -89,7 +122,7 @@
   .hero-card::after{
     content:"";
     position:absolute; inset:0;
-    background:linear-gradient(100deg, transparent 40%, rgba(255,90,46,.06) 55%, transparent 70%);
+    background:linear-gradient(100deg, transparent 40%, rgba(107,26,122,.18) 55%, transparent 70%);
     pointer-events:none;
   }
   .hero-label{
@@ -108,9 +141,9 @@
     color:var(--text);
     display:flex;gap:.5rem;flex-wrap:wrap;
   }
-  .clock .unit{color:var(--ignition);}
+  .clock .unit{color:#ffb37a;}
   .clock small{
-    font-family:'Inter',sans-serif;font-weight:500;font-size:.32em;
+    font-family:'Work Sans',sans-serif;font-weight:500;font-size:.32em;
     color:var(--muted);text-transform:uppercase;letter-spacing:.08em;
     display:block;margin-top:.15em;
   }
@@ -152,33 +185,149 @@
   .badge.net{color:var(--net);}
   .badge.tbd{color:var(--tbd);}
   .card-title{font-weight:600;font-size:1rem;margin:0 0 .15rem;}
-  .card-rocket{color:var(--ignition);font-weight:500;}
-  .card-detail{color:var(--muted);font-size:.85rem;line-height:1.5;}
+  .card-rocket{color:#ffb37a;font-weight:500;}
+  .card-detail{font-family:'Lora',serif;color:var(--muted);font-size:.85rem;line-height:1.5;}
+  .empty{font-family:'Lora',serif;color:var(--muted);font-size:.9rem;padding:1rem 0;}
+
+  .prefs{
+    max-width:760px;margin:2rem auto 0;padding:0 1.5rem;
+  }
+  .prefs-card{
+    background:linear-gradient(160deg,var(--panel-2),var(--panel));
+    border:1px solid var(--hairline);
+    border-radius:14px;
+    padding:1.3rem 1.5rem;
+  }
+  .prefs-help{
+    font-family:'Lora',serif;
+    font-size:.92rem;
+    color:var(--text);
+    margin:0 0 .8rem;
+    line-height:1.5;
+  }
+  select.lead-select{
+    font-family:'Work Sans',sans-serif;
+    font-size:1rem;
+    font-weight:500;
+    color:var(--text);
+    background:var(--bg-top);
+    border:1px solid var(--hairline);
+    border-radius:8px;
+    padding:.6rem .9rem;
+    width:100%;
+    max-width:280px;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1L7 7L13 1' stroke='%23C9C3E0' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right .9rem center;
+    padding-right:2.2rem;
+  }
+  .prefs-result{
+    margin-top:.9rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.85rem;
+    color:var(--text);
+    background:rgba(0,0,0,.2);
+    border:1px solid var(--hairline);
+    border-radius:8px;
+    padding:.7rem .9rem;
+    line-height:1.6;
+  }
+  .prefs-result strong{color:#ffb37a;}
 
   footer{
     max-width:760px;margin:2.5rem auto 0;padding:1.5rem;
-    color:var(--muted);font-size:.82rem;line-height:1.6;
+    font-family:'Lora',serif;
+    color:var(--text);font-size:.88rem;line-height:1.65;
     border-top:1px solid var(--hairline);
   }
-  footer a{color:var(--ignition);}
+  footer a{color:#ffb37a;}
   .setup-btn{
     display:inline-block;margin-top:.8rem;
     font-family:'JetBrains Mono',monospace;font-size:.78rem;
-    color:var(--bg);background:var(--ignition);
+    color:var(--text);background:var(--accent);
     padding:.55rem 1rem;border-radius:8px;text-decoration:none;font-weight:700;
   }
-  .empty{color:var(--muted);font-size:.9rem;padding:1rem 0;}
+
+  .version-badge{
+    position:fixed;
+    bottom:.9rem;
+    right:.9rem;
+    z-index:20;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.7rem;
+    color:var(--muted);
+    background:rgba(18,26,48,.85);
+    border:1px solid var(--hairline);
+    border-radius:6px;
+    padding:.35rem .6rem;
+    cursor:pointer;
+    user-select:none;
+  }
+  .version-popup{
+    display:none;
+    position:absolute;
+    bottom:130%;
+    right:0;
+    width:240px;
+    background:var(--panel);
+    border:1px solid var(--hairline);
+    border-radius:10px;
+    padding:.8rem .9rem;
+    font-family:'Work Sans',sans-serif;
+    font-size:.75rem;
+    color:var(--text);
+    line-height:1.5;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+  }
+  .version-badge:hover .version-popup,
+  .version-badge.active .version-popup{
+    display:block;
+  }
+  .version-popup-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.68rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--muted);
+    margin-bottom:.5rem;
+  }
+  .version-popup ul{
+    margin:0;
+    padding-left:1.1rem;
+  }
+  .version-popup li{
+    margin-bottom:.5rem;
+  }
+  .version-popup li:last-child{
+    margin-bottom:0;
+  }
 </style>
 </head>
 <body>
 
+<div class="stars" aria-hidden="true"></div>
+
 <header>
-  <div class="eyebrow">Launch Watch</div>
-  <h1>Next liftoff</h1>
-  <p class="sub">Auto-updates every hour from Spaceflight Now's public launch schedule. No login, no ads, runs for free.</p>
+  <div class="eyebrow">Live tracking</div>
+  <h1 class="app-title">Watch-A-Launch</h1>
+  <h2 class="liftoff-subtitle">Next Liftoff</h2>
+  <p class="sub">Shows when the next SpaceX launch will occur and sends you notifications before they happen! It automatically updates every hour from Spaceflight Now's public launch schedule. Completely free and no hastle :D</p>
 </header>
 
 <div class="hero" id="hero"></div>
+
+<div class="prefs">
+  <div class="prefs-card">
+    <p class="prefs-help">Choose when you want to be notified about the next launch. This will work for all future launches!</p>
+    <select class="lead-select" id="leadSelect">
+      <option value="3">3 hours before</option>
+      <option value="24">24 hours before</option>
+    </select>
+    <div class="prefs-result" id="prefsResult"></div>
+  </div>
+</div>
 
 <main>
   <div class="section-title">Upcoming</div>
@@ -187,12 +336,37 @@
 
 <footer>
   <div id="feed-meta">Loading schedule…</div>
-  <div>Push notifications are sent separately via <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy.sh</a>. Install the ntfy app, click <strong>Add new topic</strong>, and add <strong>CoolRockets</strong> into the empty box to get alerts before each launch.</div>
+  <div>Push notifications are sent separately via <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy.sh</a>. Install the ntfy app, add CoolRockets as a new subscription and press subscribe to get alerts before each launch. Make sure that you enable notifications for this app!</div>
   <a class="setup-btn" href="https://github.com" target="_blank" rel="noopener">View setup guide (README)</a>
 </footer>
 
+<div class="version-badge" id="versionBadge" tabindex="0">
+  v1.0.1
+  <div class="version-popup">
+    <div class="version-popup-title">Changelog</div>
+    <ul id="versionList"></ul>
+  </div>
+</div>
+
 <script>
 const FEED_URL = 'launches.json';
+const BASE_TOPIC = 'CoolRockets';
+
+const CHANGELOG = [
+  { version: "v1.0.1", notes: "Updated the background and theme colors, as well as texts. Changed the app name from Launch Watch to Watch-A-Launch." }
+];
+
+function renderChangelog(){
+  const list = document.getElementById('versionList');
+  list.innerHTML = CHANGELOG.map(entry => `<li><strong>${entry.version}:</strong> ${entry.notes}</li>`).join('');
+}
+renderChangelog();
+
+const versionBadge = document.getElementById('versionBadge');
+versionBadge.addEventListener('click', () => versionBadge.classList.toggle('active'));
+document.addEventListener('click', (e) => {
+  if (!versionBadge.contains(e.target)) versionBadge.classList.remove('active');
+});
 
 function fmtDelta(ms){
   if (ms <= 0) return { launched:true };
@@ -258,7 +432,7 @@ function renderHero(next){
 function renderList(launches){
   const list = document.getElementById('list');
   if (!launches.length){
-    list.innerHTML = '<div class="empty">No matching launches found right now. Check back after the next scheduled update, or widen rocket_keywords in config.json.</div>';
+    list.innerHTML = '<div class="empty">No matching launches found right now</div>';
     return;
   }
   list.innerHTML = launches.map(l => {
@@ -279,6 +453,15 @@ function renderList(launches){
     `;
   }).join('');
 }
+
+function updatePrefsResult(){
+  const hours = document.getElementById('leadSelect').value;
+  const topic = `${BASE_TOPIC}-${hours}h`;
+  document.getElementById('prefsResult').innerHTML =
+    `In the ntfy app, subscribe to: <strong>${topic}</strong> to get notified ${hours} hours before each launch.`;
+}
+document.getElementById('leadSelect').addEventListener('change', updatePrefsResult);
+updatePrefsResult();
 
 fetch(FEED_URL, {cache:'no-store'})
   .then(r => r.json())
