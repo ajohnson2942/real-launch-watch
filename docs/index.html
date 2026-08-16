@@ -1780,65 +1780,52 @@ function updatePrefsResult(){
       preference
     );
 
-  const label =
+  let instructions = '';
+
+  if (
     preference === 'CA'
-      ? 'California'
-      : preference === 'FL'
-        ? 'Florida'
-        : 'California + Florida';
+  ){
+    instructions = `
+      Go to the NTFY app on your phone and tap
+      <strong>Add new subscription</strong>
+      on the top right. Then, type in
+      <strong>${escapeHtml(topics[0])}</strong>,
+      and subscribe to it.
+    `;
+  }
 
-  const topicText =
-    topics
-    .map(
-      topic =>
-        `<strong>${escapeHtml(topic)}</strong>`
-    )
-    .join(
-      ' and '
-    );
+  else if (
+    preference === 'FL'
+  ){
+    instructions = `
+      Go to the NTFY app on your phone and tap
+      <strong>Add new subscription</strong>
+      on the top right. Then, type in
+      <strong>${escapeHtml(topics[0])}</strong>,
+      and subscribe to it.
+    `;
+  }
 
-  const buttons =
-    topics
-    .map(
-      topic => `
-        <a
-          class="topic-btn"
-          href="https://ntfy.sh/${encodeURIComponent(topic)}"
-          target="_blank"
-          rel="noopener"
-        >
-          Open ${escapeHtml(topic)}
-        </a>
-      `
-    )
-    .join('');
+  else{
+    instructions = `
+      Go to the NTFY app on your phone and tap
+      <strong>Add new subscription</strong>
+      on the top right. Then, subscribe to both
+      <strong>${escapeHtml(topics[0])}</strong>
+      and
+      <strong>${escapeHtml(topics[1])}</strong>.
+    `;
+  }
 
   document
     .getElementById(
       'prefsResult'
     )
     .innerHTML = `
-
-      Selected:
-      <strong>
-        ${label}
-      </strong>
-
-      <br>
-
-      Subscribe in ntfy to
-      ${topicText}.
-      These state topics receive the
-      24-hour reminder,
-      3-hour reminder,
-      and launch-time change alerts.
-
-      <div class="topic-actions">
-        ${buttons}
-      </div>
+      ${instructions}
 
       <div class="tiny-note">
-        This menu remembers your choice on this device. ntfy itself controls the push subscription, so if you switch states here, remove any old topic in ntfy that you no longer want.
+        This menu remembers your choice on this device. If you change which state's launches you want, remove any old subscription in NTFY that you no longer want.
       </div>
     `;
 }
