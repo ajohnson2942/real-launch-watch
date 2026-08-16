@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Launch Watch</title>
+<meta name="description" content="Upcoming rocket launches, tracked automatically.">
+<meta name="theme-color" content="#0A0F1E">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0F1E;
+    --panel:#121A30;
+    --panel-2:#182242;
+    --hairline:#26325A;
+    --text:#E8ECF4;
+    --muted:#8291B5;
+    --ignition:#FF5A2E;
+    --ignition-dim:#7A3320;
+    --confirmed:#3DDC97;
+    --net:#FFC857;
+    --tbd:#6B7DA6;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:4rem;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.35) 0, transparent 40%),
+      radial-gradient(1px 1px at 70% 15%, rgba(255,255,255,.25) 0, transparent 40%),
+      radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,.3) 0, transparent 40%),
+      radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,.2) 0, transparent 40%),
+      radial-gradient(1px 1px at 55% 85%, rgba(255,255,255,.25) 0, transparent 40%);
+    background-repeat:no-repeat;
+    background-size:100% 600px;
+    background-attachment:fixed;
+  }
+  header{
+    padding:2.25rem 1.5rem 1rem;
+    max-width:760px;
+    margin:0 auto;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ignition);
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--ignition);
+    box-shadow:0 0 8px 2px var(--ignition);
+    animation:pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+  h1{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:clamp(2.1rem,7vw,3rem);
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    margin:.25rem 0 .1rem;
+  }
+  .sub{color:var(--muted);font-size:.95rem;max-width:52ch;line-height:1.5;}
+
+  .hero{
+    max-width:760px;margin:1.5rem auto 0;padding:0 1.5rem;
+  }
+  .hero-card{
+    background:linear-gradient(160deg,var(--panel-2),var(--panel));
+    border:1px solid var(--hairline);
+    border-radius:14px;
+    padding:1.5rem 1.5rem 1.3rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-card::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(100deg, transparent 40%, rgba(255,90,46,.06) 55%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  }
+  .hero-mission{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;
+    font-size:1.5rem;margin:.2rem 0 .9rem;line-height:1.15;
+  }
+  .clock{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(1.6rem,8vw,2.6rem);
+    font-weight:700;
+    letter-spacing:.02em;
+    color:var(--text);
+    display:flex;gap:.5rem;flex-wrap:wrap;
+  }
+  .clock .unit{color:var(--ignition);}
+  .clock small{
+    font-family:'Inter',sans-serif;font-weight:500;font-size:.32em;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.08em;
+    display:block;margin-top:.15em;
+  }
+  .hero-meta{
+    margin-top:1rem;display:flex;gap:1.2rem;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);
+  }
+
+  main{max-width:760px;margin:2rem auto 0;padding:0 1.5rem;}
+  .section-title{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;
+    letter-spacing:.06em;font-size:1rem;color:var(--muted);
+    margin:0 0 .8rem;padding-bottom:.5rem;border-bottom:1px solid var(--hairline);
+  }
+  .card{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:.9rem;
+    padding:1rem 0;
+    border-bottom:1px solid var(--hairline);
+  }
+  .card:last-child{border-bottom:none;}
+  .t-minus{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;color:var(--muted);text-align:right;padding-top:.15rem;
+    white-space:nowrap;
+  }
+  .t-minus b{display:block;color:var(--text);font-size:.95rem;}
+  .card-main{min-width:0;}
+  .badge{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:.15rem .45rem;border-radius:4px;
+    border:1px solid currentColor;
+    margin-bottom:.35rem;
+  }
+  .badge.confirmed{color:var(--confirmed);}
+  .badge.net{color:var(--net);}
+  .badge.tbd{color:var(--tbd);}
+  .card-title{font-weight:600;font-size:1rem;margin:0 0 .15rem;}
+  .card-rocket{color:var(--ignition);font-weight:500;}
+  .card-detail{color:var(--muted);font-size:.85rem;line-height:1.5;}
+
+  footer{
+    max-width:760px;margin:2.5rem auto 0;padding:1.5rem;
+    color:var(--muted);font-size:.82rem;line-height:1.6;
+    border-top:1px solid var(--hairline);
+  }
+  footer a{color:var(--ignition);}
+  .setup-btn{
+    display:inline-block;margin-top:.8rem;
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;
+    color:var(--bg);background:var(--ignition);
+    padding:.55rem 1rem;border-radius:8px;text-decoration:none;font-weight:700;
+  }
+  .empty{color:var(--muted);font-size:.9rem;padding:1rem 0;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Launch Watch</div>
+  <h1>Next liftoff</h1>
+  <p class="sub">Auto-updates every hour from Spaceflight Now's public launch schedule. No login, no ads, runs for free.</p>
+</header>
+
+<div class="hero" id="hero"></div>
+
+<main>
+  <div class="section-title">Upcoming</div>
+  <div id="list"></div>
+</main>
+
+<footer>
+  <div id="feed-meta">Loading schedule…</div>
+  <div>Push notifications are sent separately via <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy.sh</a>. Install the ntfy app and subscribe to your topic from <code>config.json</code> to get alerts before each launch.</div>
+  <a class="setup-btn" href="https://github.com" target="_blank" rel="noopener">View setup guide (README)</a>
+</footer>
+
+<script>
+const FEED_URL = 'launches.json';
+
+function fmtDelta(ms){
+  if (ms <= 0) return { launched:true };
+  const s = Math.floor(ms/1000);
+  const days = Math.floor(s/86400);
+  const hours = Math.floor((s%86400)/3600);
+  const mins = Math.floor((s%3600)/60);
+  const secs = s%60;
+  return { days, hours, mins, secs, launched:false };
+}
+
+function pad(n){ return n.toString().padStart(2,'0'); }
+
+function statusBadge(l){
+  if (!l.launch_time_utc) return '<span class="badge tbd">TBD</span>';
+  if (l.is_net) return '<span class="badge net">NET</span>';
+  return '<span class="badge confirmed">Confirmed</span>';
+}
+
+function renderHero(next){
+  const hero = document.getElementById('hero');
+  if (!next){
+    hero.innerHTML = '';
+    return;
+  }
+  hero.innerHTML = `
+    <div class="hero-card">
+      <div class="hero-label">Next tracked launch</div>
+      <div class="hero-mission">${next.rocket} &middot; ${next.mission}</div>
+      <div class="clock" id="hero-clock"></div>
+      <div class="hero-meta">
+        <span>${next.site || ''}</span>
+        <span>${new Date(next.launch_time_utc).toUTCString().replace(' GMT','')} UTC</span>
+      </div>
+    </div>
+  `;
+  const clockEl = document.getElementById('hero-clock');
+  function tick(){
+    const d = fmtDelta(new Date(next.launch_time_utc) - new Date());
+    if (d.launched){
+      clockEl.innerHTML = `<span class="unit">LIFTOFF WINDOW OPEN</span>`;
+      return;
+    }
+    clockEl.innerHTML = `
+      <span><span class="unit">${d.days}</span><small>days</small></span>
+      <span><span class="unit">${pad(d.hours)}</span><small>hrs</small></span>
+      <span><span class="unit">${pad(d.mins)}</span><small>min</small></span>
+      <span><span class="unit">${pad(d.secs)}</span><small>sec</small></span>
+    `;
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+function renderList(launches){
+  const list = document.getElementById('list');
+  if (!launches.length){
+    list.innerHTML = '<div class="empty">No matching launches found right now. Check back after the next scheduled update, or widen rocket_keywords in config.json.</div>';
+    return;
+  }
+  list.innerHTML = launches.map(l => {
+    let tminus = '&mdash;';
+    if (l.launch_time_utc){
+      const d = fmtDelta(new Date(l.launch_time_utc) - new Date());
+      tminus = d.launched ? 'Now' : (d.days > 0 ? `T&minus;${d.days}d ${d.hours}h` : `T&minus;${d.hours}h ${d.mins}m`);
+    }
+    return `
+      <div class="card">
+        <div class="t-minus"><b>${tminus}</b>${l.date_text}</div>
+        <div class="card-main">
+          ${statusBadge(l)}
+          <div class="card-title"><span class="card-rocket">${l.rocket}</span> &middot; ${l.mission}</div>
+          <div class="card-detail">${l.site || ''}${l.time_description ? ' — ' + l.time_description : ''}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+fetch(FEED_URL, {cache:'no-store'})
+  .then(r => r.json())
+  .then(data => {
+    const launches = (data.launches || []);
+    const upcoming = launches.filter(l => !l.launch_time_utc || new Date(l.launch_time_utc) > new Date());
+    const withTime = upcoming.filter(l => l.launch_time_utc);
+    renderHero(withTime[0]);
+    renderList(upcoming);
+    const meta = document.getElementById('feed-meta');
+    const updated = new Date(data.generated_at_utc);
+    meta.textContent = `Schedule last checked ${updated.toUTCString().replace(' GMT','')} UTC.`;
+  })
+  .catch(err => {
+    document.getElementById('list').innerHTML =
+      '<div class="empty">Could not load launches.json yet. This appears after your GitHub Action has run at least once — trigger it manually from the Actions tab if it just got set up.</div>';
+    document.getElementById('feed-meta').textContent = '';
+    console.error(err);
+  });
+
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
