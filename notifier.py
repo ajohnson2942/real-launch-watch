@@ -21,6 +21,7 @@ import os
 import sys
 import datetime as dt
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -33,7 +34,7 @@ ROOT = Path(__file__).parent
 CONFIG_PATH = ROOT / "config.json"
 STATE_PATH = ROOT / "data" / "state.json"
 PUBLIC_FEED_PATH = ROOT / "docs" / "launches.json"
-
+DISPLAY_TIMEZONE = ZoneInfo("America/Los_Angeles")
 
 def load_json(path: Path, default):
     if not path.exists():
@@ -55,7 +56,7 @@ def rocket_matches_filter(rocket: str, keywords: list[str]) -> bool:
     return any(kw.lower() in rocket_l for kw in keywords)
 
 
-def send_ntfy(topic: str, title: str, message: str, priority: str = "default", tags: str = "rocket"):
+def send_ntfy(topic: str, title: str, message: str, priority: str = "default"):
     url = f"https://ntfy.sh/{topic}"
     try:
         resp = requests.post(
@@ -64,7 +65,6 @@ def send_ntfy(topic: str, title: str, message: str, priority: str = "default", t
             headers={
                 "Title": title,
                 "Priority": priority,
-                "Tags": tags,
             },
             timeout=15,
         )
@@ -77,11 +77,11 @@ def send_ntfy(topic: str, title: str, message: str, priority: str = "default", t
 
 
 def format_time_local_hint(launch_time_utc: str) -> str:
-    """Return the UTC time in a friendly format; ntfy has no per-recipient
-    timezone info so we just show UTC plus a note."""
+    """Return the launch time converted to Pacific time, formatted plainly,
+    e.g. 'Wed Aug 19, 7:00 PM PDT'."""
     t = dt.datetime.fromisoformat(launch_time_utc)
-    return t.strftime("%a %b %d, %H:%M UTC")
-
+    local = t.astimezone(DISPLAY_TIMEZONE)
+    return local.strftime("%a %b %d, %-I:%M %p %Z")
 
 def main():
     config = load_json(CONFIG_PATH, {})
@@ -138,7 +138,7 @@ def main():
         if is_new and notify_on_new and launch.launch_time_utc:
             send_ntfy(
                 ntfy_topic,
-                title=f"🚀 New launch on schedule: {launch.mission}",
+                title=f"New launch on schedule: {launch.mission}",
                 message=(
                     f"{launch.rocket} • {launch.mission}\n"
                     f"{format_time_local_hint(launch.launch_time_utc)}\n"
@@ -154,7 +154,7 @@ def main():
                 message=(
                     f"{launch.rocket} • {launch.mission}\n"
                     f"New time: {format_time_local_hint(launch.launch_time_utc)}\n"
-                    f"(was: {dt.datetime.fromisoformat(prev_launch_time).strftime('%a %b %d, %H:%M UTC')})"
+                    f"(was: {format_time_local_hint(prev_launch_time)})"
                 ),
                 tags="rocket,warning",
             )
