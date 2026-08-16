@@ -1,12 +1,27 @@
 """
 notifier.py
 -----------
-Runs the scraper, figures out which notifications are due right now given
-your configured lead times, sends them via ntfy.sh (free push
-notifications, no account needed), and writes:
+Runs the scraper, figures out which notifications are due right now, sends
+them via ntfy.sh (free push notifications, no account needed), and writes:
 
   - data/state.json     -> internal memory of what's already been sent
   - docs/launches.json  -> public feed consumed by the dashboard webpage
+
+LEAD-TIME CHANNELS
+-------------------
+Because this app is shared publicly by anyone who wants it, there's no
+per-visitor database to remember "this person wants 3 hours, that person
+wants 24 hours." Instead, each offered lead time gets its own ntfy topic,
+derived from the base topic:
+
+    base topic "CoolRockets" ->
+      "CoolRockets"      : new-launch-added / delay notifications (general)
+      "CoolRockets-3h"   : reminder ~3 hours before a tracked launch
+      "CoolRockets-24h"  : reminder ~24 hours before a tracked launch
+
+Visitors pick which of the lead-time channels to subscribe to on the
+dashboard's dropdown -- that's the entire mechanism, no server-side
+preference storage needed.
 
 This script is meant to be run on a schedule (see
 .github/workflows/check-launches.yml). It is safe to run as often as you
@@ -36,6 +51,11 @@ STATE_PATH = ROOT / "data" / "state.json"
 PUBLIC_FEED_PATH = ROOT / "docs" / "launches.json"
 
 DISPLAY_TIMEZONE = ZoneInfo("America/Los_Angeles")
+
+# The lead times offered on the dashboard dropdown. Each gets its own ntfy
+# sub-topic (see module docstring). Keep this in sync with the <select>
+# options in docs/index.html.
+OFFERED_LEAD_TIMES_HOURS = [3, 24]
 
 # Maps the trailing part of a launch site description (e.g. "...,
 # California") to a short tag for notification titles. Falls back to
@@ -92,10 +112,10 @@ def send_ntfy(topic: str, title: str, message: str, priority: str = "default"):
             timeout=15,
         )
         resp.raise_for_status()
-        log.info("Sent notification: %s", title)
+        log.info("Sent notification to %s: %s", topic, title)
         return True
     except Exception as e:
-        log.error("Failed to send notification %r: %s", title, e)
+        log.error("Failed to send notification to %s (%r): %s", topic, title, e)
         return False
 
 
@@ -118,16 +138,15 @@ def main():
     # Secret (Settings -> Secrets and variables -> Actions) that nobody
     # else can view. For local testing, you can instead set it in your
     # own shell: export NTFY_TOPIC=your-topic-name
-    ntfy_topic = os.environ.get("NTFY_TOPIC") or config.get("ntfy_topic")
-    if not ntfy_topic or ntfy_topic == "CHANGE-ME-TO-SOMETHING-UNIQUE":
+    base_topic = os.environ.get("NTFY_TOPIC") or config.get("ntfy_topic")
+    if not base_topic or base_topic == "CHANGE-ME-TO-SOMETHING-UNIQUE":
         log.error(
             "No ntfy topic configured. Add a repo Secret named NTFY_TOPIC "
             "(Settings -> Secrets and variables -> Actions -> New repository "
-            "secret) with your chosen topic name. See README Step 3."
+            "secret) with your chosen topic name."
         )
         sys.exit(1)
 
-    lead_times_hours = sorted(set(config.get("lead_times_hours", [24])), reverse=True)
     rocket_filter = config.get("rocket_keywords", [])  # e.g. ["Falcon 9", "Falcon Heavy", "Starship"]
     notify_on_new = config.get("notify_on_new_launch_added", True)
     notify_on_time_change = config.get("notify_on_time_change", True)
@@ -171,7 +190,7 @@ def main():
         if is_new and notify_on_new and launch.launch_time_utc:
             loc = location_tag(launch.site)
             send_ntfy(
-                ntfy_topic,
+                base_topic,
                 title=f"New launch on schedule: {launch.mission}" + (f" ({loc})" if loc else ""),
                 message=(
                     f"{launch.rocket} • {launch.mission}\n"
@@ -183,7 +202,7 @@ def main():
         if time_changed and notify_on_time_change:
             loc = location_tag(launch.site)
             send_ntfy(
-                ntfy_topic,
+                base_topic,
                 title=f"Launch time changed: {launch.mission}" + (f" ({loc})" if loc else ""),
                 message=(
                     f"{launch.rocket} • {launch.mission}\n"
@@ -199,7 +218,7 @@ def main():
         if launch.launch_time_utc:
             launch_dt = dt.datetime.fromisoformat(launch.launch_time_utc)
             if launch_dt > now:
-                for lead_h in lead_times_hours:
+                for lead_h in OFFERED_LEAD_TIMES_HOURS:
                     if lead_h in prev_notified:
                         continue
                     notify_at = launch_dt - dt.timedelta(hours=lead_h)
@@ -208,8 +227,9 @@ def main():
                             f"{lead_h} hours" if lead_h < 48 else f"{lead_h // 24} days"
                         )
                         loc = location_tag(launch.site)
+                        lead_topic = f"{base_topic}-{lead_h}h"
                         send_ntfy(
-                            ntfy_topic,
+                            lead_topic,
                             title=f"Launching in ~{lead_desc}: {launch.mission}" + (f" ({loc})" if loc else ""),
                             message=(
                                 f"{launch.rocket} • {launch.mission}\n"
