@@ -1,14 +1,14 @@
 {
-  "_readme": "Edit the values below, then commit the change. No coding needed — you can edit this file right in the GitHub website. Note: your ntfy topic name is NOT set here — it lives in a repo Secret instead, so it stays hidden even though this file (and this repo) is public.",
+  "_readme": "Edit these values in GitHub if you want to change which rockets are tracked. The ntfy base topic is stored in the NTFY_TOPIC GitHub Actions secret, not in this public file.",
 
-  "_lead_times_note": "Lead-time reminders (3 hours / 24 hours before launch) are no longer set here — they're fixed in notifier.py as OFFERED_LEAD_TIMES_HOURS, since visitors pick their own lead time on the dashboard by choosing which ntfy sub-topic to subscribe to (e.g. CoolRockets-3h vs CoolRockets-24h).",
- 
+  "_notification_topics_note": "Notifications are split by launch location. If NTFY_TOPIC is CoolRockets, California alerts are sent to CoolRockets-CA and Florida alerts are sent to CoolRockets-FL. Each location topic receives 24-hour reminders, 3-hour reminders, new-launch alerts, and launch-time change/delay alerts.",
+
   "rocket_keywords": ["Falcon 9", "Falcon Heavy", "Starship"],
-  "_rocket_keywords_help": "Only launches whose rocket name contains one of these words get notifications. Set to [] (empty) to get notified about every launch on the site, not just SpaceX.",
+  "_rocket_keywords_help": "Only launches whose rocket name contains one of these words are tracked. Set this to [] to track every launch on the source schedule.",
 
   "notify_on_new_launch_added": true,
-  "_notify_on_new_launch_added_help": "If true, subscribers to the base topic get a one-time notification whenever a brand new launch first appears on the schedule.",
+  "_notify_on_new_launch_added_help": "If true, the matching California or Florida topic receives a one-time alert when a newly tracked launch first appears on the schedule.",
 
   "notify_on_time_change": true,
-  "_notify_on_time_change_help": "If true, subscribers to the base topic get notified when a launch gets delayed or moved to a new date/time."
+  "_notify_on_time_change_help": "If true, the matching California or Florida topic receives a new alert when a launch date/time changes or a previously unknown exact time becomes available. Reminder timing is then recalculated from the updated launch time."
 }
