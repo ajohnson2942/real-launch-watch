@@ -2,17 +2,49 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
+
 <title>Watch-A-Launch</title>
-<meta name="description" content="Track upcoming SpaceX launches and get California or Florida launch notifications.">
-<meta name="theme-color" content="#151B54">
 
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-192.png">
+<meta
+  name="description"
+  content="Track upcoming SpaceX launches and get California or Florida launch notifications."
+>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta
+  name="theme-color"
+  content="#151B54"
+>
+
+<link
+  rel="manifest"
+  href="manifest.json"
+>
+
+<link
+  rel="icon"
+  href="icon.svg"
+  type="image/svg+xml"
+>
+
+<link
+  rel="apple-touch-icon"
+  href="icon-192.png"
+>
+
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com"
+>
+
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+>
 
 <link
   href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
@@ -32,7 +64,8 @@
     --confirmed:#3DDC97;
     --net:#FFC857;
     --tbd:#a89fc9;
-    --launch:#ff5a52;
+    --ca:#ff5a52;
+    --fl:#49d17d;
   }
 
   *{
@@ -46,15 +79,24 @@
   }
 
   body{
-    font-family:'Work Sans',system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased;
+    font-family:
+      'Work Sans',
+      system-ui,
+      sans-serif;
+
+    -webkit-font-smoothing:
+      antialiased;
+
     padding-bottom:5rem;
     color:var(--text);
-    background:linear-gradient(
-      180deg,
-      var(--bg-top) 0%,
-      var(--bg-bottom) 100%
-    );
+
+    background:
+      linear-gradient(
+        180deg,
+        var(--bg-top) 0%,
+        var(--bg-bottom) 100%
+      );
+
     min-height:100vh;
     position:relative;
   }
@@ -102,7 +144,8 @@
         transparent 40%
       );
 
-    background-repeat:no-repeat;
+    background-repeat:
+      no-repeat;
   }
 
   header,
@@ -116,13 +159,20 @@
   }
 
   header{
-    padding:2.25rem 1.5rem .5rem;
+    padding:
+      2.25rem
+      1.5rem
+      .5rem;
+
     max-width:760px;
     margin:0 auto;
   }
 
   .eyebrow{
-    font-family:'JetBrains Mono',monospace;
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.7rem;
     letter-spacing:.16em;
     text-transform:uppercase;
@@ -139,10 +189,16 @@
     height:7px;
     border-radius:50%;
     background:#ff8a3d;
+
     box-shadow:
       0 0 8px 2px
       rgba(255,138,61,.7);
-    animation:pulse 2s ease-in-out infinite;
+
+    animation:
+      pulse
+      2s
+      ease-in-out
+      infinite;
   }
 
   @keyframes pulse{
@@ -157,9 +213,19 @@
   }
 
   h1.app-title{
-    font-family:'Anton',sans-serif;
+    font-family:
+      'Anton',
+      sans-serif;
+
     font-weight:400;
-    font-size:clamp(3.2rem,13vw,5.2rem);
+
+    font-size:
+      clamp(
+        3.2rem,
+        13vw,
+        5.2rem
+      );
+
     text-transform:uppercase;
     letter-spacing:.01em;
     line-height:.95;
@@ -168,9 +234,19 @@
   }
 
   h2.liftoff-subtitle{
-    font-family:'Orbitron',sans-serif;
+    font-family:
+      'Orbitron',
+      sans-serif;
+
     font-weight:600;
-    font-size:clamp(1rem,4vw,1.35rem);
+
+    font-size:
+      clamp(
+        1rem,
+        4vw,
+        1.35rem
+      );
+
     text-transform:uppercase;
     letter-spacing:.14em;
     color:#ffb37a;
@@ -178,7 +254,10 @@
   }
 
   .sub{
-    font-family:'Lora',serif;
+    font-family:
+      'Lora',
+      serif;
+
     color:var(--text);
     font-size:1.02rem;
     max-width:56ch;
@@ -186,10 +265,17 @@
     margin:0 0 .5rem;
   }
 
-  .hero{
+  .hero,
+  .prefs,
+  .calendar-wrap{
     max-width:760px;
     margin:1.5rem auto 0;
     padding:0 1.5rem;
+  }
+
+  .prefs,
+  .calendar-wrap{
+    margin-top:2rem;
   }
 
   .hero-card,
@@ -202,12 +288,19 @@
         var(--panel)
       );
 
-    border:1px solid var(--hairline);
+    border:
+      1px solid
+      var(--hairline);
+
     border-radius:14px;
   }
 
   .hero-card{
-    padding:1.5rem 1.5rem 1.3rem;
+    padding:
+      1.5rem
+      1.5rem
+      1.3rem;
+
     position:relative;
     overflow:hidden;
   }
@@ -229,7 +322,10 @@
   }
 
   .hero-label{
-    font-family:'JetBrains Mono',monospace;
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.7rem;
     letter-spacing:.12em;
     text-transform:uppercase;
@@ -237,7 +333,10 @@
   }
 
   .hero-mission{
-    font-family:'Barlow Condensed',sans-serif;
+    font-family:
+      'Barlow Condensed',
+      sans-serif;
+
     font-weight:600;
     font-size:1.5rem;
     margin:.2rem 0 .9rem;
@@ -245,8 +344,17 @@
   }
 
   .clock{
-    font-family:'JetBrains Mono',monospace;
-    font-size:clamp(1.6rem,8vw,2.6rem);
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:
+      clamp(
+        1.6rem,
+        8vw,
+        2.6rem
+      );
+
     font-weight:700;
     letter-spacing:.02em;
     color:var(--text);
@@ -260,7 +368,10 @@
   }
 
   .clock small{
-    font-family:'Work Sans',sans-serif;
+    font-family:
+      'Work Sans',
+      sans-serif;
+
     font-weight:500;
     font-size:.32em;
     color:var(--muted);
@@ -275,25 +386,27 @@
     display:flex;
     gap:1.2rem;
     flex-wrap:wrap;
-    font-family:'JetBrains Mono',monospace;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.78rem;
     color:var(--muted);
   }
 
-  .prefs,
-  .calendar-wrap{
-    max-width:760px;
-    margin:2rem auto 0;
-    padding:0 1.5rem;
-  }
-
   .prefs-card,
   .calendar-card{
-    padding:1.3rem 1.5rem;
+    padding:
+      1.3rem
+      1.5rem;
   }
 
   .section-title{
-    font-family:'Barlow Condensed',sans-serif;
+    font-family:
+      'Barlow Condensed',
+      sans-serif;
+
     font-weight:600;
     text-transform:uppercase;
     letter-spacing:.06em;
@@ -301,11 +414,17 @@
     color:var(--muted);
     margin:0 0 .8rem;
     padding-bottom:.5rem;
-    border-bottom:1px solid var(--hairline);
+
+    border-bottom:
+      1px solid
+      var(--hairline);
   }
 
   .prefs-help{
-    font-family:'Lora',serif;
+    font-family:
+      'Lora',
+      serif;
+
     font-size:.92rem;
     color:var(--text);
     margin:0 0 .8rem;
@@ -313,14 +432,27 @@
   }
 
   select.location-select{
-    font-family:'Work Sans',sans-serif;
+    font-family:
+      'Work Sans',
+      sans-serif;
+
     font-size:1rem;
     font-weight:500;
     color:var(--text);
     background:var(--bg-top);
-    border:1px solid var(--hairline);
+
+    border:
+      1px solid
+      var(--hairline);
+
     border-radius:8px;
-    padding:.6rem .9rem;
+
+    padding:
+      .6rem
+      2.2rem
+      .6rem
+      .9rem;
+
     width:100%;
     max-width:360px;
     appearance:none;
@@ -329,18 +461,28 @@
     background-image:
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1L7 7L13 1' stroke='%23C9C3E0' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
 
-    background-repeat:no-repeat;
-    background-position:right .9rem center;
-    padding-right:2.2rem;
+    background-repeat:
+      no-repeat;
+
+    background-position:
+      right .9rem center;
   }
 
   .prefs-result{
     margin-top:.9rem;
-    font-family:'JetBrains Mono',monospace;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.82rem;
     color:var(--text);
     background:rgba(0,0,0,.2);
-    border:1px solid var(--hairline);
+
+    border:
+      1px solid
+      var(--hairline);
+
     border-radius:8px;
     padding:.8rem .9rem;
     line-height:1.65;
@@ -359,7 +501,11 @@
 
   .topic-btn{
     display:inline-block;
-    font-family:'JetBrains Mono',monospace;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.72rem;
     color:var(--text);
     background:var(--accent);
@@ -367,11 +513,17 @@
     border-radius:7px;
     text-decoration:none;
     font-weight:700;
-    border:1px solid var(--hairline);
+
+    border:
+      1px solid
+      var(--hairline);
   }
 
   .tiny-note{
-    font-family:'Lora',serif;
+    font-family:
+      'Lora',
+      serif;
+
     color:var(--muted);
     font-size:.78rem;
     margin-top:.7rem;
@@ -387,14 +539,20 @@
   }
 
   .calendar-month{
-    font-family:'Orbitron',sans-serif;
+    font-family:
+      'Orbitron',
+      sans-serif;
+
     font-size:1.05rem;
     letter-spacing:.05em;
     text-transform:uppercase;
   }
 
   .calendar-today{
-    font-family:'JetBrains Mono',monospace;
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.68rem;
     color:var(--muted);
     text-align:right;
@@ -402,12 +560,21 @@
 
   .calendar-grid{
     display:grid;
-    grid-template-columns:repeat(7,1fr);
+
+    grid-template-columns:
+      repeat(
+        7,
+        1fr
+      );
+
     gap:5px;
   }
 
   .weekday{
-    font-family:'JetBrains Mono',monospace;
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.58rem;
     color:var(--muted);
     text-align:center;
@@ -417,14 +584,20 @@
 
   .day{
     position:relative;
-    min-height:54px;
+    min-height:56px;
+
     border:
       1px solid
       rgba(201,195,224,.18);
+
     border-radius:8px;
     padding:.38rem;
     background:rgba(0,0,0,.08);
-    font-family:'JetBrains Mono',monospace;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.72rem;
     overflow:hidden;
   }
@@ -436,49 +609,87 @@
 
   .day.today{
     border-color:#ffb37a;
+
     box-shadow:
-      inset 0 0 0 1px
+      inset
+      0 0 0 1px
       rgba(255,179,122,.35);
   }
 
   .day-number{
     position:relative;
+    z-index:3;
+  }
+
+  .launch-marks{
+    position:absolute;
+    left:50%;
+    top:54%;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      );
+
+    display:flex;
+    gap:2px;
+    align-items:center;
+    justify-content:center;
     z-index:2;
+    white-space:nowrap;
   }
 
   .launch-x{
-    position:absolute;
-    left:50%;
-    top:52%;
-    transform:translate(-50%,-50%);
-    font-family:'Anton',sans-serif;
-    font-size:2rem;
-    color:var(--launch);
+    font-family:
+      'Anton',
+      sans-serif;
+
+    font-size:1.9rem;
     line-height:1;
-    opacity:.92;
-    z-index:1;
+  }
+
+  .launch-x.ca{
+    color:var(--ca);
+  }
+
+  .launch-x.fl{
+    color:var(--fl);
   }
 
   .launch-count{
     position:absolute;
     right:4px;
     bottom:3px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:.52rem;
-    color:#ffd0cc;
-    z-index:2;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.5rem;
+    color:var(--muted);
+    z-index:3;
   }
 
   .calendar-legend{
-    font-family:'Lora',serif;
+    font-family:
+      'Lora',
+      serif;
+
     color:var(--muted);
     font-size:.78rem;
-    line-height:1.45;
+    line-height:1.5;
     margin:.85rem 0 0;
   }
 
-  .calendar-legend b{
-    color:var(--launch);
+  .calendar-legend .ca-text{
+    color:var(--ca);
+    font-weight:700;
+  }
+
+  .calendar-legend .fl-text{
+    color:var(--fl);
+    font-weight:700;
   }
 
   main{
@@ -489,9 +700,13 @@
 
   .card{
     display:grid;
-    grid-template-columns:64px 1fr;
+
+    grid-template-columns:
+      64px 1fr;
+
     gap:.9rem;
     padding:1rem 0;
+
     border-bottom:
       1px solid
       var(--hairline);
@@ -502,7 +717,10 @@
   }
 
   .t-minus{
-    font-family:'JetBrains Mono',monospace;
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.72rem;
     color:var(--muted);
     text-align:right;
@@ -522,14 +740,26 @@
 
   .badge{
     display:inline-block;
-    font-family:'JetBrains Mono',monospace;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.62rem;
     letter-spacing:.08em;
     text-transform:uppercase;
     padding:.15rem .45rem;
     border-radius:4px;
-    border:1px solid currentColor;
-    margin:0 .25rem .35rem 0;
+
+    border:
+      1px solid
+      currentColor;
+
+    margin:
+      0
+      .25rem
+      .35rem
+      0;
   }
 
   .badge.confirmed{
@@ -544,8 +774,12 @@
     color:var(--tbd);
   }
 
-  .badge.location{
-    color:#ffb37a;
+  .badge.ca{
+    color:var(--ca);
+  }
+
+  .badge.fl{
+    color:var(--fl);
   }
 
   .card-title{
@@ -560,14 +794,20 @@
   }
 
   .card-detail{
-    font-family:'Lora',serif;
+    font-family:
+      'Lora',
+      serif;
+
     color:var(--muted);
     font-size:.85rem;
     line-height:1.5;
   }
 
   .empty{
-    font-family:'Lora',serif;
+    font-family:
+      'Lora',
+      serif;
+
     color:var(--muted);
     font-size:.9rem;
     padding:1rem 0;
@@ -577,10 +817,15 @@
     max-width:760px;
     margin:2.5rem auto 0;
     padding:1.5rem;
-    font-family:'Lora',serif;
+
+    font-family:
+      'Lora',
+      serif;
+
     color:var(--text);
     font-size:.88rem;
     line-height:1.65;
+
     border-top:
       1px solid
       var(--hairline);
@@ -593,7 +838,11 @@
   .setup-btn{
     display:inline-block;
     margin-top:.8rem;
-    font-family:'JetBrains Mono',monospace;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.78rem;
     color:var(--text);
     background:var(--accent);
@@ -608,11 +857,26 @@
     bottom:.9rem;
     right:.9rem;
     z-index:20;
-    font-family:'JetBrains Mono',monospace;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.7rem;
     color:var(--muted);
-    background:rgba(18,26,48,.85);
-    border:1px solid var(--hairline);
+
+    background:
+      rgba(
+        18,
+        26,
+        48,
+        .85
+      );
+
+    border:
+      1px solid
+      var(--hairline);
+
     border-radius:6px;
     padding:.35rem .6rem;
     cursor:pointer;
@@ -624,27 +888,41 @@
     position:absolute;
     bottom:130%;
     right:0;
-    width:260px;
+    width:240px;
     background:var(--panel);
-    border:1px solid var(--hairline);
+
+    border:
+      1px solid
+      var(--hairline);
+
     border-radius:10px;
     padding:.8rem .9rem;
-    font-family:'Work Sans',sans-serif;
+
+    font-family:
+      'Work Sans',
+      sans-serif;
+
     font-size:.75rem;
     color:var(--text);
     line-height:1.5;
+
     box-shadow:
       0 8px 24px
       rgba(0,0,0,.4);
   }
 
-  .version-badge:hover .version-popup,
-  .version-badge.active .version-popup{
+  .version-badge:hover
+  .version-popup,
+  .version-badge.active
+  .version-popup{
     display:block;
   }
 
   .version-popup-title{
-    font-family:'JetBrains Mono',monospace;
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.68rem;
     text-transform:uppercase;
     letter-spacing:.08em;
@@ -665,18 +943,20 @@
     margin-bottom:0;
   }
 
-  @media(max-width:480px){
+  @media(
+    max-width:480px
+  ){
     .calendar-card{
       padding:1rem;
     }
 
     .day{
-      min-height:47px;
+      min-height:48px;
       padding:.3rem;
     }
 
     .launch-x{
-      font-size:1.7rem;
+      font-size:1.65rem;
     }
 
     .calendar-today{
@@ -684,7 +964,8 @@
     }
 
     .card{
-      grid-template-columns:58px 1fr;
+      grid-template-columns:
+        58px 1fr;
     }
   }
 </style>
@@ -692,10 +973,16 @@
 
 <body>
 
-<div class="stars" aria-hidden="true"></div>
+<div
+  class="stars"
+  aria-hidden="true"
+></div>
 
 <header>
-  <div class="eyebrow">Live tracking</div>
+
+  <div class="eyebrow">
+    Live tracking
+  </div>
 
   <h1 class="app-title">
     Watch-A-Launch
@@ -706,11 +993,9 @@
   </h2>
 
   <p class="sub">
-    Shows when the next SpaceX launch will occur and sends you
-    notifications before they happen! It automatically updates from
-    Spaceflight Now's public launch schedule. Completely free and no
-    hassle :D
+    Shows when the next SpaceX launch will occur and sends you notifications before they happen! It automatically updates every hour from Spaceflight Now's public launch schedule. Completely free and no hassle :D
   </p>
+
 </header>
 
 <div
@@ -719,6 +1004,7 @@
 ></div>
 
 <div class="prefs">
+
   <div class="prefs-card">
 
     <div class="section-title">
@@ -726,16 +1012,15 @@
     </div>
 
     <p class="prefs-help">
-      Choose which launch coast you want alerts for. Each location gets a
-      24-hour reminder, a 3-hour reminder, and a new alert if the launch
-      time changes.
+      Choose which state's launches you want alerts for. Each location gets a 24-hour reminder, a 3-hour reminder, and a new alert if the launch time changes.
     </p>
 
     <select
       class="location-select"
       id="locationSelect"
-      aria-label="Choose notification location"
+      aria-label="Choose launch notification state"
     >
+
       <option value="CA">
         California only
       </option>
@@ -747,6 +1032,7 @@
       <option value="BOTH">
         California + Florida
       </option>
+
     </select>
 
     <div
@@ -755,9 +1041,11 @@
     ></div>
 
   </div>
+
 </div>
 
 <div class="calendar-wrap">
+
   <div class="calendar-card">
 
     <div class="section-title">
@@ -765,6 +1053,7 @@
     </div>
 
     <div class="calendar-head">
+
       <div
         class="calendar-month"
         id="calendarMonth"
@@ -776,6 +1065,7 @@
         class="calendar-today"
         id="calendarToday"
       ></div>
+
     </div>
 
     <div
@@ -784,36 +1074,39 @@
     ></div>
 
     <p class="calendar-legend">
-      <b>Red X</b> = at least one tracked launch is currently scheduled
-      or predicted for that date. The schedule can still move, and the X
-      will move on a later refresh if it does.
+      <span class="ca-text">Red X</span> = at least one tracked launch is currently scheduled or predicted for that date in California. <span class="fl-text">Green X</span> = at least one tracked launch is currently scheduled or predicted for that date in Florida. The schedule can still move, and the Xs will move on a later refresh if it does.
     </p>
 
   </div>
+
 </div>
 
 <main>
+
   <div class="section-title">
     Upcoming
   </div>
 
   <div id="list"></div>
+
 </main>
 
 <footer>
+
   <div id="feed-meta">
     Loading schedule…
   </div>
 
   <div>
-    Push alerts are delivered through
+    Push notifications are sent separately via
     <a
       href="https://ntfy.sh"
       target="_blank"
       rel="noopener"
-    >ntfy.sh</a>.
-    Pick California, Florida, or both above, then subscribe to the
-    topic(s) shown. Make sure notifications are enabled for ntfy.
+    >
+      ntfy.sh
+    </a>.
+    Choose California, Florida, or both above, then subscribe to the topic or topics shown. Make sure notifications are enabled for ntfy.
   </div>
 
   <a
@@ -824,6 +1117,7 @@
   >
     View setup guide (README)
   </a>
+
 </footer>
 
 <div
@@ -831,20 +1125,27 @@
   id="versionBadge"
   tabindex="0"
 >
-  v1.1.0
+
+  v1.0.1
 
   <div class="version-popup">
+
     <div class="version-popup-title">
       Changelog
     </div>
 
     <ul id="versionList"></ul>
+
   </div>
+
 </div>
 
 <script>
-const FEED_URL = 'launches.json';
-const BASE_TOPIC = 'CoolRockets';
+const FEED_URL =
+  'launches.json';
+
+const BASE_TOPIC =
+  'CoolRockets';
 
 let launchFeed = [];
 let heroTimer = null;
@@ -852,47 +1153,51 @@ let renderedMonthKey = '';
 
 const CHANGELOG = [
   {
-    version: 'v1.1.0',
+    version:
+      "v1.0.1",
+
     notes:
-      'Added California/Florida notification choices, exact times in reminders, launch-time change alerts, a monthly launch calendar, and fixed “hassle”.'
-  },
-  {
-    version: 'v1.0.1',
-    notes:
-      'Updated the background and theme colors, as well as texts. Changed the app name from Launch Watch to Watch-A-Launch.'
+      "Updated the background and theme colors, as well as texts. Changed the app name from Launch Watch to Watch-A-Launch."
   }
 ];
 
-function escapeHtml(value){
-  return String(value ?? '')
-    .replace(
-      /[&<>'"]/g,
-      char => ({
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        "'":'&#39;',
-        '"':'&quot;'
-      }[char])
-    );
+
+function escapeHtml(
+  value
+){
+  return String(
+    value ?? ''
+  ).replace(
+    /[&<>'"]/g,
+    character => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      "'":'&#39;',
+      '"':'&quot;'
+    }[character])
+  );
 }
+
 
 function renderChangelog(){
   const list =
-    document.getElementById(
+    document
+    .getElementById(
       'versionList'
     );
 
   list.innerHTML =
     CHANGELOG
-      .map(
-        entry =>
-          `<li><strong>${escapeHtml(entry.version)}:</strong> ${escapeHtml(entry.notes)}</li>`
-      )
-      .join('');
+    .map(
+      entry =>
+        `<li><strong>${escapeHtml(entry.version)}:</strong> ${escapeHtml(entry.notes)}</li>`
+    )
+    .join('');
 }
 
 renderChangelog();
+
 
 const versionBadge =
   document.getElementById(
@@ -903,50 +1208,71 @@ versionBadge.addEventListener(
   'click',
   () =>
     versionBadge
-      .classList
-      .toggle('active')
+    .classList
+    .toggle(
+      'active'
+    )
 );
 
 document.addEventListener(
   'click',
   event => {
+
     if (
-      !versionBadge.contains(
+      !versionBadge
+      .contains(
         event.target
       )
     ){
       versionBadge
-        .classList
-        .remove('active');
+      .classList
+      .remove(
+        'active'
+      );
     }
+
   }
 );
 
-function fmtDelta(ms){
-  if (ms <= 0){
+
+function fmtDelta(
+  ms
+){
+  if (
+    ms <= 0
+  ){
     return {
       launched:true
     };
   }
 
   const seconds =
-    Math.floor(ms / 1000);
+    Math.floor(
+      ms / 1000
+    );
 
   return {
     days:
       Math.floor(
-        seconds / 86400
+        seconds
+        / 86400
       ),
 
     hours:
       Math.floor(
-        (seconds % 86400)
+        (
+          seconds
+          % 86400
+        )
         / 3600
       ),
 
     mins:
       Math.floor(
-        (seconds % 3600)
+        (
+          seconds
+          % 3600
+        )
         / 60
       ),
 
@@ -957,68 +1283,129 @@ function fmtDelta(ms){
   };
 }
 
-function pad(number){
+
+function pad(
+  number
+){
   return number
     .toString()
-    .padStart(2,'0');
+    .padStart(
+      2,
+      '0'
+    );
 }
 
-function fmtPacific(date){
+
+function locationTimeZone(
+  locationCode
+){
+  return (
+    locationCode === 'FL'
+      ? 'America/New_York'
+      : 'America/Los_Angeles'
+  );
+}
+
+
+function fmtPacific(
+  date
+){
   return new Intl.DateTimeFormat(
     'en-US',
     {
       timeZone:
         'America/Los_Angeles',
 
-      weekday:'short',
-      month:'short',
-      day:'numeric',
-      hour:'numeric',
-      minute:'2-digit',
-      timeZoneName:'short'
+      weekday:
+        'short',
+
+      month:
+        'short',
+
+      day:
+        'numeric',
+
+      hour:
+        'numeric',
+
+      minute:
+        '2-digit',
+
+      timeZoneName:
+        'short'
     }
-  ).format(date);
+  ).format(
+    date
+  );
 }
 
-function fmtLaunchTime(launch){
-  if (!launch.launch_time_utc){
+
+function fmtLaunchTime(
+  launch
+){
+  if (
+    !launch
+    .launch_time_utc
+  ){
     return (
-      launch.time_description
+      launch
+      .time_description
       || 'Exact time TBD'
     );
   }
 
-  const zone =
-    launch.location_code === 'FL'
-      ? 'America/New_York'
-      : 'America/Los_Angeles';
-
   return new Intl.DateTimeFormat(
     'en-US',
     {
-      timeZone:zone,
-      weekday:'long',
-      month:'long',
-      day:'numeric',
-      hour:'numeric',
-      minute:'2-digit',
-      timeZoneName:'short'
+      timeZone:
+        locationTimeZone(
+          launch
+          .location_code
+        ),
+
+      weekday:
+        'long',
+
+      month:
+        'long',
+
+      day:
+        'numeric',
+
+      hour:
+        'numeric',
+
+      minute:
+        '2-digit',
+
+      timeZoneName:
+        'short'
     }
   ).format(
     new Date(
-      launch.launch_time_utc
+      launch
+      .launch_time_utc
     )
   );
 }
 
-function statusBadge(launch){
-  if (!launch.launch_time_utc){
+
+function statusBadge(
+  launch
+){
+  if (
+    !launch
+    .launch_time_utc
+  ){
     return (
       '<span class="badge tbd">TBD time</span>'
     );
   }
 
-  if (launch.is_net){
+  if (
+    launch
+    .is_net
+  ){
     return (
       '<span class="badge net">NET</span>'
     );
@@ -1029,26 +1416,57 @@ function statusBadge(launch){
   );
 }
 
-function locationBadge(launch){
-  return launch.location_code
-    ? `<span class="badge location">${escapeHtml(launch.location_code)}</span>`
-    : '';
+
+function locationBadge(
+  launch
+){
+  if (
+    launch
+    .location_code
+    === 'CA'
+  ){
+    return (
+      '<span class="badge ca">CA</span>'
+    );
+  }
+
+  if (
+    launch
+    .location_code
+    === 'FL'
+  ){
+    return (
+      '<span class="badge fl">FL</span>'
+    );
+  }
+
+  return '';
 }
 
-function renderHero(next){
+
+function renderHero(
+  next
+){
   const hero =
-    document.getElementById(
+    document
+    .getElementById(
       'hero'
     );
 
-  if (heroTimer){
+  if (
+    heroTimer
+  ){
     clearInterval(
       heroTimer
     );
   }
 
-  if (!next){
-    hero.innerHTML = '';
+  if (
+    !next
+  ){
+    hero.innerHTML =
+      '';
+
     return;
   }
 
@@ -1056,7 +1474,7 @@ function renderHero(next){
     <div class="hero-card">
 
       <div class="hero-label">
-        Next tracked launch with a published time
+        Next tracked launch
       </div>
 
       <div class="hero-mission">
@@ -1071,6 +1489,7 @@ function renderHero(next){
       ></div>
 
       <div class="hero-meta">
+
         <span>
           ${escapeHtml(next.site || '')}
         </span>
@@ -1078,25 +1497,33 @@ function renderHero(next){
         <span>
           ${escapeHtml(fmtLaunchTime(next))}
         </span>
+
       </div>
 
     </div>
   `;
 
   const clockEl =
-    document.getElementById(
+    document
+    .getElementById(
       'hero-clock'
     );
 
   function tick(){
+
     const delta =
       fmtDelta(
         new Date(
-          next.launch_time_utc
-        ) - new Date()
+          next
+          .launch_time_utc
+        )
+        -
+        new Date()
       );
 
-    if (delta.launched){
+    if (
+      delta.launched
+    ){
       clockEl.innerHTML =
         '<span class="unit">LIFTOFF WINDOW OPEN</span>';
 
@@ -1104,32 +1531,53 @@ function renderHero(next){
     }
 
     clockEl.innerHTML = `
+
       <span>
+
         <span class="unit">
           ${delta.days}
         </span>
-        <small>days</small>
+
+        <small>
+          days
+        </small>
+
       </span>
 
       <span>
+
         <span class="unit">
           ${pad(delta.hours)}
         </span>
-        <small>hrs</small>
+
+        <small>
+          hrs
+        </small>
+
       </span>
 
       <span>
+
         <span class="unit">
           ${pad(delta.mins)}
         </span>
-        <small>min</small>
+
+        <small>
+          min
+        </small>
+
       </span>
 
       <span>
+
         <span class="unit">
           ${pad(delta.secs)}
         </span>
-        <small>sec</small>
+
+        <small>
+          sec
+        </small>
+
       </span>
     `;
   }
@@ -1143,13 +1591,19 @@ function renderHero(next){
     );
 }
 
-function renderList(launches){
+
+function renderList(
+  launches
+){
   const list =
-    document.getElementById(
+    document
+    .getElementById(
       'list'
     );
 
-  if (!launches.length){
+  if (
+    !launches.length
+  ){
     list.innerHTML =
       '<div class="empty">No matching launches found right now.</div>';
 
@@ -1158,108 +1612,119 @@ function renderList(launches){
 
   list.innerHTML =
     launches
-      .map(
-        launch => {
-          let tminus =
-            '&mdash;';
+    .map(
+      launch => {
 
-          if (
-            launch.launch_time_utc
-          ){
-            const delta =
-              fmtDelta(
-                new Date(
-                  launch.launch_time_utc
-                ) - new Date()
-              );
+        let tminus =
+          '&mdash;';
 
-            tminus =
-              delta.launched
-                ? 'Now'
-                : (
-                    delta.days > 0
-                      ? `T&minus;${delta.days}d ${delta.hours}h`
-                      : `T&minus;${delta.hours}h ${delta.mins}m`
-                  );
-          }
+        if (
+          launch
+          .launch_time_utc
+        ){
+          const delta =
+            fmtDelta(
+              new Date(
+                launch
+                .launch_time_utc
+              )
+              -
+              new Date()
+            );
 
-          const exact =
-            launch.launch_time_utc
-              ? fmtLaunchTime(
-                  launch
-                )
+          tminus =
+            delta.launched
+              ? 'Now'
               : (
-                  launch.time_description
-                  || 'Exact time TBD'
+                  delta.days > 0
+                    ? `T&minus;${delta.days}d ${delta.hours}h`
+                    : `T&minus;${delta.hours}h ${delta.mins}m`
                 );
+        }
 
-          return `
-            <div class="card">
+        return `
+          <div class="card">
 
-              <div class="t-minus">
-                <b>
-                  ${tminus}
-                </b>
+            <div class="t-minus">
+
+              <b>
+                ${tminus}
+              </b>
+
+              ${escapeHtml(
+                launch
+                .date_text
+                || ''
+              )}
+
+            </div>
+
+            <div class="card-main">
+
+              ${statusBadge(launch)}
+              ${locationBadge(launch)}
+
+              <div class="card-title">
+
+                <span class="card-rocket">
+                  ${escapeHtml(
+                    launch.rocket
+                  )}
+                </span>
+
+                &middot;
 
                 ${escapeHtml(
-                  launch.date_text
+                  launch.mission
+                )}
+
+              </div>
+
+              <div class="card-detail">
+
+                ${escapeHtml(
+                  launch.site
                   || ''
                 )}
-              </div>
 
-              <div class="card-main">
-
-                ${statusBadge(launch)}
-                ${locationBadge(launch)}
-
-                <div class="card-title">
-                  <span class="card-rocket">
-                    ${escapeHtml(
-                      launch.rocket
-                    )}
-                  </span>
-
-                  &middot;
-
-                  ${escapeHtml(
-                    launch.mission
-                  )}
-                </div>
-
-                <div class="card-detail">
-                  ${escapeHtml(
-                    launch.site
-                    || ''
-                  )}
-
-                  ${
-                    exact
-                      ? ' — '
-                        + escapeHtml(
-                            exact
-                          )
-                      : ''
-                  }
-                </div>
+                ${
+                  launch.time_description
+                    ? ' — '
+                      + escapeHtml(
+                          launch
+                          .time_description
+                        )
+                    : ''
+                }
 
               </div>
+
             </div>
-          `;
-        }
-      )
-      .join('');
+
+          </div>
+        `;
+      }
+    )
+    .join('');
 }
+
 
 function topicsForPreference(
   preference
 ){
-  if (preference === 'CA'){
+  if (
+    preference
+    === 'CA'
+  ){
     return [
       `${BASE_TOPIC}-CA`
     ];
   }
 
-  if (preference === 'FL'){
+  if (
+    preference
+    === 'FL'
+  ){
     return [
       `${BASE_TOPIC}-FL`
     ];
@@ -1271,9 +1736,12 @@ function topicsForPreference(
   ];
 }
 
+
 function updatePrefsResult(){
+
   const select =
-    document.getElementById(
+    document
+    .getElementById(
       'locationSelect'
     );
 
@@ -1294,37 +1762,41 @@ function updatePrefsResult(){
     preference === 'CA'
       ? 'California'
       : preference === 'FL'
-      ? 'Florida'
-      : 'California + Florida';
+        ? 'Florida'
+        : 'California + Florida';
 
   const topicText =
     topics
-      .map(
-        topic =>
-          `<strong>${escapeHtml(topic)}</strong>`
-      )
-      .join(' and ');
+    .map(
+      topic =>
+        `<strong>${escapeHtml(topic)}</strong>`
+    )
+    .join(
+      ' and '
+    );
 
   const buttons =
     topics
-      .map(
-        topic =>
-          `<a
-             class="topic-btn"
-             href="https://ntfy.sh/${encodeURIComponent(topic)}"
-             target="_blank"
-             rel="noopener"
-           >
-             Open ${escapeHtml(topic)}
-           </a>`
-      )
-      .join('');
+    .map(
+      topic => `
+        <a
+          class="topic-btn"
+          href="https://ntfy.sh/${encodeURIComponent(topic)}"
+          target="_blank"
+          rel="noopener"
+        >
+          Open ${escapeHtml(topic)}
+        </a>
+      `
+    )
+    .join('');
 
   document
     .getElementById(
       'prefsResult'
     )
     .innerHTML = `
+
       Selected:
       <strong>
         ${label}
@@ -1334,29 +1806,31 @@ function updatePrefsResult(){
 
       Subscribe in ntfy to
       ${topicText}.
-      You will get 24-hour and 3-hour reminders plus
-      time-change/delay alerts.
+      These state topics receive the
+      24-hour reminder,
+      3-hour reminder,
+      and launch-time change alerts.
 
       <div class="topic-actions">
         ${buttons}
       </div>
 
       <div class="tiny-note">
-        This choice is saved on this device. Because ntfy handles the
-        actual push subscription, switching this menu does not
-        unsubscribe an old ntfy topic automatically; remove any old
-        topic in ntfy if you no longer want it.
+        This menu remembers your choice on this device. ntfy itself controls the push subscription, so if you switch states here, remove any old topic in ntfy that you no longer want.
       </div>
     `;
 }
 
+
 const locationSelect =
-  document.getElementById(
+  document
+  .getElementById(
     'locationSelect'
   );
 
 const savedPreference =
-  localStorage.getItem(
+  localStorage
+  .getItem(
     'watchALaunchLocationPreference'
   );
 
@@ -1380,13 +1854,17 @@ locationSelect.addEventListener(
 
 updatePrefsResult();
 
-function localDateKey(date){
+
+function localDateKey(
+  date
+){
   const year =
     date.getFullYear();
 
   const month =
     String(
-      date.getMonth() + 1
+      date.getMonth()
+      + 1
     ).padStart(
       2,
       '0'
@@ -1404,6 +1882,7 @@ function localDateKey(date){
     `${year}-${month}-${day}`
   );
 }
+
 
 function renderCalendar(
   launches
@@ -1428,10 +1907,16 @@ function renderCalendar(
       new Intl.DateTimeFormat(
         'en-US',
         {
-          month:'long',
-          year:'numeric'
+          month:
+            'long',
+
+          year:
+            'numeric'
         }
-      ).format(now);
+      )
+      .format(
+        now
+      );
 
   document
     .getElementById(
@@ -1442,33 +1927,67 @@ function renderCalendar(
         new Intl.DateTimeFormat(
           'en-US',
           {
-            weekday:'long',
-            month:'short',
-            day:'numeric',
-            year:'numeric'
+            weekday:
+              'long',
+
+            month:
+              'short',
+
+            day:
+              'numeric',
+
+            year:
+              'numeric'
           }
-        ).format(now)
+        )
+        .format(
+          now
+        )
       }`;
 
-  const counts = {};
+  const marks = {};
 
   launches.forEach(
     launch => {
+
       if (
-        !launch.scheduled_date
+        !launch
+        .scheduled_date
+        ||
+        ![
+          'CA',
+          'FL'
+        ].includes(
+          launch
+          .location_code
+        )
       ){
         return;
       }
 
-      counts[
-        launch.scheduled_date
-      ] =
-        (
-          counts[
-            launch.scheduled_date
-          ]
-          || 0
-        ) + 1;
+      if (
+        !marks[
+          launch
+          .scheduled_date
+        ]
+      ){
+        marks[
+          launch
+          .scheduled_date
+        ] = {
+          CA:0,
+          FL:0
+        };
+      }
+
+      marks[
+        launch
+        .scheduled_date
+      ][
+        launch
+        .location_code
+      ] += 1;
+
     }
   );
 
@@ -1539,43 +2058,68 @@ function renderCalendar(
         )
       }`;
 
-    const count =
-      counts[key]
-      || 0;
+    const dayMarks =
+      marks[key]
+      || {
+        CA:0,
+        FL:0
+      };
 
-    const launchMark =
-      count
-        ? `
-            <span
-              class="launch-x"
-              aria-label="${count} predicted launch${count > 1 ? 'es' : ''}"
-            >
-              X
-            </span>
+    const total =
+      dayMarks.CA
+      +
+      dayMarks.FL;
 
-            ${
-              count > 1
-                ? `
-                    <span class="launch-count">
-                      ${count} launches
-                    </span>
-                  `
-                : ''
-            }
-          `
-        : '';
+    const xMarks = [];
 
-    cells.push(
-      `
-        <div class="day${key === todayKey ? ' today' : ''}">
-          <span class="day-number">
-            ${day}
-          </span>
+    if (
+      dayMarks.CA
+      > 0
+    ){
+      xMarks.push(
+        '<span class="launch-x ca" title="California launch">X</span>'
+      );
+    }
 
-          ${launchMark}
-        </div>
-      `
-    );
+    if (
+      dayMarks.FL
+      > 0
+    ){
+      xMarks.push(
+        '<span class="launch-x fl" title="Florida launch">X</span>'
+      );
+    }
+
+    cells.push(`
+
+      <div class="day${key === todayKey ? ' today' : ''}">
+
+        <span class="day-number">
+          ${day}
+        </span>
+
+        ${
+          xMarks.length
+            ? `
+                <span class="launch-marks">
+                  ${xMarks.join('')}
+                </span>
+              `
+            : ''
+        }
+
+        ${
+          total > 2
+            ? `
+                <span class="launch-count">
+                  ${total}
+                </span>
+              `
+            : ''
+        }
+
+      </div>
+    `);
   }
 
   document
@@ -1586,7 +2130,9 @@ function renderCalendar(
       cells.join('');
 }
 
+
 function refreshCalendarAtMonthChange(){
+
   const now =
     new Date();
 
@@ -1598,7 +2144,8 @@ function refreshCalendarAtMonthChange(){
     }`;
 
   if (
-    key !== renderedMonthKey
+    key
+    !== renderedMonthKey
   ){
     renderCalendar(
       launchFeed
@@ -1606,138 +2153,174 @@ function refreshCalendarAtMonthChange(){
   }
 }
 
+
 setInterval(
   refreshCalendarAtMonthChange,
   60000
 );
 
+
 fetch(
   FEED_URL,
   {
-    cache:'no-store'
+    cache:
+      'no-store'
   }
 )
-  .then(
-    response => {
-      if (!response.ok){
-        throw new Error(
-          `HTTP ${response.status}`
-        );
-      }
+.then(
+  response => {
 
-      return response.json();
+    if (
+      !response.ok
+    ){
+      throw new Error(
+        `HTTP ${response.status}`
+      );
     }
-  )
-  .then(
-    data => {
-      launchFeed =
-        data.launches
-        || [];
 
-      const now =
-        new Date();
+    return response.json();
 
-      const upcoming =
-        launchFeed.filter(
-          launch => {
-            if (
-              launch.launch_time_utc
-            ){
-              return (
-                new Date(
-                  launch.launch_time_utc
-                ) > now
-              );
-            }
+  }
+)
+.then(
+  data => {
 
-            if (
-              launch.scheduled_date
-            ){
-              return (
-                launch.scheduled_date
-                >= localDateKey(now)
-              );
-            }
+    launchFeed =
+      data.launches
+      || [];
 
-            return true;
+    const now =
+      new Date();
+
+    const todayKey =
+      localDateKey(
+        now
+      );
+
+    const upcoming =
+      launchFeed.filter(
+        launch => {
+
+          if (
+            launch
+            .launch_time_utc
+          ){
+            return (
+              new Date(
+                launch
+                .launch_time_utc
+              )
+              >
+              now
+            );
           }
-        );
 
-      const withTime =
-        upcoming
-          .filter(
-            launch =>
-              launch.launch_time_utc
+          if (
+            launch
+            .scheduled_date
+          ){
+            return (
+              launch
+              .scheduled_date
+              >=
+              todayKey
+            );
+          }
+
+          return true;
+        }
+      );
+
+    const withTime =
+      upcoming
+      .filter(
+        launch =>
+          launch
+          .launch_time_utc
+      )
+      .sort(
+        (
+          a,
+          b
+        ) =>
+          new Date(
+            a
+            .launch_time_utc
           )
-          .sort(
-            (a,b) =>
-              new Date(
-                a.launch_time_utc
-              )
-              -
-              new Date(
-                b.launch_time_utc
-              )
-          );
-
-      renderHero(
-        withTime[0]
+          -
+          new Date(
+            b
+            .launch_time_utc
+          )
       );
 
-      renderList(
-        upcoming
+    renderHero(
+      withTime[0]
+    );
+
+    renderList(
+      upcoming
+    );
+
+    renderCalendar(
+      launchFeed
+    );
+
+    const meta =
+      document
+      .getElementById(
+        'feed-meta'
       );
 
-      renderCalendar(
-        launchFeed
-      );
-
-      const meta =
-        document.getElementById(
-          'feed-meta'
-        );
-
-      if (
-        data.generated_at_utc
-      ){
-        meta.textContent =
-          `Schedule last checked ${
-            fmtPacific(
-              new Date(
-                data.generated_at_utc
-              )
+    if (
+      data
+      .generated_at_utc
+    ){
+      meta.textContent =
+        `Schedule last checked ${
+          fmtPacific(
+            new Date(
+              data
+              .generated_at_utc
             )
-          }. The checker runs about every 15 minutes.`;
-      }
-      else{
-        meta.textContent =
-          'Schedule has not been checked yet.';
-      }
+          )
+        }. The GitHub Action is configured to check once per hour.`;
     }
-  )
-  .catch(
-    error => {
-      document
-        .getElementById(
-          'list'
-        )
-        .innerHTML =
-          '<div class="empty">Could not load launches.json yet. Trigger the GitHub Action manually once if this was just set up.</div>';
-
-      document
-        .getElementById(
-          'feed-meta'
-        )
-        .textContent =
-          '';
-
-      renderCalendar([]);
-
-      console.error(
-        error
-      );
+    else{
+      meta.textContent =
+        'Schedule has not been checked yet.';
     }
-  );
+
+  }
+)
+.catch(
+  error => {
+
+    document
+      .getElementById(
+        'list'
+      )
+      .innerHTML =
+        '<div class="empty">Could not load launches.json yet. Trigger the GitHub Action manually once if this was just set up.</div>';
+
+    document
+      .getElementById(
+        'feed-meta'
+      )
+      .textContent =
+        '';
+
+    renderCalendar(
+      []
+    );
+
+    console.error(
+      error
+    );
+
+  }
+);
+
 
 if (
   'serviceWorker'
@@ -1745,15 +2328,18 @@ if (
 ){
   window.addEventListener(
     'load',
-    () =>
+    () => {
+
       navigator
-        .serviceWorker
-        .register(
-          'sw.js'
-        )
-        .catch(
-          () => {}
-        )
+      .serviceWorker
+      .register(
+        'sw.js'
+      )
+      .catch(
+        () => {}
+      );
+
+    }
   );
 }
 </script>
