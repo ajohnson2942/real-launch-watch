@@ -2,13 +2,15 @@ name: Check launch schedule
 
 on:
   schedule:
-    # Runs at the top of every hour. GitHub's free scheduled Actions can
-    # lag a few minutes during busy periods, but that's fine for this.
-    - cron: "0 * * * *"
-  workflow_dispatch: {}  # lets you click "Run workflow" manually to test
+    # Run once every hour, at 7 minutes past the hour.
+    # Using :07 instead of exactly :00 can reduce GitHub Actions congestion.
+    - cron: "7 * * * *"
+
+  # Also lets you manually test it from the Actions tab.
+  workflow_dispatch: {}
 
 permissions:
-  contents: write  # needed so the workflow can commit the updated state file
+  contents: write
 
 concurrency:
   group: check-launches
@@ -17,6 +19,7 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
@@ -34,11 +37,18 @@ jobs:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: python notifier.py
 
-      - name: Commit updated state (if changed)
+      - name: Commit updated state
         run: |
           git config user.name "launch-notifier-bot"
           git config user.email "actions@users.noreply.github.com"
+
           git add data/state.json docs/launches.json
-          git diff --cached --quiet || git commit -m "Update launch state [skip ci]"
+
+          if git diff --cached --quiet; then
+            echo "No launch data changes to commit."
+          else
+            git commit -m "Update launch state [skip ci]"
+          fi
+
           git pull --rebase --autostash origin main
           git push
