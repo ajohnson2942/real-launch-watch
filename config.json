@@ -1,13 +1,13 @@
 {
   "_readme": "Edit the values below, then commit the change. No coding needed \u2014 you can edit this file right in the GitHub website.",
-  "ntfy_topic": "CHANGE-ME-TO-SOMETHING-UNIQUE",
+  "ntfy_topic": "SandWhirl2006",
   "_ntfy_topic_help": "This is like a private channel name for your notifications. Make it long and random so a stranger can't guess it and spam you, e.g. 'dave-rocket-launches-8347'. You'll subscribe to this exact name in the ntfy app.",
   "lead_times_hours": [
     72,
     24,
     3
   ],
-  "_lead_times_help": "How many hours before each launch you want a notification. 72 = 3 days before, 24 = 1 day before, 3 = 3 hours before. Add, remove, or change any of these, e.g. [168, 24, 1] for a week before, a day before, and an hour before.",
+  "_lead_times_help": "How many hours before each launch you want a notification. 72 = 3 days before, 24 = 1 day before, 3 = 3 hours before.",
   "rocket_keywords": [
     "Falcon 9",
     "Falcon Heavy",
