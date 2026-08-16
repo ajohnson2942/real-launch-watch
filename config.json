@@ -1,8 +1,6 @@
 {
   "_readme": "Edit the values below, then commit the change. No coding needed — you can edit this file right in the GitHub website. Note: your ntfy topic name is NOT set here — it lives in a repo Secret instead, so it stays hidden even though this file (and this repo) is public.",
   "lead_times_hours": [
-    72,
-    24,
     3
   ],
   "_lead_times_help": "How many hours before each launch you want a notification. 72 = 3 days before, 24 = 1 day before, 3 = 3 hours before.",
