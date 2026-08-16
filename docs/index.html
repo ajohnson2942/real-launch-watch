@@ -1083,7 +1083,10 @@
 
 <main>
 
-  <div class="section-title">
+  <div
+    class="section-title"
+    id="upcomingTitle"
+  >
     Upcoming
   </div>
 
@@ -1150,6 +1153,7 @@ const BASE_TOPIC =
 let launchFeed = [];
 let heroTimer = null;
 let renderedMonthKey = '';
+let currentlyRenderedListMonthKey = '';
 
 const CHANGELOG = [
   {
@@ -1157,10 +1161,9 @@ const CHANGELOG = [
       "v1.0.1",
 
     notes:
-      "Updated the background and theme colors, as well as texts. Changed the app name from Launch Watch to Watch-A-Launch."
+      "Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
   }
 ];
-
 
 function escapeHtml(
   value
@@ -1605,7 +1608,7 @@ function renderList(
     !launches.length
   ){
     list.innerHTML =
-      '<div class="empty">No matching launches found right now.</div>';
+      '<div class="empty">No tracked launches scheduled for this month yet.</div>';
 
     return;
   }
@@ -1884,6 +1887,134 @@ function localDateKey(
 }
 
 
+function currentMonthKey(){
+  const now =
+    new Date();
+
+  return (
+    `${now.getFullYear()}-${
+      String(
+        now.getMonth() + 1
+      ).padStart(
+        2,
+        '0'
+      )
+    }`
+  );
+}
+
+
+function launchIsInCurrentMonth(
+  launch
+){
+  if (
+    !launch
+    .scheduled_date
+  ){
+    return false;
+  }
+
+  return (
+    launch
+    .scheduled_date
+    .slice(
+      0,
+      7
+    )
+    ===
+    currentMonthKey()
+  );
+}
+
+
+function renderCurrentMonthUpcoming(){
+  const now =
+    new Date();
+
+  const currentMonthLaunches =
+    launchFeed
+    .filter(
+      launch =>
+        launchIsInCurrentMonth(
+          launch
+        )
+    )
+    .filter(
+      launch => {
+
+        if (
+          launch
+          .launch_time_utc
+        ){
+          return (
+            new Date(
+              launch
+              .launch_time_utc
+            )
+            >
+            now
+          );
+        }
+
+        return (
+          launch
+          .scheduled_date
+          >=
+          localDateKey(
+            now
+          )
+        );
+      }
+    )
+    .sort(
+      (
+        a,
+        b
+      ) =>
+        (
+          a
+          .launch_time_utc
+          || a
+          .scheduled_date
+          || ''
+        )
+        .localeCompare(
+          b
+          .launch_time_utc
+          || b
+          .scheduled_date
+          || ''
+        )
+    );
+
+  const monthName =
+    new Intl.DateTimeFormat(
+      'en-US',
+      {
+        month:
+          'long'
+      }
+    )
+    .format(
+      now
+    );
+
+  document
+    .getElementById(
+      'upcomingTitle'
+    )
+    .textContent =
+      `Upcoming — ${monthName}`;
+
+  renderList(
+    currentMonthLaunches
+  );
+
+  currentlyRenderedListMonthKey =
+    currentMonthKey();
+}
+
+
 function renderCalendar(
   launches
 ){
@@ -2131,12 +2262,12 @@ function renderCalendar(
 }
 
 
-function refreshCalendarAtMonthChange(){
+function refreshForDateChanges(){
 
   const now =
     new Date();
 
-  const key =
+  const calendarKey =
     `${
       now.getFullYear()
     }-${
@@ -2144,181 +2275,173 @@ function refreshCalendarAtMonthChange(){
     }`;
 
   if (
-    key
+    calendarKey
     !== renderedMonthKey
   ){
     renderCalendar(
       launchFeed
     );
   }
+
+  if (
+    currentMonthKey()
+    !== currentlyRenderedListMonthKey
+  ){
+    renderCurrentMonthUpcoming();
+  }
 }
 
 
 setInterval(
-  refreshCalendarAtMonthChange,
+  refreshForDateChanges,
   60000
 );
 
 
-fetch(
-  FEED_URL,
-  {
-    cache:
-      'no-store'
-  }
-)
-.then(
-  response => {
+function loadFeed(){
 
-    if (
-      !response.ok
-    ){
-      throw new Error(
-        `HTTP ${response.status}`
-      );
+  fetch(
+    FEED_URL,
+    {
+      cache:
+        'no-store'
     }
+  )
+  .then(
+    response => {
 
-    return response.json();
+      if (
+        !response.ok
+      ){
+        throw new Error(
+          `HTTP ${response.status}`
+        );
+      }
 
-  }
-)
-.then(
-  data => {
+      return response.json();
 
-    launchFeed =
-      data.launches
-      || [];
+    }
+  )
+  .then(
+    data => {
 
-    const now =
-      new Date();
+      launchFeed =
+        data.launches
+        || [];
 
-    const todayKey =
-      localDateKey(
-        now
-      );
+      const now =
+        new Date();
 
-    const upcoming =
-      launchFeed.filter(
-        launch => {
-
-          if (
+      const withTime =
+        launchFeed
+        .filter(
+          launch =>
             launch
             .launch_time_utc
-          ){
-            return (
-              new Date(
-                launch
-                .launch_time_utc
-              )
-              >
-              now
-            );
-          }
-
-          if (
-            launch
-            .scheduled_date
-          ){
-            return (
-              launch
-              .scheduled_date
-              >=
-              todayKey
-            );
-          }
-
-          return true;
-        }
-      );
-
-    const withTime =
-      upcoming
-      .filter(
-        launch =>
-          launch
-          .launch_time_utc
-      )
-      .sort(
-        (
-          a,
-          b
-        ) =>
-          new Date(
-            a
-            .launch_time_utc
-          )
-          -
-          new Date(
-            b
-            .launch_time_utc
-          )
-      );
-
-    renderHero(
-      withTime[0]
-    );
-
-    renderList(
-      upcoming
-    );
-
-    renderCalendar(
-      launchFeed
-    );
-
-    const meta =
-      document
-      .getElementById(
-        'feed-meta'
-      );
-
-    if (
-      data
-      .generated_at_utc
-    ){
-      meta.textContent =
-        `Schedule last checked ${
-          fmtPacific(
+            &&
             new Date(
-              data
-              .generated_at_utc
+              launch
+              .launch_time_utc
             )
-          )
-        }. The GitHub Action is configured to check once per hour.`;
+            >
+            now
+        )
+        .sort(
+          (
+            a,
+            b
+          ) =>
+            new Date(
+              a
+              .launch_time_utc
+            )
+            -
+            new Date(
+              b
+              .launch_time_utc
+            )
+        );
+
+      renderHero(
+        withTime[0]
+      );
+
+      renderCurrentMonthUpcoming();
+
+      renderCalendar(
+        launchFeed
+      );
+
+      const meta =
+        document
+        .getElementById(
+          'feed-meta'
+        );
+
+      if (
+        data
+        .generated_at_utc
+      ){
+        meta.textContent =
+          `Schedule last checked ${
+            fmtPacific(
+              new Date(
+                data
+                .generated_at_utc
+              )
+            )
+          }. The GitHub Action is configured to check once per hour.`;
+      }
+      else{
+        meta.textContent =
+          'Schedule has not been checked yet.';
+      }
+
     }
-    else{
-      meta.textContent =
-        'Schedule has not been checked yet.';
+  )
+  .catch(
+    error => {
+
+      document
+        .getElementById(
+          'list'
+        )
+        .innerHTML =
+          '<div class="empty">Could not load launches.json yet. Trigger the GitHub Action manually once if this was just set up.</div>';
+
+      document
+        .getElementById(
+          'feed-meta'
+        )
+        .textContent =
+          '';
+
+      renderCalendar(
+        []
+      );
+
+      console.error(
+        error
+      );
+
     }
+  );
 
-  }
-)
-.catch(
-  error => {
+}
 
-    document
-      .getElementById(
-        'list'
-      )
-      .innerHTML =
-        '<div class="empty">Could not load launches.json yet. Trigger the GitHub Action manually once if this was just set up.</div>';
 
-    document
-      .getElementById(
-        'feed-meta'
-      )
-      .textContent =
-        '';
+loadFeed();
 
-    renderCalendar(
-      []
-    );
 
-    console.error(
-      error
-    );
+/*
+  Re-read launches.json every hour while the page/app remains open.
 
-  }
+  This does NOT use extra GitHub Actions minutes.
+  It only reloads the already-generated JSON file in the browser.
+*/
+setInterval(
+  loadFeed,
+  60 * 60 * 1000
 );
 
 
