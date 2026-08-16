@@ -1,3 +1,3 @@
 Watch-A-Launch
 
-I vibe coded this platform to send notifications using the 
+I vibe coded (with AI) this platform to send notifications using the app NTFY to your phone or desktop, depending on if you want to see California's or Florida's launches. To add as an app to your phone, go to the website https://ajohnson2942.github.io/real-launch-watch/ on Safari. It must be on Safari and not google. Then, click share in the bottom right, and click add to home screen. Once you've done that, download the NTFY app onto your phone and add the corresponding subscription(s) depending on what launches you want to get notifications from. This entire platform is free and doesn't cost anything to use. Enjoy!
