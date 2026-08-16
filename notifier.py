@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import sys
 import datetime as dt
 from pathlib import Path
@@ -84,11 +85,12 @@ def format_time_local_hint(launch_time_utc: str) -> str:
 
 def main():
     config = load_json(CONFIG_PATH, {})
-    ntfy_topic = config.get("ntfy_topic")
+    ntfy_topic = os.environ.get("NTFY_TOPIC") or config.get("ntfy_topic")
     if not ntfy_topic or ntfy_topic == "CHANGE-ME-TO-SOMETHING-UNIQUE":
         log.error(
-            "config.json ntfy_topic is not set to a unique value. "
-            "Edit config.json before this will send real notifications."
+            "No ntfy topic configured. Add a repo Secret named NTFY_TOPIC "
+            "(Settings -> Secrets and variables -> Actions -> New repository "
+            "secret) with your chosen topic name."
         )
         sys.exit(1)
 
