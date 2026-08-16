@@ -1,12 +1,18 @@
 """
 scraper.py
 ----------
-Reads Spaceflight Now's public launch schedule and turns the human-readable
-schedule into structured launch records used by the notifier and dashboard.
+Fetches Spaceflight Now's public launch schedule and turns it into structured
+launch records for the notifier and dashboard.
 
-The parser intentionally keys off stable phrases such as "Launch time:",
-"Launch site:", "Updated:", the rocket/mission bullet separator, and UTC
-clock times instead of fragile CSS class names.
+The parser intentionally keys off stable text labels instead of CSS classes.
+Spaceflight Now currently renders launch headers like:
+
+    August 18/19 Falcon 9 • Starlink 17-50
+    Launch time: Window opens at 7 p.m. PDT (10 p.m. EDT / 0200 UTC)
+    Launch site: SLC-4E, Vandenberg Space Force Base, California
+
+It also handles older formatting where the date and rocket name were joined
+without a space, and where Launch time / Launch site appeared on one line.
 """
 
 from __future__ import annotations
@@ -28,11 +34,21 @@ USER_AGENT = (
 )
 
 MONTHS = {
-    m: i
-    for i, m in enumerate(
+    month: number
+    for number, month in enumerate(
         [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December",
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
         ],
         start=1,
     )
@@ -44,8 +60,8 @@ HEADER_RE = re.compile(
     ^(?P<net>NET\s+)?
     (?P<date>
         TBD
-        | Q[1-4]\s\d{4}
-        | (?:%s)\s\d{1,2}(?:/\d{1,2})?(?:,\s\d{4})?
+        | Q[1-4]\s+\d{4}
+        | (?:%s)\s+\d{1,2}(?:/\d{1,2})?(?:,\s*\d{4})?
     )
     \s*
     (?P<rocket>[A-Z][^\n•]*?)
@@ -57,15 +73,28 @@ HEADER_RE = re.compile(
     re.VERBOSE,
 )
 
-TIME_LINE_RE = re.compile(
-    r"Launch time:\s*(?P<time_desc>.*?)\s*Launch site:\s*(?P<site>.*?)\s*$"
+TIME_AND_SITE_RE = re.compile(
+    r"^Launch time:\s*(?P<time_desc>.*?)\s+Launch site:\s*(?P<site>.*?)\s*$",
+    re.IGNORECASE,
 )
-TIME_ONLY_RE = re.compile(r"Launch time:\s*(?P<time_desc>.*?)\s*$")
-SITE_ONLY_RE = re.compile(r"Launch site:\s*(?P<site>.*?)\s*$")
-UTC_TIME_RE = re.compile(r"(\d{3,4})\s*UTC")
-UPDATED_RE = re.compile(r"^Updated:\s*$")
+TIME_ONLY_RE = re.compile(
+    r"^Launch time:\s*(?P<time_desc>.*?)\s*$",
+    re.IGNORECASE,
+)
+SITE_ONLY_RE = re.compile(
+    r"^Launch site:\s*(?P<site>.*?)\s*$",
+    re.IGNORECASE,
+)
+UTC_TIME_RE = re.compile(
+    r"(\d{3,4})\s*UTC",
+    re.IGNORECASE,
+)
+UPDATED_RE = re.compile(
+    r"^Updated:\s*(?P<same_line>.*)$",
+    re.IGNORECASE,
+)
 DATE_RE = re.compile(
-    r"(?P<month>%s)\s(?P<day1>\d{1,2})(?:/(?P<day2>\d{1,2}))?(?:,\s(?P<year>\d{4}))?"
+    r"^(?P<month>%s)\s+(?P<day1>\d{1,2})(?:/(?P<day2>\d{1,2}))?(?:,\s*(?P<year>\d{4}))?$"
     % MONTH_PATTERN
 )
 
@@ -77,9 +106,9 @@ class Launch:
     mission: str
     is_net: bool
     date_text: str
-    scheduled_date: Optional[str]  # YYYY-MM-DD using the schedule's first/local day
+    scheduled_date: Optional[str]
     site: str
-    location_code: Optional[str]  # CA / FL when applicable
+    location_code: Optional[str]
     time_description: str
     launch_time_utc: Optional[str]
     updated_text: Optional[str]
@@ -89,66 +118,157 @@ class Launch:
         return asdict(self)
 
 
-def _make_uid(rocket: str, mission: str) -> str:
+def _make_uid(
+    rocket: str,
+    mission: str,
+) -> str:
     base = f"{rocket}::{mission}".lower()
-    base = re.sub(r"\s+", " ", base).strip()
-    return re.sub(r"[^a-z0-9]+", "-", base).strip("-")
+    base = re.sub(
+        r"\s+",
+        " ",
+        base,
+    ).strip()
+
+    return re.sub(
+        r"[^a-z0-9]+",
+        "-",
+        base,
+    ).strip("-")
 
 
-def _location_code(site: str) -> Optional[str]:
-    site_l = (site or "").lower()
-    if "california" in site_l or "vandenberg" in site_l:
+def _location_code(
+    site: str,
+) -> Optional[str]:
+    site_lower = (
+        site or ""
+    ).lower()
+
+    if (
+        "california" in site_lower
+        or "vandenberg" in site_lower
+    ):
         return "CA"
-    if "florida" in site_l or "cape canaveral" in site_l or "kennedy space center" in site_l:
+
+    if (
+        "florida" in site_lower
+        or "cape canaveral" in site_lower
+        or "kennedy space center" in site_lower
+    ):
         return "FL"
+
     return None
 
 
-def _parse_schedule_date(
+def _parse_date_parts(
     date_text: str,
     now: dt.datetime,
-) -> Optional[tuple[int, int, int, Optional[int]]]:
-    """Return (year, month, first_day, optional_second_day) for calendar dates."""
-    if date_text.strip() == "TBD" or date_text.strip().startswith("Q"):
+) -> Optional[
+    tuple[
+        int,
+        int,
+        int,
+        Optional[int],
+    ]
+]:
+    raw = date_text.strip()
+
+    if (
+        raw == "TBD"
+        or raw.startswith("Q")
+    ):
         return None
 
-    match = DATE_RE.fullmatch(date_text.strip())
+    match = DATE_RE.match(
+        raw
+    )
+
     if not match:
         return None
 
-    month = MONTHS[match.group("month")]
-    day1 = int(match.group("day1"))
-    day2 = int(match.group("day2")) if match.group("day2") else None
-    year = int(match.group("year")) if match.group("year") else None
+    month = MONTHS[
+        match.group("month")
+    ]
+
+    day1 = int(
+        match.group("day1")
+    )
+
+    day2 = (
+        int(
+            match.group("day2")
+        )
+        if match.group("day2")
+        else None
+    )
+
+    year = (
+        int(
+            match.group("year")
+        )
+        if match.group("year")
+        else None
+    )
 
     if year is None:
-        # Assume the current year unless that date is already far enough behind us
-        # that the schedule is clearly referring to the following year.
         try:
-            candidate = dt.date(now.year, month, day1)
+            candidate = dt.date(
+                now.year,
+                month,
+                day1,
+            )
         except ValueError:
             return None
 
-        if (now.date() - candidate).days > 60:
-            year = now.year + 1
-        else:
-            year = now.year
+        year = (
+            now.year + 1
+            if (
+                now.date()
+                - candidate
+            ).days > 60
+            else now.year
+        )
 
     try:
-        dt.date(year, month, day1)
+        dt.date(
+            year,
+            month,
+            day1,
+        )
     except ValueError:
         return None
 
-    return year, month, day1, day2
+    return (
+        year,
+        month,
+        day1,
+        day2,
+    )
 
 
-def _resolve_scheduled_date(date_text: str, now: dt.datetime) -> Optional[str]:
-    parsed = _parse_schedule_date(date_text, now)
-    if not parsed:
+def _scheduled_date(
+    date_text: str,
+    now: dt.datetime,
+) -> Optional[str]:
+    """
+    Return the first/local calendar day
+    printed in the launch header.
+    """
+
+    parts = _parse_date_parts(
+        date_text,
+        now,
+    )
+
+    if not parts:
         return None
 
-    year, month, day1, _ = parsed
-    return dt.date(year, month, day1).isoformat()
+    year, month, day1, _ = parts
+
+    return dt.date(
+        year,
+        month,
+        day1,
+    ).isoformat()
 
 
 def _resolve_utc_datetime(
@@ -156,26 +276,61 @@ def _resolve_utc_datetime(
     time_desc: str,
     now: dt.datetime,
 ) -> Optional[str]:
-    """Resolve an exact launch timestamp when the schedule publishes a UTC time."""
-    parsed = _parse_schedule_date(date_text, now)
-    if not parsed:
+    """
+    Combine the schedule date with its
+    published UTC clock time.
+    """
+
+    parts = _parse_date_parts(
+        date_text,
+        now,
+    )
+
+    if not parts:
         return None
 
-    utc_match = UTC_TIME_RE.search(time_desc)
+    utc_match = UTC_TIME_RE.search(
+        time_desc or ""
+    )
+
     if not utc_match:
         return None
 
-    hhmm = utc_match.group(1).zfill(4)
-    hour, minute = int(hhmm[:2]), int(hhmm[2:])
+    hhmm = (
+        utc_match
+        .group(1)
+        .zfill(4)
+    )
 
-    if hour > 23 or minute > 59:
+    hour = int(
+        hhmm[:2]
+    )
+
+    minute = int(
+        hhmm[2:]
+    )
+
+    if (
+        hour > 23
+        or minute > 59
+    ):
         return None
 
-    year, month, day1, day2 = parsed
+    (
+        year,
+        month,
+        day1,
+        day2,
+    ) = parts
 
-    # For a range such as "August 18/19", Spaceflight Now uses the second
-    # day for UTC when the local launch time crosses midnight UTC.
-    utc_day = day2 if day2 is not None else day1
+    # For "August 18/19", the first
+    # number is the local date and the
+    # second is the UTC calendar date.
+    utc_day = (
+        day2
+        if day2 is not None
+        else day1
+    )
 
     try:
         launch_dt = dt.datetime(
@@ -192,126 +347,302 @@ def _resolve_utc_datetime(
     return launch_dt.isoformat()
 
 
-def fetch_html(url: str = SCHEDULE_URL, timeout: int = 30) -> str:
+def fetch_html(
+    url: str = SCHEDULE_URL,
+    timeout: int = 30,
+) -> str:
     response = requests.get(
         url,
-        headers={"User-Agent": USER_AGENT},
+        headers={
+            "User-Agent": USER_AGENT
+        },
         timeout=timeout,
     )
+
     response.raise_for_status()
+
     return response.text
 
 
 def parse_schedule(
     html: str,
-    now: Optional[dt.datetime] = None,
+    now: Optional[
+        dt.datetime
+    ] = None,
 ) -> list[Launch]:
-    if now is None:
-        now = dt.datetime.now(dt.timezone.utc)
 
-    soup = BeautifulSoup(html, "html.parser")
+    if now is None:
+        now = dt.datetime.now(
+            dt.timezone.utc
+        )
+
+    soup = BeautifulSoup(
+        html,
+        "html.parser",
+    )
 
     main = (
         soup.find("main")
-        or soup.find(attrs={"class": re.compile(r"entry-content", re.I)})
-        or soup.find(attrs={"id": re.compile(r"content", re.I)})
+        or soup.find(
+            attrs={
+                "class": re.compile(
+                    r"entry-content",
+                    re.I,
+                )
+            }
+        )
+        or soup.find(
+            attrs={
+                "id": re.compile(
+                    r"content",
+                    re.I,
+                )
+            }
+        )
         or soup.body
         or soup
     )
 
-    text = main.get_text("\n")
-    lines = [line.strip() for line in text.split("\n") if line.strip()]
+    lines = [
+        line.strip()
+        for line
+        in main
+        .get_text("\n")
+        .splitlines()
+        if line.strip()
+    ]
 
-    launches: list[Launch] = []
+    launches: list[
+        Launch
+    ] = []
 
-    i = 0
-    n = len(lines)
+    index = 0
 
-    while i < n:
-        header_match = HEADER_RE.match(lines[i])
+    while index < len(
+        lines
+    ):
+        header = HEADER_RE.match(
+            lines[index]
+        )
 
-        if not header_match:
-            i += 1
+        if not header:
+            index += 1
             continue
 
-        is_net = bool(header_match.group("net"))
-        date_text = header_match.group("date").strip()
-        rocket = header_match.group("rocket").strip()
-        mission = header_match.group("mission").strip()
+        is_net = bool(
+            header.group(
+                "net"
+            )
+        )
 
-        time_desc, site = "", ""
+        date_text = (
+            header.group(
+                "date"
+            ).strip()
+        )
 
-        j = i + 1
-        search_limit = min(n, i + 8)
+        rocket = (
+            header.group(
+                "rocket"
+            ).strip()
+        )
 
-        while j < search_limit:
-            combined = TIME_LINE_RE.match(lines[j])
+        mission = (
+            header.group(
+                "mission"
+            ).strip()
+        )
 
-            if combined:
-                time_desc = combined.group("time_desc").strip()
-                site = combined.group("site").strip()
-                break
-
-            time_only = TIME_ONLY_RE.match(lines[j])
-
-            if time_only:
-                time_desc = time_only.group("time_desc").strip()
-
-                if j + 1 < n:
-                    site_only = SITE_ONLY_RE.match(lines[j + 1])
-
-                    if site_only:
-                        site = site_only.group("site").strip()
-                        j += 1
-                        break
-
-            j += 1
-
+        time_desc = ""
+        site = ""
         updated_text = None
 
-        k = j
-        search_limit2 = min(n, j + 15)
+        lookahead_end = min(
+            len(lines),
+            index + 18,
+        )
 
-        while k < search_limit2 - 1:
-            if UPDATED_RE.match(lines[k]):
-                updated_text = lines[k + 1].strip()
+        cursor = (
+            index + 1
+        )
+
+        while (
+            cursor
+            < lookahead_end
+        ):
+            if (
+                cursor
+                > index + 1
+                and HEADER_RE.match(
+                    lines[cursor]
+                )
+            ):
                 break
 
-            k += 1
+            combined = (
+                TIME_AND_SITE_RE.match(
+                    lines[cursor]
+                )
+            )
+
+            if combined:
+                time_desc = (
+                    combined
+                    .group(
+                        "time_desc"
+                    )
+                    .strip()
+                )
+
+                site = (
+                    combined
+                    .group(
+                        "site"
+                    )
+                    .strip()
+                )
+
+                cursor += 1
+                continue
+
+            time_only = (
+                TIME_ONLY_RE.match(
+                    lines[cursor]
+                )
+            )
+
+            if time_only:
+                time_desc = (
+                    time_only
+                    .group(
+                        "time_desc"
+                    )
+                    .strip()
+                )
+
+                cursor += 1
+                continue
+
+            site_only = (
+                SITE_ONLY_RE.match(
+                    lines[cursor]
+                )
+            )
+
+            if site_only:
+                site = (
+                    site_only
+                    .group(
+                        "site"
+                    )
+                    .strip()
+                )
+
+                cursor += 1
+                continue
+
+            updated = (
+                UPDATED_RE.match(
+                    lines[cursor]
+                )
+            )
+
+            if updated:
+                same_line = (
+                    updated
+                    .group(
+                        "same_line"
+                    )
+                    .strip()
+                )
+
+                if same_line:
+                    updated_text = (
+                        same_line
+                    )
+
+                elif (
+                    cursor + 1
+                    < len(lines)
+                    and not
+                    HEADER_RE.match(
+                        lines[
+                            cursor
+                            + 1
+                        ]
+                    )
+                ):
+                    updated_text = (
+                        lines[
+                            cursor
+                            + 1
+                        ].strip()
+                    )
+
+                cursor += 1
+                continue
+
+            cursor += 1
 
         launches.append(
             Launch(
-                uid=_make_uid(rocket, mission),
+                uid=_make_uid(
+                    rocket,
+                    mission,
+                ),
                 rocket=rocket,
                 mission=mission,
                 is_net=is_net,
                 date_text=date_text,
-                scheduled_date=_resolve_scheduled_date(date_text, now),
-                site=site,
-                location_code=_location_code(site),
-                time_description=time_desc,
-                launch_time_utc=_resolve_utc_datetime(
-                    date_text,
-                    time_desc,
-                    now,
+                scheduled_date=(
+                    _scheduled_date(
+                        date_text,
+                        now,
+                    )
                 ),
-                updated_text=updated_text,
+                site=site,
+                location_code=(
+                    _location_code(
+                        site
+                    )
+                ),
+                time_description=(
+                    time_desc
+                ),
+                launch_time_utc=(
+                    _resolve_utc_datetime(
+                        date_text,
+                        time_desc,
+                        now,
+                    )
+                ),
+                updated_text=(
+                    updated_text
+                ),
             )
         )
 
-        i += 1
+        index += 1
 
     return launches
 
 
 def get_upcoming_launches(
-    now: Optional[dt.datetime] = None,
+    now: Optional[
+        dt.datetime
+    ] = None,
 ) -> list[Launch]:
-    return parse_schedule(fetch_html(), now=now)
+
+    return parse_schedule(
+        fetch_html(),
+        now=now,
+    )
 
 
 if __name__ == "__main__":
-    results = get_upcoming_launches()
+    results = (
+        get_upcoming_launches()
+    )
 
     print(
         f"Parsed {len(results)} launch entries:\n",
@@ -320,8 +651,9 @@ if __name__ == "__main__":
 
     for launch in results:
         print(
-            f"- [{'NET ' if launch.is_net else ''}{launch.date_text}] "
-            f"{launch.rocket} • {launch.mission} -> "
-            f"{launch.launch_time_utc or 'TBD'} "
-            f"[{launch.location_code or 'other'}] ({launch.site})"
+            f"- {launch.date_text} | "
+            f"{launch.rocket} • "
+            f"{launch.mission} | "
+            f"{launch.location_code or 'OTHER'} | "
+            f"{launch.launch_time_utc or 'TBD'}"
         )
