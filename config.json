@@ -1,5 +1,5 @@
-
-  "_ntfy_topic_help": "This is like a private channel name for your notifications. Make it long and random so a stranger can't guess it and spam you, e.g. 'dave-rocket-launches-8347'. You'll subscribe to this exact name in the ntfy app.",
+{
+  "_readme": "Edit the values below, then commit the change. No coding needed — you can edit this file right in the GitHub website. Note: your ntfy topic name is NOT set here — it lives in a repo Secret instead, so it stays hidden even though this file (and this repo) is public.",
   "lead_times_hours": [
     72,
     24,
