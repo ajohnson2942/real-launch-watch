@@ -36,6 +36,27 @@ STATE_PATH = ROOT / "data" / "state.json"
 PUBLIC_FEED_PATH = ROOT / "docs" / "launches.json"
 DISPLAY_TIMEZONE = ZoneInfo("America/Los_Angeles")
 
+# Maps the trailing part of a launch site description (e.g. "...,
+# California") to a short tag for notification titles. Falls back to
+# whatever the last comma-separated segment says if it's not a known US
+# state (e.g. "French Guiana"), so non-US sites still show something
+# reasonable instead of nothing.
+US_STATE_ABBREV = {
+    "california": "CA",
+    "florida": "FL",
+    "texas": "TX",
+    "virginia": "VA",
+    "alaska": "AK",
+    "new mexico": "NM",
+}
+
+
+def location_tag(site: str) -> str:
+    if not site:
+        return ""
+    last_part = site.split(",")[-1].strip()
+    return US_STATE_ABBREV.get(last_part.lower(), last_part)
+
 def load_json(path: Path, default):
     if not path.exists():
         return default
@@ -150,7 +171,8 @@ def main():
         if time_changed and notify_on_time_change:
             send_ntfy(
                 ntfy_topic,
-                title=f"🔄 Launch time changed: {launch.mission}",
+                loc = location_tag(launch.site)
+                title=f"New launch on schedule: {launch.mission}" + (f" ({loc})" if loc else ""),
                 message=(
                     f"{launch.rocket} • {launch.mission}\n"
                     f"New time: {format_time_local_hint(launch.launch_time_utc)}\n"
@@ -176,7 +198,8 @@ def main():
                         )
                         send_ntfy(
                             ntfy_topic,
-                            title=f"🚀 Launching in ~{lead_desc}: {launch.mission}",
+                            loc = location_tag(launch.site)
+                            title=f"New launch on schedule: {launch.mission}" + (f" ({loc})" if loc else ""),
                             message=(
                                 f"{launch.rocket} • {launch.mission}\n"
                                 f"{format_time_local_hint(launch.launch_time_utc)}\n"
