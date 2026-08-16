@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
 <meta
   name="viewport"
   content="width=device-width, initial-scale=1, viewport-fit=cover"
@@ -61,11 +62,14 @@
     --text:#F3F1FA;
     --muted:#C9C3E0;
     --accent:#35063E;
+
     --confirmed:#3DDC97;
     --net:#FFC857;
     --tbd:#a89fc9;
-    --ca:#ff5a52;
-    --fl:#49d17d;
+
+    /* STATE COLORS */
+    --ca:#FFE600;
+    --fl:#55D8FF;
   }
 
   *{
@@ -633,7 +637,7 @@
       );
 
     display:flex;
-    gap:2px;
+    gap:3px;
     align-items:center;
     justify-content:center;
     z-index:2;
@@ -649,12 +653,22 @@
     line-height:1;
   }
 
+  /* CALIFORNIA = BRIGHT YELLOW */
   .launch-x.ca{
     color:var(--ca);
+
+    text-shadow:
+      0 0 8px
+      rgba(255,230,0,.25);
   }
 
+  /* FLORIDA = BRIGHT LIGHT BLUE */
   .launch-x.fl{
     color:var(--fl);
+
+    text-shadow:
+      0 0 8px
+      rgba(85,216,255,.25);
   }
 
   .launch-count{
@@ -774,10 +788,12 @@
     color:var(--tbd);
   }
 
+  /* CA BADGE = BRIGHT YELLOW */
   .badge.ca{
     color:var(--ca);
   }
 
+  /* FL BADGE = BRIGHT LIGHT BLUE */
   .badge.fl{
     color:var(--fl);
   }
@@ -888,7 +904,7 @@
     position:absolute;
     bottom:130%;
     right:0;
-    width:240px;
+    width:280px;
     background:var(--panel);
 
     border:
@@ -993,7 +1009,7 @@
   </h2>
 
   <p class="sub">
-    Shows when the next SpaceX launch will occur and sends you notifications before they happen! It automatically updates every hour from Spaceflight Now's public launch schedule. Completely free and no hassle :D
+    Shows when the next SpaceX launch will occur and sends you notifications before they happen! It automatically updates every hour from public launch schedule data. Completely free and no hassle :D
   </p>
 
 </header>
@@ -1074,7 +1090,7 @@
     ></div>
 
     <p class="calendar-legend">
-      <span class="ca-text">Red X</span> = at least one tracked launch is currently scheduled or predicted for that date in California. <span class="fl-text">Green X</span> = at least one tracked launch is currently scheduled or predicted for that date in Florida. The schedule can still move, and the Xs will move on a later refresh if it does.
+      <span class="ca-text">Yellow X</span> = at least one tracked launch is currently scheduled or predicted for that date in California. <span class="fl-text">Light Blue X</span> = at least one tracked launch is currently scheduled or predicted for that date in Florida. The schedule can still move, and the Xs will move on a later refresh if it does.
     </p>
 
   </div>
@@ -1164,6 +1180,7 @@ const CHANGELOG = [
       "Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
   }
 ];
+
 
 function escapeHtml(
   value
@@ -1462,6 +1479,8 @@ function renderHero(
     clearInterval(
       heroTimer
     );
+
+    heroTimer = null;
   }
 
   if (
@@ -1608,7 +1627,7 @@ function renderList(
     !launches.length
   ){
     list.innerHTML =
-      '<div class="empty">No tracked launches scheduled for this month yet.</div>';
+      '<div class="empty">No tracked launches scheduled for the rest of this month yet.</div>';
 
     return;
   }
@@ -1927,7 +1946,46 @@ function launchIsInCurrentMonth(
 }
 
 
+function launchIsStillUpcoming(
+  launch
+){
+  const now =
+    new Date();
+
+  if (
+    launch
+    .launch_time_utc
+  ){
+    return (
+      new Date(
+        launch
+        .launch_time_utc
+      )
+      >
+      now
+    );
+  }
+
+  if (
+    launch
+    .scheduled_date
+  ){
+    return (
+      launch
+      .scheduled_date
+      >=
+      localDateKey(
+        now
+      )
+    );
+  }
+
+  return false;
+}
+
+
 function renderCurrentMonthUpcoming(){
+
   const now =
     new Date();
 
@@ -1940,31 +1998,10 @@ function renderCurrentMonthUpcoming(){
         )
     )
     .filter(
-      launch => {
-
-        if (
+      launch =>
+        launchIsStillUpcoming(
           launch
-          .launch_time_utc
-        ){
-          return (
-            new Date(
-              launch
-              .launch_time_utc
-            )
-            >
-            now
-          );
-        }
-
-        return (
-          launch
-          .scheduled_date
-          >=
-          localDateKey(
-            now
-          )
-        );
-      }
+        )
     )
     .sort(
       (
@@ -2012,6 +2049,53 @@ function renderCurrentMonthUpcoming(){
 
   currentlyRenderedListMonthKey =
     currentMonthKey();
+}
+
+
+function getNextUpcomingLaunch(){
+
+  const now =
+    new Date();
+
+  return launchFeed
+    .filter(
+      launch =>
+        launch
+        .launch_time_utc
+        &&
+        new Date(
+          launch
+          .launch_time_utc
+        )
+        >
+        now
+    )
+    .sort(
+      (
+        a,
+        b
+      ) =>
+        new Date(
+          a
+          .launch_time_utc
+        )
+        -
+        new Date(
+          b
+          .launch_time_utc
+        )
+    )[0];
+}
+
+
+function refreshHero(){
+
+  const nextLaunch =
+    getNextUpcomingLaunch();
+
+  renderHero(
+    nextLaunch
+  );
 }
 
 
@@ -2262,7 +2346,7 @@ function renderCalendar(
 }
 
 
-function refreshForDateChanges(){
+function refreshLocalDisplay(){
 
   const now =
     new Date();
@@ -2274,6 +2358,10 @@ function refreshForDateChanges(){
       now.getMonth()
     }`;
 
+  /*
+    Rebuild the calendar automatically
+    when the month changes.
+  */
   if (
     calendarKey
     !== renderedMonthKey
@@ -2283,25 +2371,55 @@ function refreshForDateChanges(){
     );
   }
 
+  /*
+    Rebuild Upcoming EVERY MINUTE.
+
+    This means a completed launch disappears
+    from the text list within about one minute,
+    without using another GitHub Action.
+  */
+  renderCurrentMonthUpcoming();
+
+  /*
+    Also move the large Next Liftoff section
+    to the next launch after one has passed.
+  */
+  const nextLaunch =
+    getNextUpcomingLaunch();
+
   if (
-    currentMonthKey()
-    !== currentlyRenderedListMonthKey
+    nextLaunch
+    &&
+    (
+      !heroTimer
+      ||
+      document
+      .getElementById(
+        'hero-clock'
+      )
+      ?.textContent
+      ?.includes(
+        'LIFTOFF WINDOW OPEN'
+      )
+    )
   ){
-    renderCurrentMonthUpcoming();
+    renderHero(
+      nextLaunch
+    );
   }
 }
 
 
 setInterval(
-  refreshForDateChanges,
-  60000
+  refreshLocalDisplay,
+  60 * 1000
 );
 
 
 function loadFeed(){
 
   fetch(
-    FEED_URL,
+    `${FEED_URL}?t=${Date.now()}`,
     {
       cache:
         'no-store'
@@ -2329,42 +2447,7 @@ function loadFeed(){
         data.launches
         || [];
 
-      const now =
-        new Date();
-
-      const withTime =
-        launchFeed
-        .filter(
-          launch =>
-            launch
-            .launch_time_utc
-            &&
-            new Date(
-              launch
-              .launch_time_utc
-            )
-            >
-            now
-        )
-        .sort(
-          (
-            a,
-            b
-          ) =>
-            new Date(
-              a
-              .launch_time_utc
-            )
-            -
-            new Date(
-              b
-              .launch_time_utc
-            )
-        );
-
-      renderHero(
-        withTime[0]
-      );
+      refreshHero();
 
       renderCurrentMonthUpcoming();
 
@@ -2430,14 +2513,19 @@ function loadFeed(){
 }
 
 
+/*
+  Initial load.
+*/
 loadFeed();
 
 
 /*
-  Re-read launches.json every hour while the page/app remains open.
+  Download the latest launches.json once per hour
+  while the app stays open.
 
-  This does NOT use extra GitHub Actions minutes.
-  It only reloads the already-generated JSON file in the browser.
+  This does NOT run another GitHub Action.
+  It only downloads the small JSON file that
+  GitHub already generated.
 */
 setInterval(
   loadFeed,
