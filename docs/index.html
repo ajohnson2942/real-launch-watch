@@ -4,14 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Watch-A-Launch</title>
-<meta name="description" content="Shows when the next SpaceX launch will occur and sends you notifications before it happens.">
+<meta name="description" content="Track upcoming SpaceX launches and get California or Florida launch notifications.">
 <meta name="theme-color" content="#151B54">
+
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+  rel="stylesheet"
+>
+
 <style>
   :root{
     --bg-top:#151B54;
@@ -22,44 +29,98 @@
     --text:#F3F1FA;
     --muted:#C9C3E0;
     --accent:#35063E;
-    --accent-bright:#6b1a7a;
     --confirmed:#3DDC97;
     --net:#FFC857;
     --tbd:#a89fc9;
+    --launch:#ff5a52;
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
+
+  *{
+    box-sizing:border-box;
+  }
+
+  html,
+  body{
+    margin:0;
+    padding:0;
+  }
+
   body{
     font-family:'Work Sans',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
     padding-bottom:5rem;
     color:var(--text);
-    background:linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    background:linear-gradient(
+      180deg,
+      var(--bg-top) 0%,
+      var(--bg-bottom) 100%
+    );
     min-height:100vh;
     position:relative;
   }
+
   .stars{
     position:fixed;
     inset:0;
     pointer-events:none;
     z-index:0;
+
     background-image:
-      radial-gradient(1px 1px at 20% 15%, rgba(255,255,255,.45) 0, transparent 40%),
-      radial-gradient(1px 1px at 70% 8%, rgba(255,255,255,.3) 0, transparent 40%),
-      radial-gradient(1.5px 1.5px at 40% 25%, rgba(255,255,255,.35) 0, transparent 40%),
-      radial-gradient(1px 1px at 85% 20%, rgba(255,255,255,.25) 0, transparent 40%),
-      radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,.3) 0, transparent 40%),
-      radial-gradient(1px 1px at 10% 45%, rgba(255,255,255,.2) 0, transparent 40%),
-      radial-gradient(1px 1px at 90% 55%, rgba(255,255,255,.18) 0, transparent 40%);
+      radial-gradient(
+        1px 1px at 20% 15%,
+        rgba(255,255,255,.45) 0,
+        transparent 40%
+      ),
+      radial-gradient(
+        1px 1px at 70% 8%,
+        rgba(255,255,255,.3) 0,
+        transparent 40%
+      ),
+      radial-gradient(
+        1.5px 1.5px at 40% 25%,
+        rgba(255,255,255,.35) 0,
+        transparent 40%
+      ),
+      radial-gradient(
+        1px 1px at 85% 20%,
+        rgba(255,255,255,.25) 0,
+        transparent 40%
+      ),
+      radial-gradient(
+        1px 1px at 55% 35%,
+        rgba(255,255,255,.3) 0,
+        transparent 40%
+      ),
+      radial-gradient(
+        1px 1px at 10% 45%,
+        rgba(255,255,255,.2) 0,
+        transparent 40%
+      ),
+      radial-gradient(
+        1px 1px at 90% 55%,
+        rgba(255,255,255,.18) 0,
+        transparent 40%
+      );
+
     background-repeat:no-repeat;
   }
-  header, .hero, main, footer{ position:relative; z-index:1; }
+
+  header,
+  .hero,
+  .prefs,
+  .calendar-wrap,
+  main,
+  footer{
+    position:relative;
+    z-index:1;
+  }
 
   header{
     padding:2.25rem 1.5rem .5rem;
     max-width:760px;
     margin:0 auto;
   }
+
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
     font-size:.7rem;
@@ -71,14 +132,29 @@
     gap:.5rem;
     margin-bottom:.6rem;
   }
+
   .eyebrow::before{
     content:"";
-    width:7px;height:7px;border-radius:50%;
+    width:7px;
+    height:7px;
+    border-radius:50%;
     background:#ff8a3d;
-    box-shadow:0 0 8px 2px rgba(255,138,61,.7);
+    box-shadow:
+      0 0 8px 2px
+      rgba(255,138,61,.7);
     animation:pulse 2s ease-in-out infinite;
   }
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+
+  @keyframes pulse{
+    0%,
+    100%{
+      opacity:1;
+    }
+
+    50%{
+      opacity:.35;
+    }
+  }
 
   h1.app-title{
     font-family:'Anton',sans-serif;
@@ -90,6 +166,7 @@
     margin:0 0 .3rem;
     color:var(--text);
   }
+
   h2.liftoff-subtitle{
     font-family:'Orbitron',sans-serif;
     font-weight:600;
@@ -99,6 +176,7 @@
     color:#ffb37a;
     margin:0 0 1rem;
   }
+
   .sub{
     font-family:'Lora',serif;
     color:var(--text);
@@ -109,95 +187,123 @@
   }
 
   .hero{
-    max-width:760px;margin:1.5rem auto 0;padding:0 1.5rem;
+    max-width:760px;
+    margin:1.5rem auto 0;
+    padding:0 1.5rem;
   }
-  .hero-card{
-    background:linear-gradient(160deg,var(--panel-2),var(--panel));
+
+  .hero-card,
+  .prefs-card,
+  .calendar-card{
+    background:
+      linear-gradient(
+        160deg,
+        var(--panel-2),
+        var(--panel)
+      );
+
     border:1px solid var(--hairline);
     border-radius:14px;
+  }
+
+  .hero-card{
     padding:1.5rem 1.5rem 1.3rem;
     position:relative;
     overflow:hidden;
   }
+
   .hero-card::after{
     content:"";
-    position:absolute; inset:0;
-    background:linear-gradient(100deg, transparent 40%, rgba(107,26,122,.18) 55%, transparent 70%);
+    position:absolute;
+    inset:0;
+
+    background:
+      linear-gradient(
+        100deg,
+        transparent 40%,
+        rgba(107,26,122,.18) 55%,
+        transparent 70%
+      );
+
     pointer-events:none;
   }
+
   .hero-label{
     font-family:'JetBrains Mono',monospace;
-    font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+    font-size:.7rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
   }
+
   .hero-mission{
-    font-family:'Barlow Condensed',sans-serif;font-weight:600;
-    font-size:1.5rem;margin:.2rem 0 .9rem;line-height:1.15;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:1.5rem;
+    margin:.2rem 0 .9rem;
+    line-height:1.15;
   }
+
   .clock{
     font-family:'JetBrains Mono',monospace;
     font-size:clamp(1.6rem,8vw,2.6rem);
     font-weight:700;
     letter-spacing:.02em;
     color:var(--text);
-    display:flex;gap:.5rem;flex-wrap:wrap;
+    display:flex;
+    gap:.5rem;
+    flex-wrap:wrap;
   }
-  .clock .unit{color:#ffb37a;}
+
+  .clock .unit{
+    color:#ffb37a;
+  }
+
   .clock small{
-    font-family:'Work Sans',sans-serif;font-weight:500;font-size:.32em;
-    color:var(--muted);text-transform:uppercase;letter-spacing:.08em;
-    display:block;margin-top:.15em;
+    font-family:'Work Sans',sans-serif;
+    font-weight:500;
+    font-size:.32em;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    display:block;
+    margin-top:.15em;
   }
+
   .hero-meta{
-    margin-top:1rem;display:flex;gap:1.2rem;flex-wrap:wrap;
-    font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);
+    margin-top:1rem;
+    display:flex;
+    gap:1.2rem;
+    flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.78rem;
+    color:var(--muted);
   }
 
-  main{max-width:760px;margin:2rem auto 0;padding:0 1.5rem;}
-  .section-title{
-    font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;
-    letter-spacing:.06em;font-size:1rem;color:var(--muted);
-    margin:0 0 .8rem;padding-bottom:.5rem;border-bottom:1px solid var(--hairline);
+  .prefs,
+  .calendar-wrap{
+    max-width:760px;
+    margin:2rem auto 0;
+    padding:0 1.5rem;
   }
-  .card{
-    display:grid;
-    grid-template-columns:64px 1fr;
-    gap:.9rem;
-    padding:1rem 0;
-    border-bottom:1px solid var(--hairline);
-  }
-  .card:last-child{border-bottom:none;}
-  .t-minus{
-    font-family:'JetBrains Mono',monospace;
-    font-size:.72rem;color:var(--muted);text-align:right;padding-top:.15rem;
-    white-space:nowrap;
-  }
-  .t-minus b{display:block;color:var(--text);font-size:.95rem;}
-  .card-main{min-width:0;}
-  .badge{
-    display:inline-block;
-    font-family:'JetBrains Mono',monospace;
-    font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
-    padding:.15rem .45rem;border-radius:4px;
-    border:1px solid currentColor;
-    margin-bottom:.35rem;
-  }
-  .badge.confirmed{color:var(--confirmed);}
-  .badge.net{color:var(--net);}
-  .badge.tbd{color:var(--tbd);}
-  .card-title{font-weight:600;font-size:1rem;margin:0 0 .15rem;}
-  .card-rocket{color:#ffb37a;font-weight:500;}
-  .card-detail{font-family:'Lora',serif;color:var(--muted);font-size:.85rem;line-height:1.5;}
-  .empty{font-family:'Lora',serif;color:var(--muted);font-size:.9rem;padding:1rem 0;}
 
-  .prefs{
-    max-width:760px;margin:2rem auto 0;padding:0 1.5rem;
-  }
-  .prefs-card{
-    background:linear-gradient(160deg,var(--panel-2),var(--panel));
-    border:1px solid var(--hairline);
-    border-radius:14px;
+  .prefs-card,
+  .calendar-card{
     padding:1.3rem 1.5rem;
   }
+
+  .section-title{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:1rem;
+    color:var(--muted);
+    margin:0 0 .8rem;
+    padding-bottom:.5rem;
+    border-bottom:1px solid var(--hairline);
+  }
+
   .prefs-help{
     font-family:'Lora',serif;
     font-size:.92rem;
@@ -205,7 +311,8 @@
     margin:0 0 .8rem;
     line-height:1.5;
   }
-  select.lead-select{
+
+  select.location-select{
     font-family:'Work Sans',sans-serif;
     font-size:1rem;
     font-weight:500;
@@ -215,39 +322,285 @@
     border-radius:8px;
     padding:.6rem .9rem;
     width:100%;
-    max-width:280px;
+    max-width:360px;
     appearance:none;
     -webkit-appearance:none;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1L7 7L13 1' stroke='%23C9C3E0' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1L7 7L13 1' stroke='%23C9C3E0' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+
     background-repeat:no-repeat;
     background-position:right .9rem center;
     padding-right:2.2rem;
   }
+
   .prefs-result{
     margin-top:.9rem;
     font-family:'JetBrains Mono',monospace;
-    font-size:.85rem;
+    font-size:.82rem;
     color:var(--text);
     background:rgba(0,0,0,.2);
     border:1px solid var(--hairline);
     border-radius:8px;
-    padding:.7rem .9rem;
-    line-height:1.6;
+    padding:.8rem .9rem;
+    line-height:1.65;
   }
-  .prefs-result strong{color:#ffb37a;}
+
+  .prefs-result strong{
+    color:#ffb37a;
+  }
+
+  .topic-actions{
+    display:flex;
+    gap:.6rem;
+    flex-wrap:wrap;
+    margin-top:.75rem;
+  }
+
+  .topic-btn{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;
+    color:var(--text);
+    background:var(--accent);
+    padding:.48rem .75rem;
+    border-radius:7px;
+    text-decoration:none;
+    font-weight:700;
+    border:1px solid var(--hairline);
+  }
+
+  .tiny-note{
+    font-family:'Lora',serif;
+    color:var(--muted);
+    font-size:.78rem;
+    margin-top:.7rem;
+    line-height:1.45;
+  }
+
+  .calendar-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:1rem;
+    margin-bottom:1rem;
+  }
+
+  .calendar-month{
+    font-family:'Orbitron',sans-serif;
+    font-size:1.05rem;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
+
+  .calendar-today{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.68rem;
+    color:var(--muted);
+    text-align:right;
+  }
+
+  .calendar-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+  }
+
+  .weekday{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.58rem;
+    color:var(--muted);
+    text-align:center;
+    text-transform:uppercase;
+    padding-bottom:.25rem;
+  }
+
+  .day{
+    position:relative;
+    min-height:54px;
+    border:
+      1px solid
+      rgba(201,195,224,.18);
+    border-radius:8px;
+    padding:.38rem;
+    background:rgba(0,0,0,.08);
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;
+    overflow:hidden;
+  }
+
+  .day.blank{
+    border-color:transparent;
+    background:transparent;
+  }
+
+  .day.today{
+    border-color:#ffb37a;
+    box-shadow:
+      inset 0 0 0 1px
+      rgba(255,179,122,.35);
+  }
+
+  .day-number{
+    position:relative;
+    z-index:2;
+  }
+
+  .launch-x{
+    position:absolute;
+    left:50%;
+    top:52%;
+    transform:translate(-50%,-50%);
+    font-family:'Anton',sans-serif;
+    font-size:2rem;
+    color:var(--launch);
+    line-height:1;
+    opacity:.92;
+    z-index:1;
+  }
+
+  .launch-count{
+    position:absolute;
+    right:4px;
+    bottom:3px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.52rem;
+    color:#ffd0cc;
+    z-index:2;
+  }
+
+  .calendar-legend{
+    font-family:'Lora',serif;
+    color:var(--muted);
+    font-size:.78rem;
+    line-height:1.45;
+    margin:.85rem 0 0;
+  }
+
+  .calendar-legend b{
+    color:var(--launch);
+  }
+
+  main{
+    max-width:760px;
+    margin:2rem auto 0;
+    padding:0 1.5rem;
+  }
+
+  .card{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:.9rem;
+    padding:1rem 0;
+    border-bottom:
+      1px solid
+      var(--hairline);
+  }
+
+  .card:last-child{
+    border-bottom:none;
+  }
+
+  .t-minus{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;
+    color:var(--muted);
+    text-align:right;
+    padding-top:.15rem;
+    white-space:nowrap;
+  }
+
+  .t-minus b{
+    display:block;
+    color:var(--text);
+    font-size:.95rem;
+  }
+
+  .card-main{
+    min-width:0;
+  }
+
+  .badge{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.62rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:.15rem .45rem;
+    border-radius:4px;
+    border:1px solid currentColor;
+    margin:0 .25rem .35rem 0;
+  }
+
+  .badge.confirmed{
+    color:var(--confirmed);
+  }
+
+  .badge.net{
+    color:var(--net);
+  }
+
+  .badge.tbd{
+    color:var(--tbd);
+  }
+
+  .badge.location{
+    color:#ffb37a;
+  }
+
+  .card-title{
+    font-weight:600;
+    font-size:1rem;
+    margin:0 0 .15rem;
+  }
+
+  .card-rocket{
+    color:#ffb37a;
+    font-weight:500;
+  }
+
+  .card-detail{
+    font-family:'Lora',serif;
+    color:var(--muted);
+    font-size:.85rem;
+    line-height:1.5;
+  }
+
+  .empty{
+    font-family:'Lora',serif;
+    color:var(--muted);
+    font-size:.9rem;
+    padding:1rem 0;
+  }
 
   footer{
-    max-width:760px;margin:2.5rem auto 0;padding:1.5rem;
+    max-width:760px;
+    margin:2.5rem auto 0;
+    padding:1.5rem;
     font-family:'Lora',serif;
-    color:var(--text);font-size:.88rem;line-height:1.65;
-    border-top:1px solid var(--hairline);
+    color:var(--text);
+    font-size:.88rem;
+    line-height:1.65;
+    border-top:
+      1px solid
+      var(--hairline);
   }
-  footer a{color:#ffb37a;}
+
+  footer a{
+    color:#ffb37a;
+  }
+
   .setup-btn{
-    display:inline-block;margin-top:.8rem;
-    font-family:'JetBrains Mono',monospace;font-size:.78rem;
-    color:var(--text);background:var(--accent);
-    padding:.55rem 1rem;border-radius:8px;text-decoration:none;font-weight:700;
+    display:inline-block;
+    margin-top:.8rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.78rem;
+    color:var(--text);
+    background:var(--accent);
+    padding:.55rem 1rem;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:700;
   }
 
   .version-badge{
@@ -265,12 +618,13 @@
     cursor:pointer;
     user-select:none;
   }
+
   .version-popup{
     display:none;
     position:absolute;
     bottom:130%;
     right:0;
-    width:240px;
+    width:260px;
     background:var(--panel);
     border:1px solid var(--hairline);
     border-radius:10px;
@@ -279,12 +633,16 @@
     font-size:.75rem;
     color:var(--text);
     line-height:1.5;
-    box-shadow:0 8px 24px rgba(0,0,0,.4);
+    box-shadow:
+      0 8px 24px
+      rgba(0,0,0,.4);
   }
+
   .version-badge:hover .version-popup,
   .version-badge.active .version-popup{
     display:block;
   }
+
   .version-popup-title{
     font-family:'JetBrains Mono',monospace;
     font-size:.68rem;
@@ -293,57 +651,193 @@
     color:var(--muted);
     margin-bottom:.5rem;
   }
+
   .version-popup ul{
     margin:0;
     padding-left:1.1rem;
   }
+
   .version-popup li{
     margin-bottom:.5rem;
   }
+
   .version-popup li:last-child{
     margin-bottom:0;
   }
+
+  @media(max-width:480px){
+    .calendar-card{
+      padding:1rem;
+    }
+
+    .day{
+      min-height:47px;
+      padding:.3rem;
+    }
+
+    .launch-x{
+      font-size:1.7rem;
+    }
+
+    .calendar-today{
+      max-width:130px;
+    }
+
+    .card{
+      grid-template-columns:58px 1fr;
+    }
+  }
 </style>
 </head>
+
 <body>
 
 <div class="stars" aria-hidden="true"></div>
 
 <header>
   <div class="eyebrow">Live tracking</div>
-  <h1 class="app-title">Watch-A-Launch</h1>
-  <h2 class="liftoff-subtitle">Next Liftoff</h2>
-  <p class="sub">Shows when the next SpaceX launch will occur and sends you notifications before they happen! It automatically updates every hour from Spaceflight Now's public launch schedule. Completely free and no hastle :D</p>
+
+  <h1 class="app-title">
+    Watch-A-Launch
+  </h1>
+
+  <h2 class="liftoff-subtitle">
+    Next Liftoff
+  </h2>
+
+  <p class="sub">
+    Shows when the next SpaceX launch will occur and sends you
+    notifications before they happen! It automatically updates from
+    Spaceflight Now's public launch schedule. Completely free and no
+    hassle :D
+  </p>
 </header>
 
-<div class="hero" id="hero"></div>
+<div
+  class="hero"
+  id="hero"
+></div>
 
 <div class="prefs">
   <div class="prefs-card">
-    <p class="prefs-help">Choose when you want to be notified about the next launch. This will work for all future launches!</p>
-    <select class="lead-select" id="leadSelect">
-      <option value="3">3 hours before</option>
-      <option value="24">24 hours before</option>
+
+    <div class="section-title">
+      Notification location
+    </div>
+
+    <p class="prefs-help">
+      Choose which launch coast you want alerts for. Each location gets a
+      24-hour reminder, a 3-hour reminder, and a new alert if the launch
+      time changes.
+    </p>
+
+    <select
+      class="location-select"
+      id="locationSelect"
+      aria-label="Choose notification location"
+    >
+      <option value="CA">
+        California only
+      </option>
+
+      <option value="FL">
+        Florida only
+      </option>
+
+      <option value="BOTH">
+        California + Florida
+      </option>
     </select>
-    <div class="prefs-result" id="prefsResult"></div>
+
+    <div
+      class="prefs-result"
+      id="prefsResult"
+    ></div>
+
+  </div>
+</div>
+
+<div class="calendar-wrap">
+  <div class="calendar-card">
+
+    <div class="section-title">
+      Launch calendar
+    </div>
+
+    <div class="calendar-head">
+      <div
+        class="calendar-month"
+        id="calendarMonth"
+      >
+        Loading…
+      </div>
+
+      <div
+        class="calendar-today"
+        id="calendarToday"
+      ></div>
+    </div>
+
+    <div
+      class="calendar-grid"
+      id="calendarGrid"
+    ></div>
+
+    <p class="calendar-legend">
+      <b>Red X</b> = at least one tracked launch is currently scheduled
+      or predicted for that date. The schedule can still move, and the X
+      will move on a later refresh if it does.
+    </p>
+
   </div>
 </div>
 
 <main>
-  <div class="section-title">Upcoming</div>
+  <div class="section-title">
+    Upcoming
+  </div>
+
   <div id="list"></div>
 </main>
 
 <footer>
-  <div id="feed-meta">Loading schedule…</div>
-  <div>Push notifications are sent separately via <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy.sh</a>. Install the ntfy app, add CoolRockets as a new subscription and press subscribe to get alerts before each launch. Make sure that you enable notifications for this app!</div>
-  <a class="setup-btn" href="https://github.com" target="_blank" rel="noopener">View setup guide (README)</a>
+  <div id="feed-meta">
+    Loading schedule…
+  </div>
+
+  <div>
+    Push alerts are delivered through
+    <a
+      href="https://ntfy.sh"
+      target="_blank"
+      rel="noopener"
+    >ntfy.sh</a>.
+    Pick California, Florida, or both above, then subscribe to the
+    topic(s) shown. Make sure notifications are enabled for ntfy.
+  </div>
+
+  <a
+    class="setup-btn"
+    href="https://github.com"
+    target="_blank"
+    rel="noopener"
+  >
+    View setup guide (README)
+  </a>
 </footer>
 
-<div class="version-badge" id="versionBadge" tabindex="0">
-  v1.0.1
+<div
+  class="version-badge"
+  id="versionBadge"
+  tabindex="0"
+>
+  v1.1.0
+
   <div class="version-popup">
-    <div class="version-popup-title">Changelog</div>
+    <div class="version-popup-title">
+      Changelog
+    </div>
+
     <ul id="versionList"></ul>
   </div>
 </div>
@@ -352,141 +846,917 @@
 const FEED_URL = 'launches.json';
 const BASE_TOPIC = 'CoolRockets';
 
+let launchFeed = [];
+let heroTimer = null;
+let renderedMonthKey = '';
+
 const CHANGELOG = [
-  { version: "v1.0.1", notes: "Updated the background and theme colors, as well as texts. Changed the app name from Launch Watch to Watch-A-Launch." }
+  {
+    version: 'v1.1.0',
+    notes:
+      'Added California/Florida notification choices, exact times in reminders, launch-time change alerts, a monthly launch calendar, and fixed “hassle”.'
+  },
+  {
+    version: 'v1.0.1',
+    notes:
+      'Updated the background and theme colors, as well as texts. Changed the app name from Launch Watch to Watch-A-Launch.'
+  }
 ];
 
-function renderChangelog(){
-  const list = document.getElementById('versionList');
-  list.innerHTML = CHANGELOG.map(entry => `<li><strong>${entry.version}:</strong> ${entry.notes}</li>`).join('');
+function escapeHtml(value){
+  return String(value ?? '')
+    .replace(
+      /[&<>'"]/g,
+      char => ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        "'":'&#39;',
+        '"':'&quot;'
+      }[char])
+    );
 }
+
+function renderChangelog(){
+  const list =
+    document.getElementById(
+      'versionList'
+    );
+
+  list.innerHTML =
+    CHANGELOG
+      .map(
+        entry =>
+          `<li><strong>${escapeHtml(entry.version)}:</strong> ${escapeHtml(entry.notes)}</li>`
+      )
+      .join('');
+}
+
 renderChangelog();
 
-const versionBadge = document.getElementById('versionBadge');
-versionBadge.addEventListener('click', () => versionBadge.classList.toggle('active'));
-document.addEventListener('click', (e) => {
-  if (!versionBadge.contains(e.target)) versionBadge.classList.remove('active');
-});
+const versionBadge =
+  document.getElementById(
+    'versionBadge'
+  );
+
+versionBadge.addEventListener(
+  'click',
+  () =>
+    versionBadge
+      .classList
+      .toggle('active')
+);
+
+document.addEventListener(
+  'click',
+  event => {
+    if (
+      !versionBadge.contains(
+        event.target
+      )
+    ){
+      versionBadge
+        .classList
+        .remove('active');
+    }
+  }
+);
 
 function fmtDelta(ms){
-  if (ms <= 0) return { launched:true };
-  const s = Math.floor(ms/1000);
-  const days = Math.floor(s/86400);
-  const hours = Math.floor((s%86400)/3600);
-  const mins = Math.floor((s%3600)/60);
-  const secs = s%60;
-  return { days, hours, mins, secs, launched:false };
+  if (ms <= 0){
+    return {
+      launched:true
+    };
+  }
+
+  const seconds =
+    Math.floor(ms / 1000);
+
+  return {
+    days:
+      Math.floor(
+        seconds / 86400
+      ),
+
+    hours:
+      Math.floor(
+        (seconds % 86400)
+        / 3600
+      ),
+
+    mins:
+      Math.floor(
+        (seconds % 3600)
+        / 60
+      ),
+
+    secs:
+      seconds % 60,
+
+    launched:false
+  };
 }
 
-function pad(n){ return n.toString().padStart(2,'0'); }
+function pad(number){
+  return number
+    .toString()
+    .padStart(2,'0');
+}
 
 function fmtPacific(date){
-  return new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Los_Angeles',
-    weekday: 'short', month: 'short', day: 'numeric',
-    hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
-  }).format(date);
+  return new Intl.DateTimeFormat(
+    'en-US',
+    {
+      timeZone:
+        'America/Los_Angeles',
+
+      weekday:'short',
+      month:'short',
+      day:'numeric',
+      hour:'numeric',
+      minute:'2-digit',
+      timeZoneName:'short'
+    }
+  ).format(date);
 }
 
-function statusBadge(l){
-  if (!l.launch_time_utc) return '<span class="badge tbd">TBD</span>';
-  if (l.is_net) return '<span class="badge net">NET</span>';
-  return '<span class="badge confirmed">Confirmed</span>';
+function fmtLaunchTime(launch){
+  if (!launch.launch_time_utc){
+    return (
+      launch.time_description
+      || 'Exact time TBD'
+    );
+  }
+
+  const zone =
+    launch.location_code === 'FL'
+      ? 'America/New_York'
+      : 'America/Los_Angeles';
+
+  return new Intl.DateTimeFormat(
+    'en-US',
+    {
+      timeZone:zone,
+      weekday:'long',
+      month:'long',
+      day:'numeric',
+      hour:'numeric',
+      minute:'2-digit',
+      timeZoneName:'short'
+    }
+  ).format(
+    new Date(
+      launch.launch_time_utc
+    )
+  );
+}
+
+function statusBadge(launch){
+  if (!launch.launch_time_utc){
+    return (
+      '<span class="badge tbd">TBD time</span>'
+    );
+  }
+
+  if (launch.is_net){
+    return (
+      '<span class="badge net">NET</span>'
+    );
+  }
+
+  return (
+    '<span class="badge confirmed">Confirmed</span>'
+  );
+}
+
+function locationBadge(launch){
+  return launch.location_code
+    ? `<span class="badge location">${escapeHtml(launch.location_code)}</span>`
+    : '';
 }
 
 function renderHero(next){
-  const hero = document.getElementById('hero');
+  const hero =
+    document.getElementById(
+      'hero'
+    );
+
+  if (heroTimer){
+    clearInterval(
+      heroTimer
+    );
+  }
+
   if (!next){
     hero.innerHTML = '';
     return;
   }
+
   hero.innerHTML = `
     <div class="hero-card">
-      <div class="hero-label">Next tracked launch</div>
-      <div class="hero-mission">${next.rocket} &middot; ${next.mission}</div>
-      <div class="clock" id="hero-clock"></div>
-      <div class="hero-meta">
-        <span>${next.site || ''}</span>
-        <span>${fmtPacific(new Date(next.launch_time_utc))}</span>
+
+      <div class="hero-label">
+        Next tracked launch with a published time
       </div>
+
+      <div class="hero-mission">
+        ${escapeHtml(next.rocket)}
+        &middot;
+        ${escapeHtml(next.mission)}
+      </div>
+
+      <div
+        class="clock"
+        id="hero-clock"
+      ></div>
+
+      <div class="hero-meta">
+        <span>
+          ${escapeHtml(next.site || '')}
+        </span>
+
+        <span>
+          ${escapeHtml(fmtLaunchTime(next))}
+        </span>
+      </div>
+
     </div>
   `;
-  const clockEl = document.getElementById('hero-clock');
+
+  const clockEl =
+    document.getElementById(
+      'hero-clock'
+    );
+
   function tick(){
-    const d = fmtDelta(new Date(next.launch_time_utc) - new Date());
-    if (d.launched){
-      clockEl.innerHTML = `<span class="unit">LIFTOFF WINDOW OPEN</span>`;
+    const delta =
+      fmtDelta(
+        new Date(
+          next.launch_time_utc
+        ) - new Date()
+      );
+
+    if (delta.launched){
+      clockEl.innerHTML =
+        '<span class="unit">LIFTOFF WINDOW OPEN</span>';
+
       return;
     }
+
     clockEl.innerHTML = `
-      <span><span class="unit">${d.days}</span><small>days</small></span>
-      <span><span class="unit">${pad(d.hours)}</span><small>hrs</small></span>
-      <span><span class="unit">${pad(d.mins)}</span><small>min</small></span>
-      <span><span class="unit">${pad(d.secs)}</span><small>sec</small></span>
+      <span>
+        <span class="unit">
+          ${delta.days}
+        </span>
+        <small>days</small>
+      </span>
+
+      <span>
+        <span class="unit">
+          ${pad(delta.hours)}
+        </span>
+        <small>hrs</small>
+      </span>
+
+      <span>
+        <span class="unit">
+          ${pad(delta.mins)}
+        </span>
+        <small>min</small>
+      </span>
+
+      <span>
+        <span class="unit">
+          ${pad(delta.secs)}
+        </span>
+        <small>sec</small>
+      </span>
     `;
   }
+
   tick();
-  setInterval(tick, 1000);
+
+  heroTimer =
+    setInterval(
+      tick,
+      1000
+    );
 }
 
 function renderList(launches){
-  const list = document.getElementById('list');
+  const list =
+    document.getElementById(
+      'list'
+    );
+
   if (!launches.length){
-    list.innerHTML = '<div class="empty">No matching launches found right now</div>';
+    list.innerHTML =
+      '<div class="empty">No matching launches found right now.</div>';
+
     return;
   }
-  list.innerHTML = launches.map(l => {
-    let tminus = '&mdash;';
-    if (l.launch_time_utc){
-      const d = fmtDelta(new Date(l.launch_time_utc) - new Date());
-      tminus = d.launched ? 'Now' : (d.days > 0 ? `T&minus;${d.days}d ${d.hours}h` : `T&minus;${d.hours}h ${d.mins}m`);
-    }
-    return `
-      <div class="card">
-        <div class="t-minus"><b>${tminus}</b>${l.date_text}</div>
-        <div class="card-main">
-          ${statusBadge(l)}
-          <div class="card-title"><span class="card-rocket">${l.rocket}</span> &middot; ${l.mission}</div>
-          <div class="card-detail">${l.site || ''}${l.time_description ? ' — ' + l.time_description : ''}</div>
-        </div>
-      </div>
-    `;
-  }).join('');
+
+  list.innerHTML =
+    launches
+      .map(
+        launch => {
+          let tminus =
+            '&mdash;';
+
+          if (
+            launch.launch_time_utc
+          ){
+            const delta =
+              fmtDelta(
+                new Date(
+                  launch.launch_time_utc
+                ) - new Date()
+              );
+
+            tminus =
+              delta.launched
+                ? 'Now'
+                : (
+                    delta.days > 0
+                      ? `T&minus;${delta.days}d ${delta.hours}h`
+                      : `T&minus;${delta.hours}h ${delta.mins}m`
+                  );
+          }
+
+          const exact =
+            launch.launch_time_utc
+              ? fmtLaunchTime(
+                  launch
+                )
+              : (
+                  launch.time_description
+                  || 'Exact time TBD'
+                );
+
+          return `
+            <div class="card">
+
+              <div class="t-minus">
+                <b>
+                  ${tminus}
+                </b>
+
+                ${escapeHtml(
+                  launch.date_text
+                  || ''
+                )}
+              </div>
+
+              <div class="card-main">
+
+                ${statusBadge(launch)}
+                ${locationBadge(launch)}
+
+                <div class="card-title">
+                  <span class="card-rocket">
+                    ${escapeHtml(
+                      launch.rocket
+                    )}
+                  </span>
+
+                  &middot;
+
+                  ${escapeHtml(
+                    launch.mission
+                  )}
+                </div>
+
+                <div class="card-detail">
+                  ${escapeHtml(
+                    launch.site
+                    || ''
+                  )}
+
+                  ${
+                    exact
+                      ? ' — '
+                        + escapeHtml(
+                            exact
+                          )
+                      : ''
+                  }
+                </div>
+
+              </div>
+            </div>
+          `;
+        }
+      )
+      .join('');
+}
+
+function topicsForPreference(
+  preference
+){
+  if (preference === 'CA'){
+    return [
+      `${BASE_TOPIC}-CA`
+    ];
+  }
+
+  if (preference === 'FL'){
+    return [
+      `${BASE_TOPIC}-FL`
+    ];
+  }
+
+  return [
+    `${BASE_TOPIC}-CA`,
+    `${BASE_TOPIC}-FL`
+  ];
 }
 
 function updatePrefsResult(){
-  const hours = document.getElementById('leadSelect').value;
-  const topic = `${BASE_TOPIC}-${hours}h`;
-  document.getElementById('prefsResult').innerHTML =
-    `In the ntfy app, subscribe to: <strong>${topic}</strong> to get notified ${hours} hours before each launch.`;
+  const select =
+    document.getElementById(
+      'locationSelect'
+    );
+
+  const preference =
+    select.value;
+
+  localStorage.setItem(
+    'watchALaunchLocationPreference',
+    preference
+  );
+
+  const topics =
+    topicsForPreference(
+      preference
+    );
+
+  const label =
+    preference === 'CA'
+      ? 'California'
+      : preference === 'FL'
+      ? 'Florida'
+      : 'California + Florida';
+
+  const topicText =
+    topics
+      .map(
+        topic =>
+          `<strong>${escapeHtml(topic)}</strong>`
+      )
+      .join(' and ');
+
+  const buttons =
+    topics
+      .map(
+        topic =>
+          `<a
+             class="topic-btn"
+             href="https://ntfy.sh/${encodeURIComponent(topic)}"
+             target="_blank"
+             rel="noopener"
+           >
+             Open ${escapeHtml(topic)}
+           </a>`
+      )
+      .join('');
+
+  document
+    .getElementById(
+      'prefsResult'
+    )
+    .innerHTML = `
+      Selected:
+      <strong>
+        ${label}
+      </strong>
+
+      <br>
+
+      Subscribe in ntfy to
+      ${topicText}.
+      You will get 24-hour and 3-hour reminders plus
+      time-change/delay alerts.
+
+      <div class="topic-actions">
+        ${buttons}
+      </div>
+
+      <div class="tiny-note">
+        This choice is saved on this device. Because ntfy handles the
+        actual push subscription, switching this menu does not
+        unsubscribe an old ntfy topic automatically; remove any old
+        topic in ntfy if you no longer want it.
+      </div>
+    `;
 }
-document.getElementById('leadSelect').addEventListener('change', updatePrefsResult);
+
+const locationSelect =
+  document.getElementById(
+    'locationSelect'
+  );
+
+const savedPreference =
+  localStorage.getItem(
+    'watchALaunchLocationPreference'
+  );
+
+if (
+  [
+    'CA',
+    'FL',
+    'BOTH'
+  ].includes(
+    savedPreference
+  )
+){
+  locationSelect.value =
+    savedPreference;
+}
+
+locationSelect.addEventListener(
+  'change',
+  updatePrefsResult
+);
+
 updatePrefsResult();
 
-fetch(FEED_URL, {cache:'no-store'})
-  .then(r => r.json())
-  .then(data => {
-    const launches = (data.launches || []);
-    const upcoming = launches.filter(l => !l.launch_time_utc || new Date(l.launch_time_utc) > new Date());
-    const withTime = upcoming.filter(l => l.launch_time_utc);
-    renderHero(withTime[0]);
-    renderList(upcoming);
-    const meta = document.getElementById('feed-meta');
-    const updated = new Date(data.generated_at_utc);
-    meta.textContent = `Schedule last checked ${fmtPacific(updated)}.`;
-  })
-  .catch(err => {
-    document.getElementById('list').innerHTML =
-      '<div class="empty">Could not load launches.json yet. This appears after your GitHub Action has run at least once — trigger it manually from the Actions tab if it just got set up.</div>';
-    document.getElementById('feed-meta').textContent = '';
-    console.error(err);
-  });
+function localDateKey(date){
+  const year =
+    date.getFullYear();
 
-if ('serviceWorker' in navigator){
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
-  });
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(
+      2,
+      '0'
+    );
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(
+      2,
+      '0'
+    );
+
+  return (
+    `${year}-${month}-${day}`
+  );
+}
+
+function renderCalendar(
+  launches
+){
+  const now =
+    new Date();
+
+  const year =
+    now.getFullYear();
+
+  const month =
+    now.getMonth();
+
+  renderedMonthKey =
+    `${year}-${month}`;
+
+  document
+    .getElementById(
+      'calendarMonth'
+    )
+    .textContent =
+      new Intl.DateTimeFormat(
+        'en-US',
+        {
+          month:'long',
+          year:'numeric'
+        }
+      ).format(now);
+
+  document
+    .getElementById(
+      'calendarToday'
+    )
+    .textContent =
+      `Today: ${
+        new Intl.DateTimeFormat(
+          'en-US',
+          {
+            weekday:'long',
+            month:'short',
+            day:'numeric',
+            year:'numeric'
+          }
+        ).format(now)
+      }`;
+
+  const counts = {};
+
+  launches.forEach(
+    launch => {
+      if (
+        !launch.scheduled_date
+      ){
+        return;
+      }
+
+      counts[
+        launch.scheduled_date
+      ] =
+        (
+          counts[
+            launch.scheduled_date
+          ]
+          || 0
+        ) + 1;
+    }
+  );
+
+  const firstDay =
+    new Date(
+      year,
+      month,
+      1
+    ).getDay();
+
+  const daysInMonth =
+    new Date(
+      year,
+      month + 1,
+      0
+    ).getDate();
+
+  const weekdays = [
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat'
+  ];
+
+  const cells =
+    weekdays.map(
+      day =>
+        `<div class="weekday">${day}</div>`
+    );
+
+  for (
+    let blank = 0;
+    blank < firstDay;
+    blank++
+  ){
+    cells.push(
+      '<div class="day blank" aria-hidden="true"></div>'
+    );
+  }
+
+  const todayKey =
+    localDateKey(
+      now
+    );
+
+  for (
+    let day = 1;
+    day <= daysInMonth;
+    day++
+  ){
+    const key =
+      `${year}-${
+        String(
+          month + 1
+        ).padStart(
+          2,
+          '0'
+        )
+      }-${
+        String(
+          day
+        ).padStart(
+          2,
+          '0'
+        )
+      }`;
+
+    const count =
+      counts[key]
+      || 0;
+
+    const launchMark =
+      count
+        ? `
+            <span
+              class="launch-x"
+              aria-label="${count} predicted launch${count > 1 ? 'es' : ''}"
+            >
+              X
+            </span>
+
+            ${
+              count > 1
+                ? `
+                    <span class="launch-count">
+                      ${count} launches
+                    </span>
+                  `
+                : ''
+            }
+          `
+        : '';
+
+    cells.push(
+      `
+        <div class="day${key === todayKey ? ' today' : ''}">
+          <span class="day-number">
+            ${day}
+          </span>
+
+          ${launchMark}
+        </div>
+      `
+    );
+  }
+
+  document
+    .getElementById(
+      'calendarGrid'
+    )
+    .innerHTML =
+      cells.join('');
+}
+
+function refreshCalendarAtMonthChange(){
+  const now =
+    new Date();
+
+  const key =
+    `${
+      now.getFullYear()
+    }-${
+      now.getMonth()
+    }`;
+
+  if (
+    key !== renderedMonthKey
+  ){
+    renderCalendar(
+      launchFeed
+    );
+  }
+}
+
+setInterval(
+  refreshCalendarAtMonthChange,
+  60000
+);
+
+fetch(
+  FEED_URL,
+  {
+    cache:'no-store'
+  }
+)
+  .then(
+    response => {
+      if (!response.ok){
+        throw new Error(
+          `HTTP ${response.status}`
+        );
+      }
+
+      return response.json();
+    }
+  )
+  .then(
+    data => {
+      launchFeed =
+        data.launches
+        || [];
+
+      const now =
+        new Date();
+
+      const upcoming =
+        launchFeed.filter(
+          launch => {
+            if (
+              launch.launch_time_utc
+            ){
+              return (
+                new Date(
+                  launch.launch_time_utc
+                ) > now
+              );
+            }
+
+            if (
+              launch.scheduled_date
+            ){
+              return (
+                launch.scheduled_date
+                >= localDateKey(now)
+              );
+            }
+
+            return true;
+          }
+        );
+
+      const withTime =
+        upcoming
+          .filter(
+            launch =>
+              launch.launch_time_utc
+          )
+          .sort(
+            (a,b) =>
+              new Date(
+                a.launch_time_utc
+              )
+              -
+              new Date(
+                b.launch_time_utc
+              )
+          );
+
+      renderHero(
+        withTime[0]
+      );
+
+      renderList(
+        upcoming
+      );
+
+      renderCalendar(
+        launchFeed
+      );
+
+      const meta =
+        document.getElementById(
+          'feed-meta'
+        );
+
+      if (
+        data.generated_at_utc
+      ){
+        meta.textContent =
+          `Schedule last checked ${
+            fmtPacific(
+              new Date(
+                data.generated_at_utc
+              )
+            )
+          }. The checker runs about every 15 minutes.`;
+      }
+      else{
+        meta.textContent =
+          'Schedule has not been checked yet.';
+      }
+    }
+  )
+  .catch(
+    error => {
+      document
+        .getElementById(
+          'list'
+        )
+        .innerHTML =
+          '<div class="empty">Could not load launches.json yet. Trigger the GitHub Action manually once if this was just set up.</div>';
+
+      document
+        .getElementById(
+          'feed-meta'
+        )
+        .textContent =
+          '';
+
+      renderCalendar([]);
+
+      console.error(
+        error
+      );
+    }
+  );
+
+if (
+  'serviceWorker'
+  in navigator
+){
+  window.addEventListener(
+    'load',
+    () =>
+      navigator
+        .serviceWorker
+        .register(
+          'sw.js'
+        )
+        .catch(
+          () => {}
+        )
+  );
 }
 </script>
+
 </body>
 </html>
