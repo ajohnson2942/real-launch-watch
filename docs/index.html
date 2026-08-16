@@ -47,10 +47,7 @@
     --net:#FFC857;
     --tbd:#a89fc9;
 
-    /* California = bright yellow */
     --ca:#FFE600;
-
-    /* Florida = bright light blue */
     --fl:#55D8FF;
   }
 
@@ -216,7 +213,7 @@
     font-size:.82rem;
     line-height:1.5;
     max-width:56ch;
-    margin:.7rem 0 0;
+    margin:1.1rem 0 0;
   }
 
   .install-help strong{
@@ -753,14 +750,6 @@
     Shows when the next SpaceX launch will occur and sends you notifications before they happen! It automatically updates every hour from public launch schedule data. Completely free and no hassle :D
   </p>
 
-  <p class="install-help">
-    <strong>iPhone:</strong>
-    To add this as an app to your iPhone, go to Safari and click the three dots on the bottom right, then click Share and Add to Home Screen.
-    <br><br>
-    <strong>Android:</strong>
-    To add this as an app to your Android phone, open this page in Chrome, tap the three-dot menu, then tap Add to Home screen or Install app.
-  </p>
-
 </header>
 
 <div
@@ -879,6 +868,14 @@
     Choose California, Florida, or both above, then subscribe to the topic or topics shown. Make sure notifications are enabled for NTFY.
   </div>
 
+  <p class="install-help">
+    <strong>iPhone:</strong>
+    To add this as an app to your iPhone, go to Safari and click the three dots on the bottom right, then click Share and Add to Home Screen.
+    <br><br>
+    <strong>Android:</strong>
+    To add this as an app to your Android phone, open this page in Chrome, tap the three-dot menu, then tap Add to Home screen or Install app.
+  </p>
+
 </footer>
 
 <div
@@ -918,7 +915,7 @@ const CHANGELOG = [
       "v1.0.1",
 
     notes:
-      "Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches. Also added a written list of launch dates below the calendar. Added instructions for adding the website as an app to users' phones."
+      "Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
   }
 ];
 
@@ -1995,10 +1992,6 @@ function refreshLocalDisplay(){
       now.getMonth()
     }`;
 
-  /*
-    Automatically move the calendar to
-    the new month when the month changes.
-  */
   if (
     calendarKey
     !== renderedMonthKey
@@ -2008,19 +2001,8 @@ function refreshLocalDisplay(){
     );
   }
 
-  /*
-    Recheck Upcoming every minute.
-
-    Once an exact launch time passes,
-    that launch disappears from Upcoming
-    without requiring another GitHub Action.
-  */
   renderCurrentMonthUpcoming();
 
-  /*
-    If the current Next Liftoff launch has
-    passed, advance to the next launch.
-  */
   const nextLaunch =
     getNextUpcomingLaunch();
 
@@ -2057,10 +2039,6 @@ setInterval(
 
 function loadFeed(){
 
-  /*
-    The timestamp query prevents an old
-    cached launches.json from being used.
-  */
   fetch(
     `${FEED_URL}?t=${Date.now()}`,
     {
@@ -2154,20 +2132,9 @@ function loadFeed(){
 }
 
 
-/*
-  Load immediately when the app opens.
-*/
 loadFeed();
 
 
-/*
-  Reload launches.json once per hour if
-  somebody leaves the app open.
-
-  This does NOT create another GitHub
-  Actions run and does not cost additional
-  GitHub Actions minutes.
-*/
 setInterval(
   loadFeed,
   60 * 60 * 1000
