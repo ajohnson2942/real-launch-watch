@@ -34,6 +34,7 @@ ROOT = Path(__file__).parent
 CONFIG_PATH = ROOT / "config.json"
 STATE_PATH = ROOT / "data" / "state.json"
 PUBLIC_FEED_PATH = ROOT / "docs" / "launches.json"
+
 DISPLAY_TIMEZONE = ZoneInfo("America/Los_Angeles")
 
 # Maps the trailing part of a launch site description (e.g. "...,
@@ -56,6 +57,7 @@ def location_tag(site: str) -> str:
         return ""
     last_part = site.split(",")[-1].strip()
     return US_STATE_ABBREV.get(last_part.lower(), last_part)
+
 
 def load_json(path: Path, default):
     if not path.exists():
@@ -98,20 +100,30 @@ def send_ntfy(topic: str, title: str, message: str, priority: str = "default"):
 
 
 def format_time_local_hint(launch_time_utc: str) -> str:
-    """Return the launch time converted to Pacific time, formatted plainly,
-    e.g. 'Wed Aug 19, 7:00 PM PDT'."""
+    """Return the launch time converted to DISPLAY_TIMEZONE, formatted
+    plainly, e.g. 'Wed Aug 19, 7:00 PM PDT'."""
     t = dt.datetime.fromisoformat(launch_time_utc)
     local = t.astimezone(DISPLAY_TIMEZONE)
     return local.strftime("%a %b %d, %-I:%M %p %Z")
 
+
 def main():
     config = load_json(CONFIG_PATH, {})
+
+    # ntfy_topic is intentionally NOT read from config.json. config.json
+    # lives in the repo and (if the repo is public) is visible to anyone,
+    # which would defeat the point of it being a hard-to-guess private
+    # channel name. Instead it's read from the NTFY_TOPIC environment
+    # variable, which in GitHub Actions comes from an encrypted repo
+    # Secret (Settings -> Secrets and variables -> Actions) that nobody
+    # else can view. For local testing, you can instead set it in your
+    # own shell: export NTFY_TOPIC=your-topic-name
     ntfy_topic = os.environ.get("NTFY_TOPIC") or config.get("ntfy_topic")
     if not ntfy_topic or ntfy_topic == "CHANGE-ME-TO-SOMETHING-UNIQUE":
         log.error(
             "No ntfy topic configured. Add a repo Secret named NTFY_TOPIC "
             "(Settings -> Secrets and variables -> Actions -> New repository "
-            "secret) with your chosen topic name."
+            "secret) with your chosen topic name. See README Step 3."
         )
         sys.exit(1)
 
@@ -157,28 +169,27 @@ def main():
         )
 
         if is_new and notify_on_new and launch.launch_time_utc:
+            loc = location_tag(launch.site)
             send_ntfy(
                 ntfy_topic,
-                title=f"New launch on schedule: {launch.mission}",
+                title=f"New launch on schedule: {launch.mission}" + (f" ({loc})" if loc else ""),
                 message=(
                     f"{launch.rocket} • {launch.mission}\n"
                     f"{format_time_local_hint(launch.launch_time_utc)}\n"
                     f"Site: {launch.site}"
                 ),
-                tags="rocket,new",
             )
 
         if time_changed and notify_on_time_change:
+            loc = location_tag(launch.site)
             send_ntfy(
                 ntfy_topic,
-                loc = location_tag(launch.site)
-                title=f"New launch on schedule: {launch.mission}" + (f" ({loc})" if loc else ""),
+                title=f"Launch time changed: {launch.mission}" + (f" ({loc})" if loc else ""),
                 message=(
                     f"{launch.rocket} • {launch.mission}\n"
                     f"New time: {format_time_local_hint(launch.launch_time_utc)}\n"
                     f"(was: {format_time_local_hint(prev_launch_time)})"
                 ),
-                tags="rocket,warning",
             )
             # A time change resets which lead-time reminders are still valid,
             # so re-arm any that are still in the future relative to the new time.
@@ -196,17 +207,16 @@ def main():
                         lead_desc = (
                             f"{lead_h} hours" if lead_h < 48 else f"{lead_h // 24} days"
                         )
+                        loc = location_tag(launch.site)
                         send_ntfy(
                             ntfy_topic,
-                            loc = location_tag(launch.site)
-                            title=f"New launch on schedule: {launch.mission}" + (f" ({loc})" if loc else ""),
+                            title=f"Launching in ~{lead_desc}: {launch.mission}" + (f" ({loc})" if loc else ""),
                             message=(
                                 f"{launch.rocket} • {launch.mission}\n"
                                 f"{format_time_local_hint(launch.launch_time_utc)}\n"
                                 f"Site: {launch.site}"
                             ),
                             priority="high" if lead_h <= 3 else "default",
-                            tags="rocket,alarm_clock",
                         )
                         notified_now.add(lead_h)
 
