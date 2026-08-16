@@ -20,32 +20,12 @@
   content="#151B54"
 >
 
-<link
-  rel="manifest"
-  href="manifest.json"
->
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
 
-<link
-  rel="icon"
-  href="icon.svg"
-  type="image/svg+xml"
->
-
-<link
-  rel="apple-touch-icon"
-  href="icon-192.png"
->
-
-<link
-  rel="preconnect"
-  href="https://fonts.googleapis.com"
->
-
-<link
-  rel="preconnect"
-  href="https://fonts.gstatic.com"
-  crossorigin
->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link
   href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
@@ -67,8 +47,10 @@
     --net:#FFC857;
     --tbd:#a89fc9;
 
-    /* STATE COLORS */
+    /* California = bright yellow */
     --ca:#FFE600;
+
+    /* Florida = bright light blue */
     --fl:#55D8FF;
   }
 
@@ -83,14 +65,8 @@
   }
 
   body{
-    font-family:
-      'Work Sans',
-      system-ui,
-      sans-serif;
-
-    -webkit-font-smoothing:
-      antialiased;
-
+    font-family:'Work Sans',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
     padding-bottom:5rem;
     color:var(--text);
 
@@ -148,8 +124,7 @@
         transparent 40%
       );
 
-    background-repeat:
-      no-repeat;
+    background-repeat:no-repeat;
   }
 
   header,
@@ -163,20 +138,13 @@
   }
 
   header{
-    padding:
-      2.25rem
-      1.5rem
-      .5rem;
-
+    padding:2.25rem 1.5rem .5rem;
     max-width:760px;
     margin:0 auto;
   }
 
   .eyebrow{
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.7rem;
     letter-spacing:.16em;
     text-transform:uppercase;
@@ -198,11 +166,7 @@
       0 0 8px 2px
       rgba(255,138,61,.7);
 
-    animation:
-      pulse
-      2s
-      ease-in-out
-      infinite;
+    animation:pulse 2s ease-in-out infinite;
   }
 
   @keyframes pulse{
@@ -217,19 +181,9 @@
   }
 
   h1.app-title{
-    font-family:
-      'Anton',
-      sans-serif;
-
+    font-family:'Anton',sans-serif;
     font-weight:400;
-
-    font-size:
-      clamp(
-        3.2rem,
-        13vw,
-        5.2rem
-      );
-
+    font-size:clamp(3.2rem,13vw,5.2rem);
     text-transform:uppercase;
     letter-spacing:.01em;
     line-height:.95;
@@ -238,19 +192,9 @@
   }
 
   h2.liftoff-subtitle{
-    font-family:
-      'Orbitron',
-      sans-serif;
-
+    font-family:'Orbitron',sans-serif;
     font-weight:600;
-
-    font-size:
-      clamp(
-        1rem,
-        4vw,
-        1.35rem
-      );
-
+    font-size:clamp(1rem,4vw,1.35rem);
     text-transform:uppercase;
     letter-spacing:.14em;
     color:#ffb37a;
@@ -258,15 +202,25 @@
   }
 
   .sub{
-    font-family:
-      'Lora',
-      serif;
-
+    font-family:'Lora',serif;
     color:var(--text);
     font-size:1.02rem;
     max-width:56ch;
     line-height:1.6;
     margin:0 0 .5rem;
+  }
+
+  .install-help{
+    font-family:'Lora',serif;
+    color:var(--muted);
+    font-size:.82rem;
+    line-height:1.5;
+    max-width:56ch;
+    margin:.7rem 0 0;
+  }
+
+  .install-help strong{
+    color:var(--text);
   }
 
   .hero,
@@ -292,19 +246,12 @@
         var(--panel)
       );
 
-    border:
-      1px solid
-      var(--hairline);
-
+    border:1px solid var(--hairline);
     border-radius:14px;
   }
 
   .hero-card{
-    padding:
-      1.5rem
-      1.5rem
-      1.3rem;
-
+    padding:1.5rem 1.5rem 1.3rem;
     position:relative;
     overflow:hidden;
   }
@@ -326,10 +273,7 @@
   }
 
   .hero-label{
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.7rem;
     letter-spacing:.12em;
     text-transform:uppercase;
@@ -337,10 +281,7 @@
   }
 
   .hero-mission{
-    font-family:
-      'Barlow Condensed',
-      sans-serif;
-
+    font-family:'Barlow Condensed',sans-serif;
     font-weight:600;
     font-size:1.5rem;
     margin:.2rem 0 .9rem;
@@ -348,17 +289,8 @@
   }
 
   .clock{
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
-    font-size:
-      clamp(
-        1.6rem,
-        8vw,
-        2.6rem
-      );
-
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(1.6rem,8vw,2.6rem);
     font-weight:700;
     letter-spacing:.02em;
     color:var(--text);
@@ -372,10 +304,7 @@
   }
 
   .clock small{
-    font-family:
-      'Work Sans',
-      sans-serif;
-
+    font-family:'Work Sans',sans-serif;
     font-weight:500;
     font-size:.32em;
     color:var(--muted);
@@ -390,27 +319,18 @@
     display:flex;
     gap:1.2rem;
     flex-wrap:wrap;
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.78rem;
     color:var(--muted);
   }
 
   .prefs-card,
   .calendar-card{
-    padding:
-      1.3rem
-      1.5rem;
+    padding:1.3rem 1.5rem;
   }
 
   .section-title{
-    font-family:
-      'Barlow Condensed',
-      sans-serif;
-
+    font-family:'Barlow Condensed',sans-serif;
     font-weight:600;
     text-transform:uppercase;
     letter-spacing:.06em;
@@ -418,17 +338,11 @@
     color:var(--muted);
     margin:0 0 .8rem;
     padding-bottom:.5rem;
-
-    border-bottom:
-      1px solid
-      var(--hairline);
+    border-bottom:1px solid var(--hairline);
   }
 
   .prefs-help{
-    font-family:
-      'Lora',
-      serif;
-
+    font-family:'Lora',serif;
     font-size:.92rem;
     color:var(--text);
     margin:0 0 .8rem;
@@ -436,19 +350,12 @@
   }
 
   select.location-select{
-    font-family:
-      'Work Sans',
-      sans-serif;
-
+    font-family:'Work Sans',sans-serif;
     font-size:1rem;
     font-weight:500;
     color:var(--text);
     background:var(--bg-top);
-
-    border:
-      1px solid
-      var(--hairline);
-
+    border:1px solid var(--hairline);
     border-radius:8px;
 
     padding:
@@ -465,28 +372,17 @@
     background-image:
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1L7 7L13 1' stroke='%23C9C3E0' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
 
-    background-repeat:
-      no-repeat;
-
-    background-position:
-      right .9rem center;
+    background-repeat:no-repeat;
+    background-position:right .9rem center;
   }
 
   .prefs-result{
     margin-top:.9rem;
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.82rem;
     color:var(--text);
     background:rgba(0,0,0,.2);
-
-    border:
-      1px solid
-      var(--hairline);
-
+    border:1px solid var(--hairline);
     border-radius:8px;
     padding:.8rem .9rem;
     line-height:1.65;
@@ -496,38 +392,8 @@
     color:#ffb37a;
   }
 
-  .topic-actions{
-    display:flex;
-    gap:.6rem;
-    flex-wrap:wrap;
-    margin-top:.75rem;
-  }
-
-  .topic-btn{
-    display:inline-block;
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
-    font-size:.72rem;
-    color:var(--text);
-    background:var(--accent);
-    padding:.48rem .75rem;
-    border-radius:7px;
-    text-decoration:none;
-    font-weight:700;
-
-    border:
-      1px solid
-      var(--hairline);
-  }
-
   .tiny-note{
-    font-family:
-      'Lora',
-      serif;
-
+    font-family:'Lora',serif;
     color:var(--muted);
     font-size:.78rem;
     margin-top:.7rem;
@@ -543,20 +409,14 @@
   }
 
   .calendar-month{
-    font-family:
-      'Orbitron',
-      sans-serif;
-
+    font-family:'Orbitron',sans-serif;
     font-size:1.05rem;
     letter-spacing:.05em;
     text-transform:uppercase;
   }
 
   .calendar-today{
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.68rem;
     color:var(--muted);
     text-align:right;
@@ -564,21 +424,12 @@
 
   .calendar-grid{
     display:grid;
-
-    grid-template-columns:
-      repeat(
-        7,
-        1fr
-      );
-
+    grid-template-columns:repeat(7,1fr);
     gap:5px;
   }
 
   .weekday{
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.58rem;
     color:var(--muted);
     text-align:center;
@@ -589,19 +440,11 @@
   .day{
     position:relative;
     min-height:56px;
-
-    border:
-      1px solid
-      rgba(201,195,224,.18);
-
+    border:1px solid rgba(201,195,224,.18);
     border-radius:8px;
     padding:.38rem;
     background:rgba(0,0,0,.08);
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.72rem;
     overflow:hidden;
   }
@@ -629,13 +472,7 @@
     position:absolute;
     left:50%;
     top:54%;
-
-    transform:
-      translate(
-        -50%,
-        -50%
-      );
-
+    transform:translate(-50%,-50%);
     display:flex;
     gap:3px;
     align-items:center;
@@ -645,15 +482,11 @@
   }
 
   .launch-x{
-    font-family:
-      'Anton',
-      sans-serif;
-
+    font-family:'Anton',sans-serif;
     font-size:1.9rem;
     line-height:1;
   }
 
-  /* CALIFORNIA = BRIGHT YELLOW */
   .launch-x.ca{
     color:var(--ca);
 
@@ -662,7 +495,6 @@
       rgba(255,230,0,.25);
   }
 
-  /* FLORIDA = BRIGHT LIGHT BLUE */
   .launch-x.fl{
     color:var(--fl);
 
@@ -675,21 +507,14 @@
     position:absolute;
     right:4px;
     bottom:3px;
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.5rem;
     color:var(--muted);
     z-index:3;
   }
 
   .calendar-legend{
-    font-family:
-      'Lora',
-      serif;
-
+    font-family:'Lora',serif;
     color:var(--muted);
     font-size:.78rem;
     line-height:1.5;
@@ -714,16 +539,10 @@
 
   .card{
     display:grid;
-
-    grid-template-columns:
-      64px 1fr;
-
+    grid-template-columns:64px 1fr;
     gap:.9rem;
     padding:1rem 0;
-
-    border-bottom:
-      1px solid
-      var(--hairline);
+    border-bottom:1px solid var(--hairline);
   }
 
   .card:last-child{
@@ -731,10 +550,7 @@
   }
 
   .t-minus{
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.72rem;
     color:var(--muted);
     text-align:right;
@@ -754,26 +570,14 @@
 
   .badge{
     display:inline-block;
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.62rem;
     letter-spacing:.08em;
     text-transform:uppercase;
     padding:.15rem .45rem;
     border-radius:4px;
-
-    border:
-      1px solid
-      currentColor;
-
-    margin:
-      0
-      .25rem
-      .35rem
-      0;
+    border:1px solid currentColor;
+    margin:0 .25rem .35rem 0;
   }
 
   .badge.confirmed{
@@ -788,12 +592,10 @@
     color:var(--tbd);
   }
 
-  /* CA BADGE = BRIGHT YELLOW */
   .badge.ca{
     color:var(--ca);
   }
 
-  /* FL BADGE = BRIGHT LIGHT BLUE */
   .badge.fl{
     color:var(--fl);
   }
@@ -810,20 +612,14 @@
   }
 
   .card-detail{
-    font-family:
-      'Lora',
-      serif;
-
+    font-family:'Lora',serif;
     color:var(--muted);
     font-size:.85rem;
     line-height:1.5;
   }
 
   .empty{
-    font-family:
-      'Lora',
-      serif;
-
+    font-family:'Lora',serif;
     color:var(--muted);
     font-size:.9rem;
     padding:1rem 0;
@@ -833,39 +629,15 @@
     max-width:760px;
     margin:2.5rem auto 0;
     padding:1.5rem;
-
-    font-family:
-      'Lora',
-      serif;
-
+    font-family:'Lora',serif;
     color:var(--text);
     font-size:.88rem;
     line-height:1.65;
-
-    border-top:
-      1px solid
-      var(--hairline);
+    border-top:1px solid var(--hairline);
   }
 
   footer a{
     color:#ffb37a;
-  }
-
-  .setup-btn{
-    display:inline-block;
-    margin-top:.8rem;
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
-    font-size:.78rem;
-    color:var(--text);
-    background:var(--accent);
-    padding:.55rem 1rem;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:700;
   }
 
   .version-badge{
@@ -873,26 +645,11 @@
     bottom:.9rem;
     right:.9rem;
     z-index:20;
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.7rem;
     color:var(--muted);
-
-    background:
-      rgba(
-        18,
-        26,
-        48,
-        .85
-      );
-
-    border:
-      1px solid
-      var(--hairline);
-
+    background:rgba(18,26,48,.85);
+    border:1px solid var(--hairline);
     border-radius:6px;
     padding:.35rem .6rem;
     cursor:pointer;
@@ -906,18 +663,10 @@
     right:0;
     width:280px;
     background:var(--panel);
-
-    border:
-      1px solid
-      var(--hairline);
-
+    border:1px solid var(--hairline);
     border-radius:10px;
     padding:.8rem .9rem;
-
-    font-family:
-      'Work Sans',
-      sans-serif;
-
+    font-family:'Work Sans',sans-serif;
     font-size:.75rem;
     color:var(--text);
     line-height:1.5;
@@ -927,18 +676,13 @@
       rgba(0,0,0,.4);
   }
 
-  .version-badge:hover
-  .version-popup,
-  .version-badge.active
-  .version-popup{
+  .version-badge:hover .version-popup,
+  .version-badge.active .version-popup{
     display:block;
   }
 
   .version-popup-title{
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
+    font-family:'JetBrains Mono',monospace;
     font-size:.68rem;
     text-transform:uppercase;
     letter-spacing:.08em;
@@ -959,9 +703,7 @@
     margin-bottom:0;
   }
 
-  @media(
-    max-width:480px
-  ){
+  @media(max-width:480px){
     .calendar-card{
       padding:1rem;
     }
@@ -980,8 +722,7 @@
     }
 
     .card{
-      grid-template-columns:
-        58px 1fr;
+      grid-template-columns:58px 1fr;
     }
   }
 </style>
@@ -1010,6 +751,14 @@
 
   <p class="sub">
     Shows when the next SpaceX launch will occur and sends you notifications before they happen! It automatically updates every hour from public launch schedule data. Completely free and no hassle :D
+  </p>
+
+  <p class="install-help">
+    <strong>iPhone:</strong>
+    To add this as an app to your iPhone, go to Safari and click the three dots on the bottom right, then click Share and Add to Home Screen.
+    <br><br>
+    <strong>Android:</strong>
+    To add this as an app to your Android phone, open this page in Chrome, tap the three-dot menu, then tap Add to Home screen or Install app.
   </p>
 
 </header>
@@ -1090,7 +839,9 @@
     ></div>
 
     <p class="calendar-legend">
-      <span class="ca-text">Yellow X</span> = at least one tracked launch is currently scheduled or predicted for that date in California. <span class="fl-text">Light Blue X</span> = at least one tracked launch is currently scheduled or predicted for that date in Florida. The schedule can still move, and the Xs will move on a later refresh if it does.
+      <span class="ca-text">Yellow X</span> = at least one tracked launch is currently scheduled or predicted for that date in California.
+      <span class="fl-text">Light Blue X</span> = at least one tracked launch is currently scheduled or predicted for that date in Florida.
+      The schedule can still move, and the Xs will move on a later refresh if it does.
     </p>
 
   </div>
@@ -1125,10 +876,8 @@
     >
       ntfy.sh
     </a>.
-    Choose California, Florida, or both above, then subscribe to the topic or topics shown. Make sure notifications are enabled for ntfy.
+    Choose California, Florida, or both above, then subscribe to the topic or topics shown. Make sure notifications are enabled for NTFY.
   </div>
-
- 
 
 </footer>
 
@@ -1162,7 +911,6 @@ const BASE_TOPIC =
 let launchFeed = [];
 let heroTimer = null;
 let renderedMonthKey = '';
-let currentlyRenderedListMonthKey = '';
 
 const CHANGELOG = [
   {
@@ -1170,14 +918,12 @@ const CHANGELOG = [
       "v1.0.1",
 
     notes:
-      "Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches. Made the California Color Scheme Yellow and the Florida Color Scheme Blue" 
+      "Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
   }
 ];
 
 
-function escapeHtml(
-  value
-){
+function escapeHtml(value){
   return String(
     value ?? ''
   ).replace(
@@ -1194,9 +940,9 @@ function escapeHtml(
 
 
 function renderChangelog(){
+
   const list =
-    document
-    .getElementById(
+    document.getElementById(
       'versionList'
     );
 
@@ -1207,6 +953,7 @@ function renderChangelog(){
         `<li><strong>${escapeHtml(entry.version)}:</strong> ${escapeHtml(entry.notes)}</li>`
     )
     .join('');
+
 }
 
 renderChangelog();
@@ -1216,6 +963,7 @@ const versionBadge =
   document.getElementById(
     'versionBadge'
   );
+
 
 versionBadge.addEventListener(
   'click',
@@ -1227,13 +975,13 @@ versionBadge.addEventListener(
     )
 );
 
+
 document.addEventListener(
   'click',
   event => {
 
     if (
-      !versionBadge
-      .contains(
+      !versionBadge.contains(
         event.target
       )
     ){
@@ -1248,9 +996,8 @@ document.addEventListener(
 );
 
 
-function fmtDelta(
-  ms
-){
+function fmtDelta(ms){
+
   if (
     ms <= 0
   ){
@@ -1267,25 +1014,18 @@ function fmtDelta(
   return {
     days:
       Math.floor(
-        seconds
-        / 86400
+        seconds / 86400
       ),
 
     hours:
       Math.floor(
-        (
-          seconds
-          % 86400
-        )
+        (seconds % 86400)
         / 3600
       ),
 
     mins:
       Math.floor(
-        (
-          seconds
-          % 3600
-        )
+        (seconds % 3600)
         / 60
       ),
 
@@ -1294,35 +1034,37 @@ function fmtDelta(
 
     launched:false
   };
+
 }
 
 
-function pad(
-  number
-){
+function pad(number){
+
   return number
     .toString()
     .padStart(
       2,
       '0'
     );
+
 }
 
 
 function locationTimeZone(
   locationCode
 ){
+
   return (
     locationCode === 'FL'
       ? 'America/New_York'
       : 'America/Los_Angeles'
   );
+
 }
 
 
-function fmtPacific(
-  date
-){
+function fmtPacific(date){
+
   return new Intl.DateTimeFormat(
     'en-US',
     {
@@ -1350,19 +1092,19 @@ function fmtPacific(
   ).format(
     date
   );
+
 }
 
 
 function fmtLaunchTime(
   launch
 ){
+
   if (
-    !launch
-    .launch_time_utc
+    !launch.launch_time_utc
   ){
     return (
-      launch
-      .time_description
+      launch.time_description
       || 'Exact time TBD'
     );
   }
@@ -1372,8 +1114,7 @@ function fmtLaunchTime(
     {
       timeZone:
         locationTimeZone(
-          launch
-          .location_code
+          launch.location_code
         ),
 
       weekday:
@@ -1396,19 +1137,19 @@ function fmtLaunchTime(
     }
   ).format(
     new Date(
-      launch
-      .launch_time_utc
+      launch.launch_time_utc
     )
   );
+
 }
 
 
 function statusBadge(
   launch
 ){
+
   if (
-    !launch
-    .launch_time_utc
+    !launch.launch_time_utc
   ){
     return (
       '<span class="badge tbd">TBD time</span>'
@@ -1416,8 +1157,7 @@ function statusBadge(
   }
 
   if (
-    launch
-    .is_net
+    launch.is_net
   ){
     return (
       '<span class="badge net">NET</span>'
@@ -1427,15 +1167,16 @@ function statusBadge(
   return (
     '<span class="badge confirmed">Confirmed</span>'
   );
+
 }
 
 
 function locationBadge(
   launch
 ){
+
   if (
-    launch
-    .location_code
+    launch.location_code
     === 'CA'
   ){
     return (
@@ -1444,8 +1185,7 @@ function locationBadge(
   }
 
   if (
-    launch
-    .location_code
+    launch.location_code
     === 'FL'
   ){
     return (
@@ -1454,15 +1194,42 @@ function locationBadge(
   }
 
   return '';
+
 }
 
 
-function renderHero(
-  next
-){
+function getNextUpcomingLaunch(){
+
+  const now =
+    new Date();
+
+  return launchFeed
+    .filter(
+      launch =>
+        launch.launch_time_utc
+        &&
+        new Date(
+          launch.launch_time_utc
+        ) > now
+    )
+    .sort(
+      (a,b) =>
+        new Date(
+          a.launch_time_utc
+        )
+        -
+        new Date(
+          b.launch_time_utc
+        )
+    )[0];
+
+}
+
+
+function renderHero(next){
+
   const hero =
-    document
-    .getElementById(
+    document.getElementById(
       'hero'
     );
 
@@ -1519,8 +1286,7 @@ function renderHero(
   `;
 
   const clockEl =
-    document
-    .getElementById(
+    document.getElementById(
       'hero-clock'
     );
 
@@ -1529,8 +1295,7 @@ function renderHero(
     const delta =
       fmtDelta(
         new Date(
-          next
-          .launch_time_utc
+          next.launch_time_utc
         )
         -
         new Date()
@@ -1548,53 +1313,35 @@ function renderHero(
     clockEl.innerHTML = `
 
       <span>
-
         <span class="unit">
           ${delta.days}
         </span>
-
-        <small>
-          days
-        </small>
-
+        <small>days</small>
       </span>
 
       <span>
-
         <span class="unit">
           ${pad(delta.hours)}
         </span>
-
-        <small>
-          hrs
-        </small>
-
+        <small>hrs</small>
       </span>
 
       <span>
-
         <span class="unit">
           ${pad(delta.mins)}
         </span>
-
-        <small>
-          min
-        </small>
-
+        <small>min</small>
       </span>
 
       <span>
-
         <span class="unit">
           ${pad(delta.secs)}
         </span>
-
-        <small>
-          sec
-        </small>
-
+        <small>sec</small>
       </span>
+
     `;
+
   }
 
   tick();
@@ -1604,15 +1351,120 @@ function renderHero(
       tick,
       1000
     );
+
+}
+
+
+function localDateKey(date){
+
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(
+      2,
+      '0'
+    );
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(
+      2,
+      '0'
+    );
+
+  return (
+    `${year}-${month}-${day}`
+  );
+
+}
+
+
+function currentMonthKey(){
+
+  const now =
+    new Date();
+
+  return (
+    `${now.getFullYear()}-${
+      String(
+        now.getMonth() + 1
+      ).padStart(
+        2,
+        '0'
+      )
+    }`
+  );
+
+}
+
+
+function launchIsInCurrentMonth(
+  launch
+){
+
+  if (
+    !launch.scheduled_date
+  ){
+    return false;
+  }
+
+  return (
+    launch.scheduled_date
+    .slice(
+      0,
+      7
+    )
+    ===
+    currentMonthKey()
+  );
+
+}
+
+
+function launchIsStillUpcoming(
+  launch
+){
+
+  const now =
+    new Date();
+
+  if (
+    launch.launch_time_utc
+  ){
+    return (
+      new Date(
+        launch.launch_time_utc
+      ) > now
+    );
+  }
+
+  if (
+    launch.scheduled_date
+  ){
+    return (
+      launch.scheduled_date
+      >=
+      localDateKey(
+        now
+      )
+    );
+  }
+
+  return false;
+
 }
 
 
 function renderList(
   launches
 ){
+
   const list =
-    document
-    .getElementById(
+    document.getElementById(
       'list'
     );
 
@@ -1634,14 +1486,13 @@ function renderList(
           '&mdash;';
 
         if (
-          launch
-          .launch_time_utc
+          launch.launch_time_utc
         ){
+
           const delta =
             fmtDelta(
               new Date(
-                launch
-                .launch_time_utc
+                launch.launch_time_utc
               )
               -
               new Date()
@@ -1655,9 +1506,11 @@ function renderList(
                     ? `T&minus;${delta.days}d ${delta.hours}h`
                     : `T&minus;${delta.hours}h ${delta.mins}m`
                 );
+
         }
 
         return `
+
           <div class="card">
 
             <div class="t-minus">
@@ -1667,8 +1520,7 @@ function renderList(
               </b>
 
               ${escapeHtml(
-                launch
-                .date_text
+                launch.date_text
                 || ''
               )}
 
@@ -1706,8 +1558,7 @@ function renderList(
                   launch.time_description
                     ? ' — '
                       + escapeHtml(
-                          launch
-                          .time_description
+                          launch.time_description
                         )
                     : ''
                 }
@@ -1717,19 +1568,77 @@ function renderList(
             </div>
 
           </div>
+
         `;
+
       }
     )
     .join('');
+
+}
+
+
+function renderCurrentMonthUpcoming(){
+
+  const now =
+    new Date();
+
+  const launches =
+    launchFeed
+    .filter(
+      launch =>
+        launchIsInCurrentMonth(
+          launch
+        )
+    )
+    .filter(
+      launch =>
+        launchIsStillUpcoming(
+          launch
+        )
+    )
+    .sort(
+      (a,b) =>
+        (
+          a.launch_time_utc
+          || a.scheduled_date
+          || ''
+        )
+        .localeCompare(
+          b.launch_time_utc
+          || b.scheduled_date
+          || ''
+        )
+    );
+
+  const monthName =
+    new Intl.DateTimeFormat(
+      'en-US',
+      {
+        month:'long'
+      }
+    ).format(
+      now
+    );
+
+  document.getElementById(
+    'upcomingTitle'
+  ).textContent =
+    `Upcoming — ${monthName}`;
+
+  renderList(
+    launches
+  );
+
 }
 
 
 function topicsForPreference(
   preference
 ){
+
   if (
-    preference
-    === 'CA'
+    preference === 'CA'
   ){
     return [
       `${BASE_TOPIC}-CA`
@@ -1737,8 +1646,7 @@ function topicsForPreference(
   }
 
   if (
-    preference
-    === 'FL'
+    preference === 'FL'
   ){
     return [
       `${BASE_TOPIC}-FL`
@@ -1749,14 +1657,14 @@ function topicsForPreference(
     `${BASE_TOPIC}-CA`,
     `${BASE_TOPIC}-FL`
   ];
+
 }
 
 
 function updatePrefsResult(){
 
   const select =
-    document
-    .getElementById(
+    document.getElementById(
       'locationSelect'
     );
 
@@ -1777,19 +1685,10 @@ function updatePrefsResult(){
 
   if (
     preference === 'CA'
-  ){
-    instructions = `
-      Go to the NTFY app on your phone and tap
-      <strong>Add new subscription</strong>
-      on the top right. Then, type in
-      <strong>${escapeHtml(topics[0])}</strong>,
-      and subscribe to it.
-    `;
-  }
-
-  else if (
+    ||
     preference === 'FL'
   ){
+
     instructions = `
       Go to the NTFY app on your phone and tap
       <strong>Add new subscription</strong>
@@ -1797,9 +1696,10 @@ function updatePrefsResult(){
       <strong>${escapeHtml(topics[0])}</strong>,
       and subscribe to it.
     `;
-  }
 
+  }
   else{
+
     instructions = `
       Go to the NTFY app on your phone and tap
       <strong>Add new subscription</strong>
@@ -1808,31 +1708,31 @@ function updatePrefsResult(){
       and
       <strong>${escapeHtml(topics[1])}</strong>.
     `;
+
   }
 
-  document
-    .getElementById(
-      'prefsResult'
-    )
-    .innerHTML = `
-      ${instructions}
+  document.getElementById(
+    'prefsResult'
+  ).innerHTML = `
 
-      <div class="tiny-note">
-        This menu remembers your choice on this device. If you change which state's launches you want, remove any old subscription in NTFY that you no longer want.
-      </div>
-    `;
+    ${instructions}
+
+    <div class="tiny-note">
+      This menu remembers your choice on this device. If you change which state's launches you want, remove any old subscription in NTFY that you no longer want.
+    </div>
+
+  `;
+
 }
 
 
 const locationSelect =
-  document
-  .getElementById(
+  document.getElementById(
     'locationSelect'
   );
 
 const savedPreference =
-  localStorage
-  .getItem(
+  localStorage.getItem(
     'watchALaunchLocationPreference'
   );
 
@@ -1857,231 +1757,10 @@ locationSelect.addEventListener(
 updatePrefsResult();
 
 
-function localDateKey(
-  date
-){
-  const year =
-    date.getFullYear();
-
-  const month =
-    String(
-      date.getMonth()
-      + 1
-    ).padStart(
-      2,
-      '0'
-    );
-
-  const day =
-    String(
-      date.getDate()
-    ).padStart(
-      2,
-      '0'
-    );
-
-  return (
-    `${year}-${month}-${day}`
-  );
-}
-
-
-function currentMonthKey(){
-  const now =
-    new Date();
-
-  return (
-    `${now.getFullYear()}-${
-      String(
-        now.getMonth() + 1
-      ).padStart(
-        2,
-        '0'
-      )
-    }`
-  );
-}
-
-
-function launchIsInCurrentMonth(
-  launch
-){
-  if (
-    !launch
-    .scheduled_date
-  ){
-    return false;
-  }
-
-  return (
-    launch
-    .scheduled_date
-    .slice(
-      0,
-      7
-    )
-    ===
-    currentMonthKey()
-  );
-}
-
-
-function launchIsStillUpcoming(
-  launch
-){
-  const now =
-    new Date();
-
-  if (
-    launch
-    .launch_time_utc
-  ){
-    return (
-      new Date(
-        launch
-        .launch_time_utc
-      )
-      >
-      now
-    );
-  }
-
-  if (
-    launch
-    .scheduled_date
-  ){
-    return (
-      launch
-      .scheduled_date
-      >=
-      localDateKey(
-        now
-      )
-    );
-  }
-
-  return false;
-}
-
-
-function renderCurrentMonthUpcoming(){
-
-  const now =
-    new Date();
-
-  const currentMonthLaunches =
-    launchFeed
-    .filter(
-      launch =>
-        launchIsInCurrentMonth(
-          launch
-        )
-    )
-    .filter(
-      launch =>
-        launchIsStillUpcoming(
-          launch
-        )
-    )
-    .sort(
-      (
-        a,
-        b
-      ) =>
-        (
-          a
-          .launch_time_utc
-          || a
-          .scheduled_date
-          || ''
-        )
-        .localeCompare(
-          b
-          .launch_time_utc
-          || b
-          .scheduled_date
-          || ''
-        )
-    );
-
-  const monthName =
-    new Intl.DateTimeFormat(
-      'en-US',
-      {
-        month:
-          'long'
-      }
-    )
-    .format(
-      now
-    );
-
-  document
-    .getElementById(
-      'upcomingTitle'
-    )
-    .textContent =
-      `Upcoming — ${monthName}`;
-
-  renderList(
-    currentMonthLaunches
-  );
-
-  currentlyRenderedListMonthKey =
-    currentMonthKey();
-}
-
-
-function getNextUpcomingLaunch(){
-
-  const now =
-    new Date();
-
-  return launchFeed
-    .filter(
-      launch =>
-        launch
-        .launch_time_utc
-        &&
-        new Date(
-          launch
-          .launch_time_utc
-        )
-        >
-        now
-    )
-    .sort(
-      (
-        a,
-        b
-      ) =>
-        new Date(
-          a
-          .launch_time_utc
-        )
-        -
-        new Date(
-          b
-          .launch_time_utc
-        )
-    )[0];
-}
-
-
-function refreshHero(){
-
-  const nextLaunch =
-    getNextUpcomingLaunch();
-
-  renderHero(
-    nextLaunch
-  );
-}
-
-
 function renderCalendar(
   launches
 ){
+
   const now =
     new Date();
 
@@ -2094,51 +1773,35 @@ function renderCalendar(
   renderedMonthKey =
     `${year}-${month}`;
 
-  document
-    .getElementById(
-      'calendarMonth'
-    )
-    .textContent =
+  document.getElementById(
+    'calendarMonth'
+  ).textContent =
+    new Intl.DateTimeFormat(
+      'en-US',
+      {
+        month:'long',
+        year:'numeric'
+      }
+    ).format(
+      now
+    );
+
+  document.getElementById(
+    'calendarToday'
+  ).textContent =
+    `Today: ${
       new Intl.DateTimeFormat(
         'en-US',
         {
-          month:
-            'long',
-
-          year:
-            'numeric'
+          weekday:'long',
+          month:'short',
+          day:'numeric',
+          year:'numeric'
         }
-      )
-      .format(
+      ).format(
         now
-      );
-
-  document
-    .getElementById(
-      'calendarToday'
-    )
-    .textContent =
-      `Today: ${
-        new Intl.DateTimeFormat(
-          'en-US',
-          {
-            weekday:
-              'long',
-
-            month:
-              'short',
-
-            day:
-              'numeric',
-
-            year:
-              'numeric'
-          }
-        )
-        .format(
-          now
-        )
-      }`;
+      )
+    }`;
 
   const marks = {};
 
@@ -2146,15 +1809,13 @@ function renderCalendar(
     launch => {
 
       if (
-        !launch
-        .scheduled_date
+        !launch.scheduled_date
         ||
         ![
           'CA',
           'FL'
         ].includes(
-          launch
-          .location_code
+          launch.location_code
         )
       ){
         return;
@@ -2162,13 +1823,11 @@ function renderCalendar(
 
       if (
         !marks[
-          launch
-          .scheduled_date
+          launch.scheduled_date
         ]
       ){
         marks[
-          launch
-          .scheduled_date
+          launch.scheduled_date
         ] = {
           CA:0,
           FL:0
@@ -2176,11 +1835,9 @@ function renderCalendar(
       }
 
       marks[
-        launch
-        .scheduled_date
+        launch.scheduled_date
       ][
-        launch
-        .location_code
+        launch.location_code
       ] += 1;
 
     }
@@ -2236,6 +1893,7 @@ function renderCalendar(
     day <= daysInMonth;
     day++
   ){
+
     const key =
       `${year}-${
         String(
@@ -2268,8 +1926,7 @@ function renderCalendar(
     const xMarks = [];
 
     if (
-      dayMarks.CA
-      > 0
+      dayMarks.CA > 0
     ){
       xMarks.push(
         '<span class="launch-x ca" title="California launch">X</span>'
@@ -2277,8 +1934,7 @@ function renderCalendar(
     }
 
     if (
-      dayMarks.FL
-      > 0
+      dayMarks.FL > 0
     ){
       xMarks.push(
         '<span class="launch-x fl" title="Florida launch">X</span>'
@@ -2314,15 +1970,16 @@ function renderCalendar(
         }
 
       </div>
+
     `);
+
   }
 
-  document
-    .getElementById(
-      'calendarGrid'
-    )
-    .innerHTML =
-      cells.join('');
+  document.getElementById(
+    'calendarGrid'
+  ).innerHTML =
+    cells.join('');
+
 }
 
 
@@ -2339,8 +1996,8 @@ function refreshLocalDisplay(){
     }`;
 
   /*
-    Rebuild the calendar automatically
-    when the month changes.
+    Automatically move the calendar to
+    the new month when the month changes.
   */
   if (
     calendarKey
@@ -2352,41 +2009,43 @@ function refreshLocalDisplay(){
   }
 
   /*
-    Rebuild Upcoming EVERY MINUTE.
+    Recheck Upcoming every minute.
 
-    This means a completed launch disappears
-    from the text list within about one minute,
-    without using another GitHub Action.
+    Once an exact launch time passes,
+    that launch disappears from Upcoming
+    without requiring another GitHub Action.
   */
   renderCurrentMonthUpcoming();
 
   /*
-    Also move the large Next Liftoff section
-    to the next launch after one has passed.
+    If the current Next Liftoff launch has
+    passed, advance to the next launch.
   */
   const nextLaunch =
     getNextUpcomingLaunch();
+
+  const heroClock =
+    document.getElementById(
+      'hero-clock'
+    );
 
   if (
     nextLaunch
     &&
     (
-      !heroTimer
+      !heroClock
       ||
-      document
-      .getElementById(
-        'hero-clock'
-      )
-      ?.textContent
-      ?.includes(
-        'LIFTOFF WINDOW OPEN'
-      )
+      heroClock.textContent
+        .includes(
+          'LIFTOFF WINDOW OPEN'
+        )
     )
   ){
     renderHero(
       nextLaunch
     );
   }
+
 }
 
 
@@ -2398,11 +2057,14 @@ setInterval(
 
 function loadFeed(){
 
+  /*
+    The timestamp query prevents an old
+    cached launches.json from being used.
+  */
   fetch(
     `${FEED_URL}?t=${Date.now()}`,
     {
-      cache:
-        'no-store'
+      cache:'no-store'
     }
   )
   .then(
@@ -2427,7 +2089,9 @@ function loadFeed(){
         data.launches
         || [];
 
-      refreshHero();
+      renderHero(
+        getNextUpcomingLaunch()
+      );
 
       renderCurrentMonthUpcoming();
 
@@ -2436,28 +2100,29 @@ function loadFeed(){
       );
 
       const meta =
-        document
-        .getElementById(
+        document.getElementById(
           'feed-meta'
         );
 
       if (
-        data
-        .generated_at_utc
+        data.generated_at_utc
       ){
+
         meta.textContent =
           `Schedule last checked ${
             fmtPacific(
               new Date(
-                data
-                .generated_at_utc
+                data.generated_at_utc
               )
             )
           }. The GitHub Action is configured to check once per hour.`;
+
       }
       else{
+
         meta.textContent =
           'Schedule has not been checked yet.';
+
       }
 
     }
@@ -2465,19 +2130,15 @@ function loadFeed(){
   .catch(
     error => {
 
-      document
-        .getElementById(
-          'list'
-        )
-        .innerHTML =
-          '<div class="empty">Could not load launches.json yet. Trigger the GitHub Action manually once if this was just set up.</div>';
+      document.getElementById(
+        'list'
+      ).innerHTML =
+        '<div class="empty">Could not load the launch schedule right now.</div>';
 
-      document
-        .getElementById(
-          'feed-meta'
-        )
-        .textContent =
-          '';
+      document.getElementById(
+        'feed-meta'
+      ).textContent =
+        '';
 
       renderCalendar(
         []
@@ -2494,18 +2155,18 @@ function loadFeed(){
 
 
 /*
-  Initial load.
+  Load immediately when the app opens.
 */
 loadFeed();
 
 
 /*
-  Download the latest launches.json once per hour
-  while the app stays open.
+  Reload launches.json once per hour if
+  somebody leaves the app open.
 
-  This does NOT run another GitHub Action.
-  It only downloads the small JSON file that
-  GitHub already generated.
+  This does NOT create another GitHub
+  Actions run and does not cost additional
+  GitHub Actions minutes.
 */
 setInterval(
   loadFeed,
