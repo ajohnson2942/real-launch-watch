@@ -1,6 +1,4 @@
-{
-  "_readme": "Edit the values below, then commit the change. No coding needed \u2014 you can edit this file right in the GitHub website.",
-  "ntfy_topic": "SandWhirl2006",
+
   "_ntfy_topic_help": "This is like a private channel name for your notifications. Make it long and random so a stranger can't guess it and spam you, e.g. 'dave-rocket-launches-8347'. You'll subscribe to this exact name in the ntfy app.",
   "lead_times_hours": [
     72,
