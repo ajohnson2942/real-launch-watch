@@ -1,40 +1,30 @@
 """
 notifier.py
 -----------
-Runs the scraper, figures out which notifications are due right now, sends
-them via ntfy.sh (free push notifications, no account needed), and writes:
+Refreshes the launch schedule, sends California/Florida notifications through
+ntfy, remembers what has already been sent, and publishes docs/launches.json
+for the dashboard.
 
-  - data/state.json     -> internal memory of what's already been sent
-  - docs/launches.json  -> public feed consumed by the dashboard webpage
-
-LEAD-TIME CHANNELS
+NOTIFICATION TOPICS
 -------------------
-Because this app is shared publicly by anyone who wants it, there's no
-per-visitor database to remember "this person wants 3 hours, that person
-wants 24 hours." Instead, each offered lead time gets its own ntfy topic,
-derived from the base topic:
+The app uses one topic per launch coast:
 
-    base topic "CoolRockets" ->
-      "CoolRockets"      : new-launch-added / delay notifications (general)
-      "CoolRockets-3h"   : reminder ~3 hours before a tracked launch
-      "CoolRockets-24h"  : reminder ~24 hours before a tracked launch
+    <NTFY_TOPIC>-CA   California launches
+    <NTFY_TOPIC>-FL   Florida launches
 
-Visitors pick which of the lead-time channels to subscribe to on the
-dashboard's dropdown -- that's the entire mechanism, no server-side
-preference storage needed.
-
-This script is meant to be run on a schedule (see
-.github/workflows/check-launches.yml). It is safe to run as often as you
-like -- it never sends the same notification twice.
+A person who wants both simply subscribes to both topics. Each location topic
+receives the normal reminders plus new-launch and schedule-change alerts.
+That means a delay notification always reaches the same people who asked for
+that location's launch reminders.
 """
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import logging
 import os
 import sys
-import datetime as dt
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -42,7 +32,11 @@ import requests
 
 import scraper
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+)
+
 log = logging.getLogger("notifier")
 
 ROOT = Path(__file__).parent
@@ -50,60 +44,63 @@ CONFIG_PATH = ROOT / "config.json"
 STATE_PATH = ROOT / "data" / "state.json"
 PUBLIC_FEED_PATH = ROOT / "docs" / "launches.json"
 
-DISPLAY_TIMEZONE = ZoneInfo("America/Los_Angeles")
+PACIFIC = ZoneInfo("America/Los_Angeles")
+EASTERN = ZoneInfo("America/New_York")
 
-# The lead times offered on the dashboard dropdown. Each gets its own ntfy
-# sub-topic (see module docstring). Keep this in sync with the <select>
-# options in docs/index.html.
-OFFERED_LEAD_TIMES_HOURS = [3, 24]
-
-# Maps the trailing part of a launch site description (e.g. "...,
-# California") to a short tag for notification titles. Falls back to
-# whatever the last comma-separated segment says if it's not a known US
-# state (e.g. "French Guiana"), so non-US sites still show something
-# reasonable instead of nothing.
-US_STATE_ABBREV = {
-    "california": "CA",
-    "florida": "FL",
-    "texas": "TX",
-    "virginia": "VA",
-    "alaska": "AK",
-    "new mexico": "NM",
-}
-
-
-def location_tag(site: str) -> str:
-    if not site:
-        return ""
-    last_part = site.split(",")[-1].strip()
-    return US_STATE_ABBREV.get(last_part.lower(), last_part)
+OFFERED_LEAD_TIMES_HOURS = [24, 3]
 
 
 def load_json(path: Path, default):
     if not path.exists():
         return default
-    with path.open() as f:
-        return json.load(f)
+
+    with path.open(encoding="utf-8") as handle:
+        return json.load(handle)
 
 
 def save_json(path: Path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w") as f:
-        json.dump(data, f, indent=2, default=str)
+
+    with path.open("w", encoding="utf-8") as handle:
+        json.dump(
+            data,
+            handle,
+            indent=2,
+            default=str,
+        )
 
 
-def rocket_matches_filter(rocket: str, keywords: list[str]) -> bool:
+def rocket_matches_filter(
+    rocket: str,
+    keywords: list[str],
+) -> bool:
     if not keywords:
         return True
+
     rocket_l = rocket.lower()
-    return any(kw.lower() in rocket_l for kw in keywords)
+
+    return any(
+        keyword.lower() in rocket_l
+        for keyword in keywords
+    )
 
 
-def send_ntfy(topic: str, title: str, message: str, priority: str = "default"):
-    url = f"https://ntfy.sh/{topic}"
+def topic_for_location(
+    base_topic: str,
+    location_code: str,
+) -> str:
+    return f"{base_topic}-{location_code.upper()}"
+
+
+def send_ntfy(
+    topic: str,
+    title: str,
+    message: str,
+    priority: str = "default",
+) -> bool:
     try:
-        resp = requests.post(
-            url,
+        response = requests.post(
+            f"https://ntfy.sh/{topic}",
             data=message.encode("utf-8"),
             headers={
                 "Title": title,
@@ -111,174 +108,522 @@ def send_ntfy(topic: str, title: str, message: str, priority: str = "default"):
             },
             timeout=15,
         )
-        resp.raise_for_status()
-        log.info("Sent notification to %s: %s", topic, title)
+
+        response.raise_for_status()
+
+        log.info(
+            "Sent notification to %s: %s",
+            topic,
+            title,
+        )
+
         return True
-    except Exception as e:
-        log.error("Failed to send notification to %s (%r): %s", topic, title, e)
+
+    except Exception as exc:
+        log.error(
+            "Failed to send notification to %s (%r): %s",
+            topic,
+            title,
+            exc,
+        )
+
         return False
 
 
-def format_time_local_hint(launch_time_utc: str) -> str:
-    """Return the launch time converted to DISPLAY_TIMEZONE, formatted
-    plainly, e.g. 'Wed Aug 19, 7:00 PM PDT'."""
-    t = dt.datetime.fromisoformat(launch_time_utc)
-    local = t.astimezone(DISPLAY_TIMEZONE)
-    return local.strftime("%a %b %d, %-I:%M %p %Z")
+def timezone_for_launch(
+    launch: scraper.Launch,
+) -> ZoneInfo:
+    return (
+        PACIFIC
+        if launch.location_code == "CA"
+        else EASTERN
+    )
+
+
+def format_launch_time(
+    launch_time_utc: str,
+    location_code: str | None,
+) -> str:
+    launch_dt = dt.datetime.fromisoformat(
+        launch_time_utc
+    )
+
+    zone = (
+        PACIFIC
+        if location_code == "CA"
+        else EASTERN
+        if location_code == "FL"
+        else PACIFIC
+    )
+
+    local = launch_dt.astimezone(zone)
+
+    return local.strftime(
+        "%A, %B %-d at %-I:%M %p %Z"
+    )
+
+
+def describe_when(
+    launch: scraper.Launch,
+) -> str:
+    if launch.launch_time_utc:
+        return format_launch_time(
+            launch.launch_time_utc,
+            launch.location_code,
+        )
+
+    if launch.scheduled_date:
+        date_value = dt.date.fromisoformat(
+            launch.scheduled_date
+        )
+
+        return (
+            f"{date_value.strftime('%A, %B')} "
+            f"{date_value.day} "
+            f"(exact time TBD)"
+        )
+
+    return (
+        f"{launch.date_text} "
+        f"(exact time TBD)"
+    )
+
+
+def time_change_message(
+    launch: scraper.Launch,
+    previous_time: str | None,
+) -> tuple[str, str]:
+    if launch.launch_time_utc:
+        new_time = format_launch_time(
+            launch.launch_time_utc,
+            launch.location_code,
+        )
+
+        title = (
+            f"Launch delayed/changed: "
+            f"{launch.mission} "
+            f"({launch.location_code})"
+        )
+
+        if previous_time:
+            old_time = format_launch_time(
+                previous_time,
+                launch.location_code,
+            )
+
+            body = (
+                f"{launch.rocket} • {launch.mission}\n"
+                f"Updated launch time: {new_time}\n"
+                f"Previously: {old_time}\n"
+                f"Site: {launch.site}"
+            )
+
+        else:
+            body = (
+                f"{launch.rocket} • {launch.mission}\n"
+                f"A precise launch time is now available: "
+                f"{new_time}\n"
+                f"Site: {launch.site}"
+            )
+
+    else:
+        title = (
+            f"Launch schedule changed: "
+            f"{launch.mission} "
+            f"({launch.location_code})"
+        )
+
+        old = (
+            format_launch_time(
+                previous_time,
+                launch.location_code,
+            )
+            if previous_time
+            else "previous schedule"
+        )
+
+        body = (
+            f"{launch.rocket} • {launch.mission}\n"
+            f"The previous time ({old}) is no longer current.\n"
+            f"New schedule: {describe_when(launch)}\n"
+            f"Site: {launch.site}"
+        )
+
+    return title, body
 
 
 def main():
-    config = load_json(CONFIG_PATH, {})
+    config = load_json(
+        CONFIG_PATH,
+        {},
+    )
 
-    # ntfy_topic is intentionally NOT read from config.json. config.json
-    # lives in the repo and (if the repo is public) is visible to anyone,
-    # which would defeat the point of it being a hard-to-guess private
-    # channel name. Instead it's read from the NTFY_TOPIC environment
-    # variable, which in GitHub Actions comes from an encrypted repo
-    # Secret (Settings -> Secrets and variables -> Actions) that nobody
-    # else can view. For local testing, you can instead set it in your
-    # own shell: export NTFY_TOPIC=your-topic-name
-    base_topic = os.environ.get("NTFY_TOPIC") or config.get("ntfy_topic")
-    if not base_topic or base_topic == "CHANGE-ME-TO-SOMETHING-UNIQUE":
+    base_topic = (
+        os.environ.get("NTFY_TOPIC")
+        or config.get("ntfy_topic")
+    )
+
+    if (
+        not base_topic
+        or base_topic
+        == "CHANGE-ME-TO-SOMETHING-UNIQUE"
+    ):
         log.error(
-            "No ntfy topic configured. Add a repo Secret named NTFY_TOPIC "
-            "(Settings -> Secrets and variables -> Actions -> New repository "
-            "secret) with your chosen topic name."
+            "No ntfy topic configured. "
+            "Add a repo Secret named NTFY_TOPIC "
+            "with the base topic used by the dashboard."
         )
         sys.exit(1)
 
-    rocket_filter = config.get("rocket_keywords", [])  # e.g. ["Falcon 9", "Falcon Heavy", "Starship"]
-    notify_on_new = config.get("notify_on_new_launch_added", True)
-    notify_on_time_change = config.get("notify_on_time_change", True)
+    rocket_filter = config.get(
+        "rocket_keywords",
+        [],
+    )
 
-    state = load_json(STATE_PATH, {"launches": {}})
-    state.setdefault("launches", {})
+    notify_on_new = config.get(
+        "notify_on_new_launch_added",
+        True,
+    )
 
-    now = dt.datetime.now(dt.timezone.utc)
+    notify_on_time_change = config.get(
+        "notify_on_time_change",
+        True,
+    )
+
+    state = load_json(
+        STATE_PATH,
+        {"launches": {}},
+    )
+
+    state.setdefault(
+        "launches",
+        {},
+    )
+
+    now = dt.datetime.now(
+        dt.timezone.utc
+    )
 
     try:
-        html = scraper.fetch_html()
-    except Exception as e:
-        log.error("Could not fetch schedule page: %s", e)
-        sys.exit(1)
-
-    launches = scraper.parse_schedule(html, now=now)
-    if not launches:
-        log.warning(
-            "Parsed 0 launches -- the site's layout may have changed and "
-            "the scraper needs updating. No notifications sent this run."
+        launches = scraper.parse_schedule(
+            scraper.fetch_html(),
+            now=now,
         )
 
-    filtered = [l for l in launches if rocket_matches_filter(l.rocket, rocket_filter)]
-    log.info("Parsed %d launches total, %d match your rocket filter", len(launches), len(filtered))
+    except Exception as exc:
+        log.error(
+            "Could not fetch schedule page: %s",
+            exc,
+        )
+        sys.exit(1)
+
+    if not launches:
+        log.warning(
+            "Parsed 0 launches -- "
+            "the source layout may have changed. "
+            "No notifications sent this run."
+        )
+
+    filtered = [
+        launch
+        for launch in launches
+        if rocket_matches_filter(
+            launch.rocket,
+            rocket_filter,
+        )
+    ]
+
+    log.info(
+        "Parsed %d launches total, "
+        "%d match the rocket filter",
+        len(launches),
+        len(filtered),
+    )
 
     public_feed = []
 
     for launch in filtered:
         uid = launch.uid
-        prev = state["launches"].get(uid, {})
-        prev_notified = set(prev.get("notified_lead_hours", []))
-        prev_launch_time = prev.get("launch_time_utc")
 
-        is_new = uid not in state["launches"]
-        time_changed = (
-            prev_launch_time
-            and launch.launch_time_utc
-            and prev_launch_time != launch.launch_time_utc
+        previous = state["launches"].get(
+            uid,
+            {},
         )
 
-        if is_new and notify_on_new and launch.launch_time_utc:
-            loc = location_tag(launch.site)
-            send_ntfy(
+        is_new = (
+            uid not in state["launches"]
+        )
+
+        previous_time = previous.get(
+            "launch_time_utc"
+        )
+
+        previous_date = previous.get(
+            "scheduled_date"
+        )
+
+        previous_location = previous.get(
+            "location_code"
+        )
+
+        notified_leads = set(
+            previous.get(
+                "notified_lead_hours",
+                [],
+            )
+        )
+
+        time_changed = (
+            not is_new
+            and previous_time
+            != launch.launch_time_utc
+        )
+
+        date_changed = (
+            not is_new
+            and "scheduled_date" in previous
+            and previous_date
+            != launch.scheduled_date
+        )
+
+        time_or_date_changed = (
+            time_changed
+            or date_changed
+        )
+
+        location_changed = (
+            not is_new
+            and previous_location
+            != launch.location_code
+        )
+
+        # Only CA and FL are push-notification locations.
+        # Other SpaceX launches can still appear on the
+        # dashboard/feed without sending a push.
+        location_code = (
+            launch.location_code
+        )
+
+        topic = (
+            topic_for_location(
                 base_topic,
-                title=f"New launch on schedule: {launch.mission}" + (f" ({loc})" if loc else ""),
+                location_code,
+            )
+            if location_code in {"CA", "FL"}
+            else None
+        )
+
+        if (
+            is_new
+            and notify_on_new
+            and topic
+        ):
+            send_ntfy(
+                topic,
+                title=(
+                    f"New launch scheduled: "
+                    f"{launch.mission} "
+                    f"({location_code})"
+                ),
                 message=(
-                    f"{launch.rocket} • {launch.mission}\n"
-                    f"{format_time_local_hint(launch.launch_time_utc)}\n"
+                    f"{launch.rocket} • "
+                    f"{launch.mission}\n"
+                    f"Launch: "
+                    f"{describe_when(launch)}\n"
                     f"Site: {launch.site}"
                 ),
             )
 
-        if time_changed and notify_on_time_change:
-            loc = location_tag(launch.site)
-            send_ntfy(
-                base_topic,
-                title=f"Launch time changed: {launch.mission}" + (f" ({loc})" if loc else ""),
-                message=(
-                    f"{launch.rocket} • {launch.mission}\n"
-                    f"New time: {format_time_local_hint(launch.launch_time_utc)}\n"
-                    f"(was: {format_time_local_hint(prev_launch_time)})"
-                ),
+        if (
+            time_or_date_changed
+            and notify_on_time_change
+            and topic
+        ):
+            title, message = (
+                time_change_message(
+                    launch,
+                    previous_time,
+                )
             )
-            # A time change resets which lead-time reminders are still valid,
-            # so re-arm any that are still in the future relative to the new time.
-            prev_notified = set()
 
-        notified_now = set(prev_notified)
-        if launch.launch_time_utc:
-            launch_dt = dt.datetime.fromisoformat(launch.launch_time_utc)
+            send_ntfy(
+                topic,
+                title=title,
+                message=message,
+                priority="high",
+            )
+
+            # Re-arm reminders against the new schedule.
+            # If a launch moves later, a fresh
+            # 24-hour/3-hour reminder can be sent
+            # at the correct new time.
+            notified_leads = set()
+
+        if location_changed:
+            notified_leads = set()
+
+        notified_now = set(
+            notified_leads
+        )
+
+        if (
+            topic
+            and launch.launch_time_utc
+        ):
+            launch_dt = dt.datetime.fromisoformat(
+                launch.launch_time_utc
+            )
+
             if launch_dt > now:
-                for lead_h in OFFERED_LEAD_TIMES_HOURS:
-                    if lead_h in prev_notified:
+                for lead_hours in (
+                    OFFERED_LEAD_TIMES_HOURS
+                ):
+                    if (
+                        lead_hours
+                        in notified_leads
+                    ):
                         continue
-                    notify_at = launch_dt - dt.timedelta(hours=lead_h)
-                    if notify_at <= now:
-                        lead_desc = (
-                            f"{lead_h} hours" if lead_h < 48 else f"{lead_h // 24} days"
+
+                    notify_at = (
+                        launch_dt
+                        - dt.timedelta(
+                            hours=lead_hours
                         )
-                        loc = location_tag(launch.site)
-                        lead_topic = f"{base_topic}-{lead_h}h"
+                    )
+
+                    if notify_at <= now:
+                        exact_time = (
+                            format_launch_time(
+                                launch.launch_time_utc,
+                                location_code,
+                            )
+                        )
+
+                        label = (
+                            "3 hours"
+                            if lead_hours == 3
+                            else "24 hours"
+                        )
+
                         send_ntfy(
-                            lead_topic,
-                            title=f"Launching in ~{lead_desc}: {launch.mission}" + (f" ({loc})" if loc else ""),
+                            topic,
+                            title=(
+                                f"Launch in {label}: "
+                                f"{launch.mission} "
+                                f"({location_code})"
+                            ),
                             message=(
-                                f"{launch.rocket} • {launch.mission}\n"
-                                f"{format_time_local_hint(launch.launch_time_utc)}\n"
+                                f"{launch.rocket} • "
+                                f"{launch.mission}\n"
+                                f"Launch in {label} "
+                                f"at {exact_time}.\n"
                                 f"Site: {launch.site}"
                             ),
-                            priority="high" if lead_h <= 3 else "default",
+                            priority=(
+                                "high"
+                                if lead_hours == 3
+                                else "default"
+                            ),
                         )
-                        notified_now.add(lead_h)
+
+                        notified_now.add(
+                            lead_hours
+                        )
 
         state["launches"][uid] = {
             "rocket": launch.rocket,
             "mission": launch.mission,
-            "launch_time_utc": launch.launch_time_utc,
+            "launch_time_utc": (
+                launch.launch_time_utc
+            ),
+            "scheduled_date": (
+                launch.scheduled_date
+            ),
+            "location_code": (
+                launch.location_code
+            ),
             "date_text": launch.date_text,
-            "notified_lead_hours": sorted(notified_now),
-            "last_seen_utc": now.isoformat(),
+            "notified_lead_hours": (
+                sorted(notified_now)
+            ),
+            "last_seen_utc": (
+                now.isoformat()
+            ),
         }
 
         public_feed.append(
             {
                 **launch.to_dict(),
-                "notified_lead_hours": sorted(notified_now),
+                "notified_lead_hours": (
+                    sorted(notified_now)
+                ),
             }
         )
 
-    # Prune launches that are no longer on the schedule at all AND are
-    # clearly in the past (keeps state.json from growing forever), but
-    # keep anything from the last 3 days in case of re-parsing quirks.
-    cutoff = now - dt.timedelta(days=3)
-    still_present = {l.uid for l in filtered}
+    cutoff = (
+        now
+        - dt.timedelta(days=3)
+    )
+
+    still_present = {
+        launch.uid
+        for launch in filtered
+    }
+
     pruned = {}
-    for uid, rec in state["launches"].items():
+
+    for (
+        uid,
+        record,
+    ) in state["launches"].items():
         if uid in still_present:
-            pruned[uid] = rec
+            pruned[uid] = record
             continue
-        lt = rec.get("launch_time_utc")
-        if lt and dt.datetime.fromisoformat(lt) > cutoff:
-            pruned[uid] = rec
+
+        launch_time = record.get(
+            "launch_time_utc"
+        )
+
+        if (
+            launch_time
+            and dt.datetime.fromisoformat(
+                launch_time
+            )
+            > cutoff
+        ):
+            pruned[uid] = record
+
     state["launches"] = pruned
 
-    save_json(STATE_PATH, state)
+    save_json(
+        STATE_PATH,
+        state,
+    )
 
-    public_feed.sort(key=lambda l: l["launch_time_utc"] or "9999")
+    public_feed.sort(
+        key=lambda launch: (
+            launch["launch_time_utc"]
+            or launch["scheduled_date"]
+            or "9999"
+        )
+    )
+
     save_json(
         PUBLIC_FEED_PATH,
         {
-            "generated_at_utc": now.isoformat(),
-            "rocket_keywords_filter": rocket_filter,
+            "generated_at_utc": (
+                now.isoformat()
+            ),
+            "rocket_keywords_filter": (
+                rocket_filter
+            ),
+            "notification_locations": [
+                "CA",
+                "FL",
+            ],
+            "notification_lead_times_hours": (
+                OFFERED_LEAD_TIMES_HOURS
+            ),
             "launches": public_feed,
         },
     )
