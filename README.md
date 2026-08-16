@@ -1,161 +1,141 @@
-# Launch Watch
+Watch-A-Launch
 
-Get a push notification on your phone and desktop before rocket launches
-happen — automatically, forever, for $0.
+Get push notifications on your phone and desktop before SpaceX rocket launches happen, completely automatic and free!
 
-It works by checking [Spaceflight Now's launch schedule](https://spaceflightnow.com/launch-schedule/)
-every hour and sending you a notification at whatever lead times you choose
-(e.g. 3 days before, 1 day before, 3 hours before). It keeps working for
-every future launch with no further setup — you never have to touch it
-again after the one-time setup below, unless you want to change your
-notification timing.
+Watch-A-Launch checks upcoming launch data every hour and keeps the schedule, countdowns, calendar, and notifications updated automatically. It will update if any rocket launch times change. 
 
-**Everything here is free**, using only free tiers of free services:
+What Watch-A-Launch does
+Sends push notifications before launches
+Gives a 24-hour reminder
+Gives a 3-hour reminder
+Includes the exact scheduled launch time
+Sends a new notification if a launch is delayed or its scheduled time changes
+Lets you choose notifications for:
+California launches only
+Florida launches only
+Both California and Florida
+Shows the next launch with a live countdown
+Shows upcoming launches for the current month
+Shows a calendar with predicted launch dates, for one month ahead. 
+Updates automatically as new launches are added or existing launches move
+Notification locations
 
-| Piece | What it does | Cost |
-|---|---|---|
-| GitHub | Hosts the code and runs the checker on a schedule | Free |
-| GitHub Actions | Runs the checker every hour, forever | Free (uses a few seconds/hour, way under the free monthly limit) |
-| ntfy.sh | Delivers the push notification to your phone/desktop | Free, no account needed |
-| GitHub Pages | Hosts a small installable dashboard webpage | Free |
+Watch-A-Launch uses separate ntfy topics for each state:
 
-No credit card is required anywhere in this process.
+CoolRockets-CA — California launch notifications
+CoolRockets-FL — Florida launch notifications
 
----
+If you want alerts for both states, subscribe to both topics.
 
-## What you'll end up with
+You can also use the notification selector on the Watch-A-Launch homepage to see which topic or topics correspond to your choice.
 
-1. **Push notifications** on your phone (iOS/Android) and desktop via the
-   free **ntfy** app, sent automatically before each launch.
-2. An **installable dashboard webpage** ("Launch Watch") you can add to
-   your home screen, showing the next launch with a live countdown and the
-   full upcoming schedule — this is the part you can share with your dad.
+Calendar
 
----
+The launch calendar automatically displays the current month and year.
 
-## Setup (about 15 minutes, one time)
+It changes automatically when a new month begins, so no manual updates are required.
 
-### Step 1 — Create a free GitHub account
-Go to [github.com/signup](https://github.com/signup) if you don't already
-have an account. It's free.
+The calendar uses:
 
-### Step 2 — Create a new repository from these files
-1. On GitHub, click **New repository** (the green button, or
-   [github.com/new](https://github.com/new)).
-2. Name it something like `launch-watch`. You can make it **Private** —
-   everything will still work.
-3. Click **Create repository**.
-4. On the new repo's page, click **uploading an existing file** and drag
-   in *all* the files and folders from this project (keep the folder
-   structure — `.github/workflows/check-launches.yml`, `docs/`, `data/`,
-   `scraper.py`, `notifier.py`, `config.json`, `requirements.txt`).
-5. Scroll down and click **Commit changes**.
+Yellow X = at least one tracked launch is currently scheduled or predicted for that date in California
+Light Blue X = at least one tracked launch is currently scheduled or predicted for that date in Florida
 
-*(If you're comfortable with git/command line, you can `git push` instead
-— same result.)*
+If both California and Florida have launches scheduled for the same day, both colored X's will appear on that date.
 
-### Step 3 — Set your notification preferences
-1. In your new repo, open `config.json` and click the pencil (✏️) icon to
-   edit it right in the browser.
-2. Change `"ntfy_topic"` to something unique and hard to guess — this is
-   like a private channel name. For example:
-   `"dad-rocket-launches-58213"`. **Don't leave it as the default** — pick
-   your own random-ish name. Anyone who knows this exact name could send
-   fake notifications to it, so make it long and not-obvious (no need to
-   write it down anywhere public).
-3. Adjust `"lead_times_hours"` to whatever you want. This is a list of
-   hours-before-launch. Examples:
-   - `[72, 24, 3]` → notified 3 days before, 1 day before, and 3 hours before (the default)
-   - `[168, 24, 1]` → a week before, a day before, and an hour before
-   - `[24]` → just once, a day before
-4. `"rocket_keywords"` controls which launches you get notified about.
-   It defaults to `["Falcon 9", "Falcon Heavy", "Starship"]` (SpaceX
-   only). Set it to `[]` to get every launch from every provider on the
-   schedule.
-5. Click **Commit changes**.
+Launch schedules can change, so the X]s automatically move when updated launch data is received.
 
-### Step 4 — Turn on GitHub Actions (the free scheduler)
-1. Go to the **Actions** tab of your repo.
-2. If prompted, click **I understand my workflows, go ahead and enable
-   them**.
-3. Click on **Check launch schedule** in the left sidebar, then click
-   **Run workflow** → **Run workflow** to trigger it manually the first
-   time (don't wait for the hourly schedule).
-4. After a minute, refresh — you should see a green checkmark. Click into
-   the run and check the log for a line like `Parsed X launches total`.
-   If you see red ✕, click in to read the error (most likely cause: you
-   left `ntfy_topic` as the placeholder value — go back to Step 3).
+Upcoming launches
 
-From now on, this runs automatically, every hour, forever — you don't
-need to do anything.
+The Upcoming section only shows launches scheduled for the current month.
 
-### Step 5 — Install ntfy and subscribe to your topic
-ntfy is a free, open-source push notification app with no account/signup.
+For example:
 
-- **iPhone**: install [ntfy from the App Store](https://apps.apple.com/us/app/ntfy/id1625396347)
-- **Android**: install [ntfy from Google Play](https://play.google.com/store/apps/details?id=io.heckel.ntfy) or [F-Droid](https://f-droid.org/packages/io.heckel.ntfy/)
-- **Desktop**: no app needed — just open `https://ntfy.sh/YOUR-TOPIC-NAME`
-  in a browser and click "Enable notifications," or use the
-  [desktop app](https://ntfy.sh) if you'd rather have one
+In August, it shows the remaining August launches
+When September begins, it automatically switches to September launches
+When October begins, it automatically switches to October launches
 
-In the app, tap **+ (Subscribe to topic)** and type in the *exact* topic
-name you set in `config.json` (e.g. `dad-rocket-launches-58213`). That's
-it — no server address to configure, no login. Do this on your dad's
-phone too, using the same topic name, and he'll get the same
-notifications.
+Once a launch's scheduled time has passed, it automatically disappears from the Upcoming list.
 
-**To test it right now:** trigger the workflow again from Step 4 —
-if there's a launch within your configured lead times, you'll get a
-notification within a minute or two.
+The calendar can still keep the X on that date for the remainder of the month.
 
-### Step 6 — Turn on GitHub Pages for the dashboard
-1. In your repo, go to **Settings → Pages**.
-2. Under "Build and deployment," set **Source** to **Deploy from a
-   branch**, branch **main**, folder **/docs**. Click **Save**.
-3. After a minute, GitHub will show you a URL like
-   `https://yourusername.github.io/launch-watch/`. Open it — that's your
-   dashboard.
+Automatic updates
 
-### Step 7 — Add the dashboard to your phone's home screen
-- **iPhone (Safari)**: open the dashboard URL → tap the Share icon →
-  **Add to Home Screen**.
-- **Android (Chrome)**: open the dashboard URL → tap the ⋮ menu →
-  **Add to Home Screen** / **Install app**.
-- **Desktop (Chrome/Edge)**: open the dashboard URL → click the install
-  icon (⊕) in the address bar.
+The GitHub Action checks for new launch information once every hour.
 
-Now it behaves like a normal app icon, opens full-screen, no browser
-chrome.
+Each successful check updates the launch data used by the app.
 
----
+This means Watch-A-Launch automatically keeps track of:
 
-## Changing your settings later
-Just edit `config.json` in the GitHub website (pencil icon → edit →
-commit) any time you want to change lead times, add/remove rocket
-filters, or turn the "new launch added" / "time changed" alerts on or
-off. The very next scheduled run (within an hour) picks up the change.
-No re-installing anything, no coding.
+Newly announced launches
+Launch delays
+Launch date changes
+Launch time changes
+Updated launch locations
+Upcoming launch dates for the calendar
 
-## How it stays accurate for *all* future launches
-Spaceflight Now updates their schedule page continuously as new launches
-get added, delayed, or confirmed. Every hour, the GitHub Action re-reads
-that page from scratch, so new launches show up automatically and delays
-are detected (you'll get a "🔄 Launch time changed" notification, and
-your lead-time reminders re-arm against the new time). There's no list of
-launches to maintain — it's always reading the live page.
+The app does not require a manually maintained list of launches.
 
-## If it ever stops working
-The scraper looks for consistent text patterns ("Launch time:",
-"Launch site:", the "•" separator, "(NNNN UTC)") rather than exact page
-styling, so it should survive minor site tweaks. If Spaceflight Now does
-a bigger redesign, the Action log will show `Parsed 0 launches` as a
-warning. If you (or I, in a future chat) need to fix the scraper, only
-`scraper.py` needs updating — nothing else changes.
+Schedule changes
 
-## Files in this project
-- `scraper.py` — reads and parses the Spaceflight Now schedule
-- `notifier.py` — decides what notifications are due and sends them
-- `config.json` — **your settings** (edit this one)
-- `data/state.json` — internal memory of what's already been sent (don't edit)
-- `docs/` — the installable dashboard webpage (GitHub Pages serves this folder)
-- `.github/workflows/check-launches.yml` — the free hourly scheduler
+Rocket launch schedules frequently change.
+
+If a launch time changes, Watch-A-Launch detects the updated schedule during one of its hourly checks.
+
+For example, if a launch was originally scheduled for:
+
+3:00 PM
+
+and later moves to:
+
+4:00 PM
+
+the appropriate California or Florida notification topic receives an updated launch-time notification.
+
+Future 24-hour and 3-hour reminders are then calculated using the new launch time.
+
+Launch data
+
+Watch-A-Launch uses structured launch information for its primary launch schedule and can use Spaceflight Now as a fallback source.
+
+This allows the app to retrieve future launch dates for the calendar without depending entirely on the visual layout of one website.
+
+The generated launch data is stored in:
+
+docs/launches.json
+
+The dashboard reads that file to display the next launch, calendar, and current month's upcoming launches.
+
+Automatic browser updates
+
+When Watch-A-Launch is opened, it loads the latest generated launch schedule.
+
+If the app is left open continuously, it periodically reloads the launch data automatically.
+
+This does not create additional GitHub Actions runs. It only reloads the already-generated schedule file.
+
+The current month and Upcoming list are also checked locally, so they can roll over automatically when the date changes.
+
+Free services used
+Piece	What it does	Cost
+GitHub	Hosts the project	Free
+GitHub Actions	Checks launch information once per hour	Free
+ntfy.sh	Delivers launch notifications	Free
+GitHub Pages	Hosts the Watch-A-Launch dashboard	Free
+Files in this project
+launch_source.py — retrieves and normalizes upcoming launch information
+scraper.py — Spaceflight Now schedule parser/fallback
+notifier.py — updates launch data and sends notifications
+config.json — launch filtering and notification settings
+data/state.json — remembers previous schedules and notifications that have already been sent
+docs/index.html — Watch-A-Launch dashboard
+docs/launches.json — automatically generated launch data used by the dashboard
+.github/workflows/check-launches.yml — runs the automatic launch checker once per hour
+Version
+
+Current version:
+
+v1.0.1
+
+Changelog:
+
+Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches.
