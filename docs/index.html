@@ -206,6 +206,14 @@ function fmtDelta(ms){
 
 function pad(n){ return n.toString().padStart(2,'0'); }
 
+function fmtPacific(date){
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Los_Angeles',
+    weekday: 'short', month: 'short', day: 'numeric',
+    hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+  }).format(date);
+}
+
 function statusBadge(l){
   if (!l.launch_time_utc) return '<span class="badge tbd">TBD</span>';
   if (l.is_net) return '<span class="badge net">NET</span>';
@@ -225,7 +233,7 @@ function renderHero(next){
       <div class="clock" id="hero-clock"></div>
       <div class="hero-meta">
         <span>${next.site || ''}</span>
-        <span>${new Date(next.launch_time_utc).toUTCString().replace(' GMT','')} UTC</span>
+        <span>${fmtPacific(new Date(next.launch_time_utc))}</span>
       </div>
     </div>
   `;
@@ -282,7 +290,7 @@ fetch(FEED_URL, {cache:'no-store'})
     renderList(upcoming);
     const meta = document.getElementById('feed-meta');
     const updated = new Date(data.generated_at_utc);
-    meta.textContent = `Schedule last checked ${updated.toUTCString().replace(' GMT','')} UTC.`;
+    meta.textContent = `Schedule last checked ${fmtPacific(updated)}.`;
   })
   .catch(err => {
     document.getElementById('list').innerHTML =
