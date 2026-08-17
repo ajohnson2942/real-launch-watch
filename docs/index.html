@@ -158,11 +158,7 @@
     height:7px;
     border-radius:50%;
     background:#ff8a3d;
-
-    box-shadow:
-      0 0 8px 2px
-      rgba(255,138,61,.7);
-
+    box-shadow:0 0 8px 2px rgba(255,138,61,.7);
     animation:pulse 2s ease-in-out infinite;
   }
 
@@ -397,6 +393,23 @@
     line-height:1.45;
   }
 
+  /*
+    Small timestamp above the calendar.
+  */
+  .calendar-last-updated{
+    max-width:760px;
+    margin:0 auto .55rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.68rem;
+    letter-spacing:.02em;
+    color:var(--muted);
+  }
+
+  .calendar-last-updated strong{
+    color:var(--text);
+    font-weight:500;
+  }
+
   .calendar-head{
     display:flex;
     justify-content:space-between;
@@ -486,18 +499,12 @@
 
   .launch-x.ca{
     color:var(--ca);
-
-    text-shadow:
-      0 0 8px
-      rgba(255,230,0,.25);
+    text-shadow:0 0 8px rgba(255,230,0,.25);
   }
 
   .launch-x.fl{
     color:var(--fl);
-
-    text-shadow:
-      0 0 8px
-      rgba(85,216,255,.25);
+    text-shadow:0 0 8px rgba(85,216,255,.25);
   }
 
   .launch-count{
@@ -667,10 +674,7 @@
     font-size:.75rem;
     color:var(--text);
     line-height:1.5;
-
-    box-shadow:
-      0 8px 24px
-      rgba(0,0,0,.4);
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
   }
 
   .version-badge:hover .version-popup,
@@ -800,6 +804,13 @@
 
 <div class="calendar-wrap">
 
+  <div
+    class="calendar-last-updated"
+    id="calendarLastUpdated"
+  >
+    Last updated: loading…
+  </div>
+
   <div class="calendar-card">
 
     <div class="section-title">
@@ -915,12 +926,13 @@ const CHANGELOG = [
       "v1.0.1",
 
     notes:
-      "8/16/2026. Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
+      "Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
   }
 ];
 
 
 function escapeHtml(value){
+
   return String(
     value ?? ''
   ).replace(
@@ -933,6 +945,7 @@ function escapeHtml(value){
       '"':'&quot;'
     }[character])
   );
+
 }
 
 
@@ -1060,31 +1073,23 @@ function locationTimeZone(
 }
 
 
-function fmtPacific(date){
+/*
+  This is used for the actual launch-data update timestamp.
+
+  The timestamp is stored in UTC by the GitHub Action,
+  then displayed in the user's own local timezone.
+*/
+function formatLastUpdated(date){
 
   return new Intl.DateTimeFormat(
     'en-US',
     {
-      timeZone:
-        'America/Los_Angeles',
-
-      weekday:
-        'short',
-
-      month:
-        'short',
-
-      day:
-        'numeric',
-
-      hour:
-        'numeric',
-
-      minute:
-        '2-digit',
-
-      timeZoneName:
-        'short'
+      month:'short',
+      day:'numeric',
+      year:'numeric',
+      hour:'numeric',
+      minute:'2-digit',
+      timeZoneName:'short'
     }
   ).format(
     date
@@ -1114,23 +1119,12 @@ function fmtLaunchTime(
           launch.location_code
         ),
 
-      weekday:
-        'long',
-
-      month:
-        'long',
-
-      day:
-        'numeric',
-
-      hour:
-        'numeric',
-
-      minute:
-        '2-digit',
-
-      timeZoneName:
-        'short'
+      weekday:'long',
+      month:'long',
+      day:'numeric',
+      hour:'numeric',
+      minute:'2-digit',
+      timeZoneName:'short'
     }
   ).format(
     new Date(
@@ -1173,8 +1167,7 @@ function locationBadge(
 ){
 
   if (
-    launch.location_code
-    === 'CA'
+    launch.location_code === 'CA'
   ){
     return (
       '<span class="badge ca">CA</span>'
@@ -1182,8 +1175,7 @@ function locationBadge(
   }
 
   if (
-    launch.location_code
-    === 'FL'
+    launch.location_code === 'FL'
   ){
     return (
       '<span class="badge fl">FL</span>'
@@ -2001,6 +1993,11 @@ function refreshLocalDisplay(){
     );
   }
 
+  /*
+    Remove completed launches from
+    Upcoming without waiting for another
+    GitHub Action.
+  */
   renderCurrentMonthUpcoming();
 
   const nextLaunch =
@@ -2039,6 +2036,10 @@ setInterval(
 
 function loadFeed(){
 
+  /*
+    Cache-busting query makes sure GitHub
+    Pages gives us the newest launches.json.
+  */
   fetch(
     `${FEED_URL}?t=${Date.now()}`,
     {
@@ -2077,31 +2078,57 @@ function loadFeed(){
         launchFeed
       );
 
-      const meta =
+      /*
+        THIS is the timestamp displayed
+        directly above the calendar.
+
+        It uses generated_at_utc from
+        launches.json, which notifier.py
+        rewrites after a successful hourly
+        GitHub Action.
+      */
+      const calendarUpdated =
         document.getElementById(
-          'feed-meta'
+          'calendarLastUpdated'
         );
 
       if (
         data.generated_at_utc
       ){
 
-        meta.textContent =
-          `Schedule last checked ${
-            fmtPacific(
-              new Date(
-                data.generated_at_utc
-              )
+        const updatedDate =
+          new Date(
+            data.generated_at_utc
+          );
+
+        calendarUpdated.innerHTML =
+          `Last updated: <strong>${escapeHtml(
+            formatLastUpdated(
+              updatedDate
             )
-          }. The GitHub Action is configured to check once per hour.`;
+          )}</strong>`;
 
       }
       else{
 
-        meta.textContent =
-          'Schedule has not been checked yet.';
+        calendarUpdated.textContent =
+          'Last updated: unavailable';
 
       }
+
+      /*
+        Keep the existing footer status,
+        but make it shorter since the exact
+        timestamp is now shown above the
+        calendar.
+      */
+      const meta =
+        document.getElementById(
+          'feed-meta'
+        );
+
+      meta.textContent =
+        'Launch data is checked automatically once per hour.';
 
     }
   )
@@ -2118,6 +2145,11 @@ function loadFeed(){
       ).textContent =
         '';
 
+      document.getElementById(
+        'calendarLastUpdated'
+      ).textContent =
+        'Last updated: unavailable';
+
       renderCalendar(
         []
       );
@@ -2132,9 +2164,20 @@ function loadFeed(){
 }
 
 
+/*
+  Initial schedule load.
+*/
 loadFeed();
 
 
+/*
+  Re-read the generated schedule every
+  hour while the app remains open.
+
+  This does NOT run another GitHub Action
+  and does not consume extra Actions
+  minutes.
+*/
 setInterval(
   loadFeed,
   60 * 60 * 1000
