@@ -21,8 +21,10 @@
 >
 
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-192.png">
+
+<!-- App icon: creator's SpaceX launch photo -->
+<link rel="icon" href="launch-photo.png" type="image/png">
+<link rel="apple-touch-icon" href="launch-photo.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +49,10 @@
     --net:#FFC857;
     --tbd:#a89fc9;
 
+    /* California = bright yellow */
     --ca:#FFE600;
+
+    /* Florida = bright light blue */
     --fl:#55D8FF;
   }
 
@@ -393,9 +398,6 @@
     line-height:1.45;
   }
 
-  /*
-    Small timestamp above the calendar.
-  */
   .calendar-last-updated{
     max-width:760px;
     margin:0 auto .55rem;
@@ -466,7 +468,6 @@
 
   .day.today{
     border-color:#ffb37a;
-
     box-shadow:
       inset
       0 0 0 1px
@@ -665,7 +666,7 @@
     position:absolute;
     bottom:130%;
     right:0;
-    width:280px;
+    width:300px;
     background:var(--panel);
     border:1px solid var(--hairline);
     border-radius:10px;
@@ -895,7 +896,7 @@
   tabindex="0"
 >
 
-  v1.0.2
+  v1.2.0
 
   <div class="version-popup">
 
@@ -923,6 +924,14 @@ let renderedMonthKey = '';
 const CHANGELOG = [
   {
     version:
+      "v1.2.0",
+
+    notes:
+      "8/18/2026. Changed the icon of the app to a night photo that the creator got of a SpaceX launch off the coast of California."
+  },
+
+  {
+    version:
       "v1.0.2",
 
     notes:
@@ -937,6 +946,7 @@ const CHANGELOG = [
       "Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
   }
 ];
+
 
 function escapeHtml(value){
 
@@ -1081,10 +1091,10 @@ function locationTimeZone(
 
 
 /*
-  This is used for the actual launch-data update timestamp.
+  Format the real timestamp written by
+  the successful hourly backend update.
 
-  The timestamp is stored in UTC by the GitHub Action,
-  then displayed in the user's own local timezone.
+  It displays in the visitor's local timezone.
 */
 function formatLastUpdated(date){
 
@@ -1991,6 +2001,10 @@ function refreshLocalDisplay(){
       now.getMonth()
     }`;
 
+  /*
+    Automatically switch the calendar
+    when a new month begins.
+  */
   if (
     calendarKey
     !== renderedMonthKey
@@ -2001,12 +2015,17 @@ function refreshLocalDisplay(){
   }
 
   /*
-    Remove completed launches from
-    Upcoming without waiting for another
-    GitHub Action.
+    Re-render Upcoming every minute.
+
+    Once a launch's exact time passes,
+    it disappears from Upcoming.
   */
   renderCurrentMonthUpcoming();
 
+  /*
+    Advance the large countdown to the
+    next launch after the current one passes.
+  */
   const nextLaunch =
     getNextUpcomingLaunch();
 
@@ -2044,8 +2063,8 @@ setInterval(
 function loadFeed(){
 
   /*
-    Cache-busting query makes sure GitHub
-    Pages gives us the newest launches.json.
+    The timestamp prevents an old cached
+    copy of launches.json from being used.
   */
   fetch(
     `${FEED_URL}?t=${Date.now()}`,
@@ -2086,13 +2105,9 @@ function loadFeed(){
       );
 
       /*
-        THIS is the timestamp displayed
-        directly above the calendar.
-
-        It uses generated_at_utc from
-        launches.json, which notifier.py
-        rewrites after a successful hourly
-        GitHub Action.
+        Show the actual timestamp written
+        during the most recent successful
+        backend update.
       */
       const calendarUpdated =
         document.getElementById(
@@ -2123,18 +2138,9 @@ function loadFeed(){
 
       }
 
-      /*
-        Keep the existing footer status,
-        but make it shorter since the exact
-        timestamp is now shown above the
-        calendar.
-      */
-      const meta =
-        document.getElementById(
-          'feed-meta'
-        );
-
-      meta.textContent =
+      document.getElementById(
+        'feed-meta'
+      ).textContent =
         'Launch data is checked automatically once per hour.';
 
     }
@@ -2172,18 +2178,17 @@ function loadFeed(){
 
 
 /*
-  Initial schedule load.
+  Initial load.
 */
 loadFeed();
 
 
 /*
-  Re-read the generated schedule every
-  hour while the app remains open.
+  Re-read launches.json every hour if
+  somebody leaves the app open.
 
-  This does NOT run another GitHub Action
-  and does not consume extra Actions
-  minutes.
+  This does NOT create another GitHub
+  Actions run.
 */
 setInterval(
   loadFeed,
