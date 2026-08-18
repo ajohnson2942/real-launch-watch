@@ -49,10 +49,7 @@
     --net:#FFC857;
     --tbd:#a89fc9;
 
-    /* California = bright yellow */
     --ca:#FFE600;
-
-    /* Florida = bright light blue */
     --fl:#55D8FF;
   }
 
@@ -896,7 +893,7 @@
   tabindex="0"
 >
 
-  v1.2.0
+  v1.2.1
 
   <div class="version-popup">
 
@@ -924,10 +921,18 @@ let renderedMonthKey = '';
 const CHANGELOG = [
   {
     version:
+      "v1.2.1",
+
+    notes:
+      "8/18/2026. Added the word Utility after NTFY."
+  },
+
+  {
+    version:
       "v1.2.0",
 
     notes:
-      "8/18/2026. Changed the icon of the app to a night photo that the creator got of a SpaceX launch off the coast of California. (If you had the app installed before this update, delete it off your homescreen and re-add it to your phone to get the change)."
+      "8/18/2026. Changed the icon of the app to a night photo that the creator got of a SpaceX launch off the coast of California."
   },
 
   {
@@ -943,7 +948,7 @@ const CHANGELOG = [
       "v1.0.1",
 
     notes:
-      "Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
+      "8/16/2026. Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
   }
 ];
 
@@ -1090,12 +1095,6 @@ function locationTimeZone(
 }
 
 
-/*
-  Format the real timestamp written by
-  the successful hourly backend update.
-
-  It displays in the visitor's local timezone.
-*/
 function formatLastUpdated(date){
 
   return new Intl.DateTimeFormat(
@@ -1696,7 +1695,7 @@ function updatePrefsResult(){
   ){
 
     instructions = `
-      Go to the NTFY app on your phone and tap
+      Go to the NTFY utility app on your phone and tap
       <strong>Add new subscription</strong>
       on the top right. Then, type in
       <strong>${escapeHtml(topics[0])}</strong>,
@@ -1707,7 +1706,7 @@ function updatePrefsResult(){
   else{
 
     instructions = `
-      Go to the NTFY app on your phone and tap
+      Go to the NTFY utility app on your phone and tap
       <strong>Add new subscription</strong>
       on the top right. Then, subscribe to both
       <strong>${escapeHtml(topics[0])}</strong>
@@ -2001,10 +2000,6 @@ function refreshLocalDisplay(){
       now.getMonth()
     }`;
 
-  /*
-    Automatically switch the calendar
-    when a new month begins.
-  */
   if (
     calendarKey
     !== renderedMonthKey
@@ -2014,18 +2009,8 @@ function refreshLocalDisplay(){
     );
   }
 
-  /*
-    Re-render Upcoming every minute.
-
-    Once a launch's exact time passes,
-    it disappears from Upcoming.
-  */
   renderCurrentMonthUpcoming();
 
-  /*
-    Advance the large countdown to the
-    next launch after the current one passes.
-  */
   const nextLaunch =
     getNextUpcomingLaunch();
 
@@ -2062,10 +2047,6 @@ setInterval(
 
 function loadFeed(){
 
-  /*
-    The timestamp prevents an old cached
-    copy of launches.json from being used.
-  */
   fetch(
     `${FEED_URL}?t=${Date.now()}`,
     {
@@ -2104,11 +2085,6 @@ function loadFeed(){
         launchFeed
       );
 
-      /*
-        Show the actual timestamp written
-        during the most recent successful
-        backend update.
-      */
       const calendarUpdated =
         document.getElementById(
           'calendarLastUpdated'
@@ -2177,19 +2153,9 @@ function loadFeed(){
 }
 
 
-/*
-  Initial load.
-*/
 loadFeed();
 
 
-/*
-  Re-read launches.json every hour if
-  somebody leaves the app open.
-
-  This does NOT create another GitHub
-  Actions run.
-*/
 setInterval(
   loadFeed,
   60 * 60 * 1000
