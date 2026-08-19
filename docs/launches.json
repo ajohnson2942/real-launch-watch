@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-19T03:07:50.333061+00:00",
+  "generated_at_utc": "2026-08-19T04:48:16.277989+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -15,24 +15,6 @@
     3
   ],
   "launches": [
-    {
-      "uid": "f6958a77-37bb-4559-a108-40ba0ff9e34a",
-      "rocket": "Falcon 9",
-      "mission": "Starlink Group 17-50",
-      "is_net": false,
-      "date_text": "August 18",
-      "scheduled_date": "2026-08-18",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Tuesday, August 18 at 9:01 PM PDT",
-      "launch_time_utc": "2026-08-19T04:01:07+00:00",
-      "updated_text": "2026-08-19T01:54:04Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": [
-        3,
-        24
-      ]
-    },
     {
       "uid": "bbdc4d47-1de3-428e-9fe1-bbf45d9b1e04",
       "rocket": "Falcon 9",
@@ -139,6 +121,21 @@
       "notified_lead_hours": []
     },
     {
+      "uid": "4541ce85-0e38-42ac-a9a0-20474bb5f2cd",
+      "rocket": "Falcon 9",
+      "mission": "SDA Tranche 1 Transport Layer D",
+      "is_net": true,
+      "date_text": "September 29",
+      "scheduled_date": "2026-09-29",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Currently scheduled for September 29; exact launch time TBD (quarter 3-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-06-19T11:31:37Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
       "uid": "7d1afb26-6f9c-429b-9ccf-29012fd1e519",
       "rocket": "Starship",
       "mission": "Flight 14",
@@ -229,17 +226,17 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "4541ce85-0e38-42ac-a9a0-20474bb5f2cd",
+      "uid": "67213393-7983-4c06-8b44-b8c785a5ed79",
       "rocket": "Falcon 9",
-      "mission": "SDA Tranche 1 Transport Layer D",
+      "mission": "Transporter 18 (Dedicated SSO Rideshare)",
       "is_net": true,
-      "date_text": "September 29",
-      "scheduled_date": "2026-09-29",
+      "date_text": "October 30",
+      "scheduled_date": "2026-10-30",
       "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
       "location_code": "CA",
-      "time_description": "Currently scheduled for September 29; exact launch time TBD (quarter 3-level estimate)",
+      "time_description": "Currently scheduled for October 30; exact launch time TBD (month-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2026-06-19T11:31:37Z",
+      "updated_text": "2025-06-03T23:40:03Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -255,21 +252,6 @@
       "time_description": "Currently scheduled for October 30; exact launch time TBD (month-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2026-08-16T15:28:13Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "67213393-7983-4c06-8b44-b8c785a5ed79",
-      "rocket": "Falcon 9",
-      "mission": "Transporter 18 (Dedicated SSO Rideshare)",
-      "is_net": true,
-      "date_text": "October 30",
-      "scheduled_date": "2026-10-30",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Currently scheduled for October 30; exact launch time TBD (month-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2025-06-03T23:40:03Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -1515,6 +1497,21 @@
       "time_description": "Currently scheduled for July 4, 2028; exact launch time TBD (day-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2024-11-26T02:46:33Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "26881916-98e7-40bc-954c-88ad6ac7a050",
+      "rocket": "Falcon Heavy",
+      "mission": "ExoMars 2028 Rosalind Franklin Rover",
+      "is_net": true,
+      "date_text": "October 30, 2028",
+      "scheduled_date": "2028-10-30",
+      "site": "Launch Complex 39A, Kennedy Space Center, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for October 30, 2028; exact launch time TBD (month-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-04-16T17:23:45Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     }
