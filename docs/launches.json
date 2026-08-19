@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-19T04:48:16.277989+00:00",
+  "generated_at_utc": "2026-08-19T04:49:13.677743+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -14,6 +14,7 @@
     24,
     3
   ],
+  "launching_now_notifications": true,
   "launches": [
     {
       "uid": "bbdc4d47-1de3-428e-9fe1-bbf45d9b1e04",
