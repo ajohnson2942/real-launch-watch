@@ -20,14 +20,32 @@
   content="#151B54"
 >
 
-<link rel="manifest" href="manifest.json">
+<link
+  rel="manifest"
+  href="manifest.json"
+>
 
-<!-- App icon: creator's SpaceX launch photo -->
-<link rel="icon" href="launch-photo.png" type="image/png">
-<link rel="apple-touch-icon" href="launch-photo.png">
+<link
+  rel="icon"
+  href="launch-photo.png"
+  type="image/png"
+>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="apple-touch-icon"
+  href="launch-photo.png"
+>
+
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com"
+>
+
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+>
 
 <link
   href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
@@ -44,11 +62,9 @@
     --text:#F3F1FA;
     --muted:#C9C3E0;
     --accent:#35063E;
-
     --confirmed:#3DDC97;
     --net:#FFC857;
     --tbd:#a89fc9;
-
     --ca:#FFE600;
     --fl:#55D8FF;
   }
@@ -64,9 +80,9 @@
   }
 
   body{
-    font-family:'Work Sans',system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
     padding-bottom:5rem;
+    position:relative;
     color:var(--text);
 
     background:
@@ -76,15 +92,20 @@
         var(--bg-bottom) 100%
       );
 
-    min-height:100vh;
-    position:relative;
+    font-family:
+      'Work Sans',
+      system-ui,
+      sans-serif;
+
+    -webkit-font-smoothing:
+      antialiased;
   }
 
   .stars{
     position:fixed;
     inset:0;
-    pointer-events:none;
     z-index:0;
+    pointer-events:none;
 
     background-image:
       radial-gradient(
@@ -123,7 +144,8 @@
         transparent 40%
       );
 
-    background-repeat:no-repeat;
+    background-repeat:
+      no-repeat;
   }
 
   header,
@@ -132,26 +154,59 @@
   .calendar-wrap,
   main,
   footer{
+    max-width:760px;
     position:relative;
     z-index:1;
+    margin-left:auto;
+    margin-right:auto;
   }
 
   header{
-    padding:2.25rem 1.5rem .5rem;
-    max-width:760px;
-    margin:0 auto;
+    padding:
+      2.25rem
+      1.5rem
+      .5rem;
+  }
+
+  .hero,
+  .prefs,
+  .calendar-wrap{
+    padding:
+      0
+      1.5rem;
+  }
+
+  .hero{
+    margin-top:1.5rem;
+  }
+
+  .prefs,
+  .calendar-wrap{
+    margin-top:2rem;
+  }
+
+  main{
+    margin-top:2rem;
+
+    padding:
+      0
+      1.5rem;
   }
 
   .eyebrow{
-    font-family:'JetBrains Mono',monospace;
-    font-size:.7rem;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--muted);
     display:flex;
     align-items:center;
     gap:.5rem;
     margin-bottom:.6rem;
+    color:var(--muted);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.7rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
   }
 
   .eyebrow::before{
@@ -160,8 +215,16 @@
     height:7px;
     border-radius:50%;
     background:#ff8a3d;
-    box-shadow:0 0 8px 2px rgba(255,138,61,.7);
-    animation:pulse 2s ease-in-out infinite;
+
+    box-shadow:
+      0 0 8px 2px
+      rgba(255,138,61,.7);
+
+    animation:
+      pulse
+      2s
+      ease-in-out
+      infinite;
   }
 
   @keyframes pulse{
@@ -175,86 +238,105 @@
     }
   }
 
-  h1.app-title{
-    font-family:'Anton',sans-serif;
+  .app-title{
+    margin:
+      0
+      0
+      .3rem;
+
+    color:var(--text);
+
+    font-family:
+      'Anton',
+      sans-serif;
+
+    font-size:
+      clamp(
+        3.2rem,
+        13vw,
+        5.2rem
+      );
+
     font-weight:400;
-    font-size:clamp(3.2rem,13vw,5.2rem);
-    text-transform:uppercase;
     letter-spacing:.01em;
     line-height:.95;
-    margin:0 0 .3rem;
-    color:var(--text);
+    text-transform:uppercase;
   }
 
-  h2.liftoff-subtitle{
-    font-family:'Orbitron',sans-serif;
-    font-weight:600;
-    font-size:clamp(1rem,4vw,1.35rem);
-    text-transform:uppercase;
-    letter-spacing:.14em;
+  .liftoff-subtitle{
+    margin:
+      0
+      0
+      1rem;
+
     color:#ffb37a;
-    margin:0 0 1rem;
+
+    font-family:
+      'Orbitron',
+      sans-serif;
+
+    font-size:
+      clamp(
+        1rem,
+        4vw,
+        1.35rem
+      );
+
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
   }
 
   .sub{
-    font-family:'Lora',serif;
+    max-width:56ch;
+
+    margin:
+      0
+      0
+      .5rem;
+
     color:var(--text);
+
+    font-family:
+      'Lora',
+      serif;
+
     font-size:1.02rem;
-    max-width:56ch;
     line-height:1.6;
-    margin:0 0 .5rem;
-  }
-
-  .install-help{
-    font-family:'Lora',serif;
-    color:var(--muted);
-    font-size:.82rem;
-    line-height:1.5;
-    max-width:56ch;
-    margin:1.1rem 0 0;
-  }
-
-  .install-help strong{
-    color:var(--text);
-  }
-
-  .hero,
-  .prefs,
-  .calendar-wrap{
-    max-width:760px;
-    margin:1.5rem auto 0;
-    padding:0 1.5rem;
-  }
-
-  .prefs,
-  .calendar-wrap{
-    margin-top:2rem;
   }
 
   .hero-card,
   .prefs-card,
   .calendar-card{
+    border:
+      1px solid
+      var(--hairline);
+
+    border-radius:14px;
+
     background:
       linear-gradient(
         160deg,
         var(--panel-2),
         var(--panel)
       );
-
-    border:1px solid var(--hairline);
-    border-radius:14px;
   }
 
   .hero-card{
-    padding:1.5rem 1.5rem 1.3rem;
     position:relative;
     overflow:hidden;
+
+    padding:
+      1.5rem
+      1.5rem
+      1.3rem;
   }
 
   .hero-card::after{
     content:"";
     position:absolute;
     inset:0;
+    pointer-events:none;
 
     background:
       linear-gradient(
@@ -263,35 +345,54 @@
         rgba(107,26,122,.18) 55%,
         transparent 70%
       );
-
-    pointer-events:none;
   }
 
   .hero-label{
-    font-family:'JetBrains Mono',monospace;
+    color:var(--muted);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.7rem;
     letter-spacing:.12em;
     text-transform:uppercase;
-    color:var(--muted);
   }
 
   .hero-mission{
-    font-family:'Barlow Condensed',sans-serif;
-    font-weight:600;
+    margin:
+      .2rem
+      0
+      .9rem;
+
+    font-family:
+      'Barlow Condensed',
+      sans-serif;
+
     font-size:1.5rem;
-    margin:.2rem 0 .9rem;
+    font-weight:600;
     line-height:1.15;
   }
 
   .clock{
-    font-family:'JetBrains Mono',monospace;
-    font-size:clamp(1.6rem,8vw,2.6rem);
+    display:flex;
+    flex-wrap:wrap;
+    gap:.5rem;
+    color:var(--text);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:
+      clamp(
+        1.6rem,
+        8vw,
+        2.6rem
+      );
+
     font-weight:700;
     letter-spacing:.02em;
-    color:var(--text);
-    display:flex;
-    gap:.5rem;
-    flex-wrap:wrap;
   }
 
   .clock .unit{
@@ -299,59 +400,84 @@
   }
 
   .clock small{
-    font-family:'Work Sans',sans-serif;
-    font-weight:500;
-    font-size:.32em;
-    color:var(--muted);
-    text-transform:uppercase;
-    letter-spacing:.08em;
     display:block;
     margin-top:.15em;
+    color:var(--muted);
+
+    font-family:
+      'Work Sans',
+      sans-serif;
+
+    font-size:.32em;
+    font-weight:500;
+    letter-spacing:.08em;
+    text-transform:uppercase;
   }
 
   .hero-meta{
-    margin-top:1rem;
     display:flex;
-    gap:1.2rem;
     flex-wrap:wrap;
-    font-family:'JetBrains Mono',monospace;
-    font-size:.78rem;
+    gap:1.2rem;
+    margin-top:1rem;
     color:var(--muted);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.78rem;
   }
 
   .prefs-card,
   .calendar-card{
-    padding:1.3rem 1.5rem;
+    padding:
+      1.3rem
+      1.5rem;
   }
 
   .section-title{
-    font-family:'Barlow Condensed',sans-serif;
-    font-weight:600;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    font-size:1rem;
-    color:var(--muted);
-    margin:0 0 .8rem;
+    margin:
+      0
+      0
+      .8rem;
+
     padding-bottom:.5rem;
-    border-bottom:1px solid var(--hairline);
+
+    border-bottom:
+      1px solid
+      var(--hairline);
+
+    color:var(--muted);
+
+    font-family:
+      'Barlow Condensed',
+      sans-serif;
+
+    font-size:1rem;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
   }
 
   .prefs-help{
-    font-family:'Lora',serif;
-    font-size:.92rem;
+    margin:
+      0
+      0
+      .8rem;
+
     color:var(--text);
-    margin:0 0 .8rem;
+
+    font-family:
+      'Lora',
+      serif;
+
+    font-size:.92rem;
     line-height:1.5;
   }
 
-  select.location-select{
-    font-family:'Work Sans',sans-serif;
-    font-size:1rem;
-    font-weight:500;
-    color:var(--text);
-    background:var(--bg-top);
-    border:1px solid var(--hairline);
-    border-radius:8px;
+  .location-select{
+    width:100%;
+    max-width:360px;
 
     padding:
       .6rem
@@ -359,27 +485,52 @@
       .6rem
       .9rem;
 
-    width:100%;
-    max-width:360px;
-    appearance:none;
-    -webkit-appearance:none;
+    border:
+      1px solid
+      var(--hairline);
+
+    border-radius:8px;
+    color:var(--text);
+    background-color:var(--bg-top);
 
     background-image:
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1L7 7L13 1' stroke='%23C9C3E0' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
 
     background-repeat:no-repeat;
-    background-position:right .9rem center;
+
+    background-position:
+      right .9rem center;
+
+    font-family:
+      'Work Sans',
+      sans-serif;
+
+    font-size:1rem;
+    font-weight:500;
+    appearance:none;
+    -webkit-appearance:none;
   }
 
   .prefs-result{
     margin-top:.9rem;
-    font-family:'JetBrains Mono',monospace;
-    font-size:.82rem;
+
+    padding:
+      .8rem
+      .9rem;
+
+    border:
+      1px solid
+      var(--hairline);
+
+    border-radius:8px;
     color:var(--text);
     background:rgba(0,0,0,.2);
-    border:1px solid var(--hairline);
-    border-radius:8px;
-    padding:.8rem .9rem;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.82rem;
     line-height:1.65;
   }
 
@@ -388,20 +539,31 @@
   }
 
   .tiny-note{
-    font-family:'Lora',serif;
-    color:var(--muted);
-    font-size:.78rem;
     margin-top:.7rem;
+    color:var(--muted);
+
+    font-family:
+      'Lora',
+      serif;
+
+    font-size:.78rem;
     line-height:1.45;
   }
 
   .calendar-last-updated{
-    max-width:760px;
-    margin:0 auto .55rem;
-    font-family:'JetBrains Mono',monospace;
+    margin:
+      0
+      auto
+      .55rem;
+
+    color:var(--muted);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.68rem;
     letter-spacing:.02em;
-    color:var(--muted);
   }
 
   .calendar-last-updated strong{
@@ -411,51 +573,76 @@
 
   .calendar-head{
     display:flex;
-    justify-content:space-between;
     align-items:flex-end;
+    justify-content:space-between;
     gap:1rem;
     margin-bottom:1rem;
   }
 
   .calendar-month{
-    font-family:'Orbitron',sans-serif;
+    font-family:
+      'Orbitron',
+      sans-serif;
+
     font-size:1.05rem;
     letter-spacing:.05em;
     text-transform:uppercase;
   }
 
   .calendar-today{
-    font-family:'JetBrains Mono',monospace;
-    font-size:.68rem;
     color:var(--muted);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.68rem;
     text-align:right;
   }
 
   .calendar-grid{
     display:grid;
-    grid-template-columns:repeat(7,1fr);
+
+    grid-template-columns:
+      repeat(
+        7,
+        1fr
+      );
+
     gap:5px;
   }
 
   .weekday{
-    font-family:'JetBrains Mono',monospace;
-    font-size:.58rem;
+    padding-bottom:.25rem;
     color:var(--muted);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.58rem;
     text-align:center;
     text-transform:uppercase;
-    padding-bottom:.25rem;
   }
 
   .day{
-    position:relative;
     min-height:56px;
-    border:1px solid rgba(201,195,224,.18);
-    border-radius:8px;
-    padding:.38rem;
-    background:rgba(0,0,0,.08);
-    font-family:'JetBrains Mono',monospace;
-    font-size:.72rem;
+    position:relative;
     overflow:hidden;
+    padding:.38rem;
+
+    border:
+      1px solid
+      rgba(201,195,224,.18);
+
+    border-radius:8px;
+    background:rgba(0,0,0,.08);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.72rem;
   }
 
   .day.blank{
@@ -465,6 +652,7 @@
 
   .day.today{
     border-color:#ffb37a;
+
     box-shadow:
       inset
       0 0 0 1px
@@ -480,71 +668,100 @@
     position:absolute;
     left:50%;
     top:54%;
-    transform:translate(-50%,-50%);
+    z-index:2;
     display:flex;
-    gap:3px;
     align-items:center;
     justify-content:center;
-    z-index:2;
+    gap:3px;
     white-space:nowrap;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      );
   }
 
   .launch-x{
-    font-family:'Anton',sans-serif;
+    font-family:
+      'Anton',
+      sans-serif;
+
     font-size:1.9rem;
     line-height:1;
   }
 
   .launch-x.ca{
     color:var(--ca);
-    text-shadow:0 0 8px rgba(255,230,0,.25);
+
+    text-shadow:
+      0 0 8px
+      rgba(255,230,0,.25);
   }
 
   .launch-x.fl{
     color:var(--fl);
-    text-shadow:0 0 8px rgba(85,216,255,.25);
+
+    text-shadow:
+      0 0 8px
+      rgba(85,216,255,.25);
   }
 
   .launch-count{
     position:absolute;
     right:4px;
     bottom:3px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:.5rem;
-    color:var(--muted);
     z-index:3;
+    color:var(--muted);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.5rem;
   }
 
   .calendar-legend{
-    font-family:'Lora',serif;
+    margin:
+      .85rem
+      0
+      0;
+
     color:var(--muted);
+
+    font-family:
+      'Lora',
+      serif;
+
     font-size:.78rem;
     line-height:1.5;
-    margin:.85rem 0 0;
   }
 
-  .calendar-legend .ca-text{
+  .ca-text{
     color:var(--ca);
     font-weight:700;
   }
 
-  .calendar-legend .fl-text{
+  .fl-text{
     color:var(--fl);
     font-weight:700;
   }
 
-  main{
-    max-width:760px;
-    margin:2rem auto 0;
-    padding:0 1.5rem;
-  }
-
   .card{
     display:grid;
-    grid-template-columns:64px 1fr;
+
+    grid-template-columns:
+      64px 1fr;
+
     gap:.9rem;
-    padding:1rem 0;
-    border-bottom:1px solid var(--hairline);
+
+    padding:
+      1rem
+      0;
+
+    border-bottom:
+      1px solid
+      var(--hairline);
   }
 
   .card:last-child{
@@ -552,11 +769,15 @@
   }
 
   .t-minus{
-    font-family:'JetBrains Mono',monospace;
-    font-size:.72rem;
-    color:var(--muted);
-    text-align:right;
     padding-top:.15rem;
+    color:var(--muted);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.72rem;
+    text-align:right;
     white-space:nowrap;
   }
 
@@ -572,14 +793,30 @@
 
   .badge{
     display:inline-block;
-    font-family:'JetBrains Mono',monospace;
+
+    margin:
+      0
+      .25rem
+      .35rem
+      0;
+
+    padding:
+      .15rem
+      .45rem;
+
+    border:
+      1px solid
+      currentColor;
+
+    border-radius:4px;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size:.62rem;
     letter-spacing:.08em;
     text-transform:uppercase;
-    padding:.15rem .45rem;
-    border-radius:4px;
-    border:1px solid currentColor;
-    margin:0 .25rem .35rem 0;
   }
 
   .badge.confirmed{
@@ -603,9 +840,13 @@
   }
 
   .card-title{
-    font-weight:600;
+    margin:
+      0
+      0
+      .15rem;
+
     font-size:1rem;
-    margin:0 0 .15rem;
+    font-weight:600;
   }
 
   .card-rocket{
@@ -614,46 +855,92 @@
   }
 
   .card-detail{
-    font-family:'Lora',serif;
     color:var(--muted);
+
+    font-family:
+      'Lora',
+      serif;
+
     font-size:.85rem;
     line-height:1.5;
   }
 
   .empty{
-    font-family:'Lora',serif;
+    padding:
+      1rem
+      0;
+
     color:var(--muted);
+
+    font-family:
+      'Lora',
+      serif;
+
     font-size:.9rem;
-    padding:1rem 0;
   }
 
   footer{
-    max-width:760px;
-    margin:2.5rem auto 0;
+    margin-top:2.5rem;
     padding:1.5rem;
-    font-family:'Lora',serif;
+
+    border-top:
+      1px solid
+      var(--hairline);
+
     color:var(--text);
+
+    font-family:
+      'Lora',
+      serif;
+
     font-size:.88rem;
     line-height:1.65;
-    border-top:1px solid var(--hairline);
   }
 
   footer a{
     color:#ffb37a;
   }
 
+  .install-help{
+    max-width:56ch;
+
+    margin:
+      1.1rem
+      0
+      0;
+
+    color:var(--muted);
+    font-size:.82rem;
+    line-height:1.5;
+  }
+
+  .install-help strong{
+    color:var(--text);
+  }
+
   .version-badge{
     position:fixed;
-    bottom:.9rem;
     right:.9rem;
+    bottom:.9rem;
     z-index:20;
-    font-family:'JetBrains Mono',monospace;
-    font-size:.7rem;
+
+    padding:
+      .35rem
+      .6rem;
+
+    border:
+      1px solid
+      var(--hairline);
+
+    border-radius:6px;
     color:var(--muted);
     background:rgba(18,26,48,.85);
-    border:1px solid var(--hairline);
-    border-radius:6px;
-    padding:.35rem .6rem;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.7rem;
     cursor:pointer;
     user-select:none;
   }
@@ -661,32 +948,52 @@
   .version-popup{
     display:none;
     position:absolute;
-    bottom:130%;
     right:0;
-    width:300px;
-    background:var(--panel);
-    border:1px solid var(--hairline);
+    bottom:130%;
+    width:310px;
+
+    padding:
+      .8rem
+      .9rem;
+
+    border:
+      1px solid
+      var(--hairline);
+
     border-radius:10px;
-    padding:.8rem .9rem;
-    font-family:'Work Sans',sans-serif;
-    font-size:.75rem;
     color:var(--text);
+    background:var(--panel);
+
+    box-shadow:
+      0 8px 24px
+      rgba(0,0,0,.4);
+
+    font-family:
+      'Work Sans',
+      sans-serif;
+
+    font-size:.75rem;
     line-height:1.5;
-    box-shadow:0 8px 24px rgba(0,0,0,.4);
   }
 
-  .version-badge:hover .version-popup,
-  .version-badge.active .version-popup{
+  .version-badge:hover
+  .version-popup,
+  .version-badge.active
+  .version-popup{
     display:block;
   }
 
   .version-popup-title{
-    font-family:'JetBrains Mono',monospace;
-    font-size:.68rem;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    color:var(--muted);
     margin-bottom:.5rem;
+    color:var(--muted);
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size:.68rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
   }
 
   .version-popup ul{
@@ -702,7 +1009,9 @@
     margin-bottom:0;
   }
 
-  @media(max-width:480px){
+  @media(
+    max-width:480px
+  ){
     .calendar-card{
       padding:1rem;
     }
@@ -721,7 +1030,16 @@
     }
 
     .card{
-      grid-template-columns:58px 1fr;
+      grid-template-columns:
+        58px 1fr;
+    }
+
+    .version-popup{
+      width:
+        min(
+          310px,
+          calc(100vw - 2rem)
+        );
     }
   }
 </style>
@@ -768,7 +1086,7 @@
     </div>
 
     <p class="prefs-help">
-      Choose which state's launches you want alerts for. Each location gets a 24-hour reminder, a 3-hour reminder, and a new alert if the launch time changes.
+      Choose which state's launches you want alerts for. Each location gets a 24-hour reminder, a 3-hour reminder, a LAUNCHING NOW! notification, and a new alert if the launch time changes.
     </p>
 
     <select
@@ -867,6 +1185,7 @@
 
   <div>
     Push notifications are sent separately via
+
     <a
       href="https://ntfy.sh"
       target="_blank"
@@ -874,15 +1193,26 @@
     >
       ntfy.sh
     </a>.
+
     Choose California, Florida, or both above, then subscribe to the topic or topics shown. Make sure notifications are enabled for NTFY.
   </div>
 
   <p class="install-help">
-    <strong>iPhone:</strong>
+
+    <strong>
+      iPhone:
+    </strong>
+
     To add this as an app to your iPhone, go to Safari and click the three dots on the bottom right, then click Share and Add to Home Screen.
+
     <br><br>
-    <strong>Android:</strong>
+
+    <strong>
+      Android:
+    </strong>
+
     To add this as an app to your Android phone, open this page in Chrome, tap the three-dot menu, then tap Add to Home screen or Install app.
+
   </p>
 
 </footer>
@@ -893,7 +1223,7 @@
   tabindex="0"
 >
 
-  v1.2.1
+  v1.3.0
 
   <div class="version-popup">
 
@@ -917,35 +1247,44 @@ const BASE_TOPIC =
 let launchFeed = [];
 let heroTimer = null;
 let renderedMonthKey = '';
+let currentHeroUid = null;
 
 const CHANGELOG = [
   {
     version:
-      "v1.2.1",
+      'v1.3.0',
 
     notes:
-      "8/18/2026. Added the word Utility after NTFY."
+      '8/18/2026. Added the LAUNCHING NOW! notifications.'
   },
 
   {
     version:
-      "v1.2.0",
+      'v1.2.1',
 
     notes:
-      "8/18/2026. Changed the icon of the app to a night photo that the creator got of a SpaceX launch off the coast of California."
+      '8/18/2026. Added the word Utility after NTFY.'
   },
 
   {
     version:
-      "v1.0.2",
+      'v1.2.0',
 
     notes:
-      "8/16/2026. Added the text that shows the last time that the calendar was updated."
+      '8/18/2026. Changed the icon of the app to a night photo that the creator got of a SpaceX launch off the coast of California.'
   },
 
   {
     version:
-      "v1.0.1",
+      'v1.0.2',
+
+    notes:
+      '8/16/2026. Added the text that shows the last time that the calendar was updated.'
+  },
+
+  {
+    version:
+      'v1.0.1',
 
     notes:
       "8/16/2026. Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches."
@@ -953,12 +1292,14 @@ const CHANGELOG = [
 ];
 
 
-function escapeHtml(value){
-
+function escapeHtml(
+  value
+){
   return String(
     value ?? ''
   ).replace(
     /[&<>'"]/g,
+
     character => ({
       '&':'&amp;',
       '<':'&lt;',
@@ -967,38 +1308,37 @@ function escapeHtml(value){
       '"':'&quot;'
     }[character])
   );
-
 }
 
 
 function renderChangelog(){
-
-  const list =
-    document.getElementById(
+  document
+    .getElementById(
       'versionList'
-    );
-
-  list.innerHTML =
-    CHANGELOG
-    .map(
-      entry =>
-        `<li><strong>${escapeHtml(entry.version)}:</strong> ${escapeHtml(entry.notes)}</li>`
     )
-    .join('');
-
+    .innerHTML =
+      CHANGELOG
+      .map(
+        entry =>
+          `<li><strong>${escapeHtml(entry.version)}:</strong> ${escapeHtml(entry.notes)}</li>`
+      )
+      .join('');
 }
+
 
 renderChangelog();
 
 
 const versionBadge =
-  document.getElementById(
+  document
+  .getElementById(
     'versionBadge'
   );
 
 
 versionBadge.addEventListener(
   'click',
+
   () =>
     versionBadge
     .classList
@@ -1010,28 +1350,51 @@ versionBadge.addEventListener(
 
 document.addEventListener(
   'click',
-  event => {
 
+  event => {
     if (
       !versionBadge.contains(
         event.target
       )
     ){
       versionBadge
-      .classList
-      .remove(
-        'active'
-      );
+        .classList
+        .remove(
+          'active'
+        );
     }
-
   }
 );
 
 
-function fmtDelta(ms){
+function parseDate(
+  value
+){
+  if (!value){
+    return null;
+  }
 
+  const date =
+    new Date(
+      value
+    );
+
+  return (
+    Number.isNaN(
+      date.getTime()
+    )
+      ? null
+      : date
+  );
+}
+
+
+function fmtDelta(
+  milliseconds
+){
   if (
-    ms <= 0
+    milliseconds
+    <= 0
   ){
     return {
       launched:true
@@ -1040,123 +1403,159 @@ function fmtDelta(ms){
 
   const seconds =
     Math.floor(
-      ms / 1000
+      milliseconds
+      / 1000
     );
 
   return {
     days:
       Math.floor(
-        seconds / 86400
+        seconds
+        / 86400
       ),
 
     hours:
       Math.floor(
-        (seconds % 86400)
+        (
+          seconds
+          % 86400
+        )
         / 3600
       ),
 
     mins:
       Math.floor(
-        (seconds % 3600)
+        (
+          seconds
+          % 3600
+        )
         / 60
       ),
 
     secs:
       seconds % 60,
 
-    launched:false
+    launched:
+      false
   };
-
 }
 
 
-function pad(number){
-
-  return number
-    .toString()
-    .padStart(
-      2,
-      '0'
-    );
-
+function pad(
+  number
+){
+  return String(
+    number
+  ).padStart(
+    2,
+    '0'
+  );
 }
 
 
 function locationTimeZone(
   locationCode
 ){
-
   return (
-    locationCode === 'FL'
+    locationCode
+    === 'FL'
       ? 'America/New_York'
       : 'America/Los_Angeles'
   );
-
 }
 
 
-function formatLastUpdated(date){
-
+function formatLastUpdated(
+  date
+){
   return new Intl.DateTimeFormat(
     'en-US',
+
     {
-      month:'short',
-      day:'numeric',
-      year:'numeric',
-      hour:'numeric',
-      minute:'2-digit',
-      timeZoneName:'short'
+      month:
+        'short',
+
+      day:
+        'numeric',
+
+      year:
+        'numeric',
+
+      hour:
+        'numeric',
+
+      minute:
+        '2-digit',
+
+      timeZoneName:
+        'short'
     }
   ).format(
     date
   );
-
 }
 
 
 function fmtLaunchTime(
   launch
 ){
+  const launchDate =
+    parseDate(
+      launch
+      .launch_time_utc
+    );
 
-  if (
-    !launch.launch_time_utc
-  ){
+  if (!launchDate){
     return (
-      launch.time_description
+      launch
+      .time_description
       || 'Exact time TBD'
     );
   }
 
   return new Intl.DateTimeFormat(
     'en-US',
+
     {
       timeZone:
         locationTimeZone(
-          launch.location_code
+          launch
+          .location_code
         ),
 
-      weekday:'long',
-      month:'long',
-      day:'numeric',
-      hour:'numeric',
-      minute:'2-digit',
-      timeZoneName:'short'
+      weekday:
+        'long',
+
+      month:
+        'long',
+
+      day:
+        'numeric',
+
+      year:
+        'numeric',
+
+      hour:
+        'numeric',
+
+      minute:
+        '2-digit',
+
+      timeZoneName:
+        'short'
     }
   ).format(
-    new Date(
-      launch.launch_time_utc
-    )
+    launchDate
   );
-
 }
 
 
 function statusBadge(
   launch
 ){
-
   if (
-    !launch.launch_time_utc
+    !launch
+    .launch_time_utc
   ){
     return (
       '<span class="badge tbd">TBD time</span>'
@@ -1164,7 +1563,8 @@ function statusBadge(
   }
 
   if (
-    launch.is_net
+    launch
+    .is_net
   ){
     return (
       '<span class="badge net">NET</span>'
@@ -1174,16 +1574,16 @@ function statusBadge(
   return (
     '<span class="badge confirmed">Confirmed</span>'
   );
-
 }
 
 
 function locationBadge(
   launch
 ){
-
   if (
-    launch.location_code === 'CA'
+    launch
+    .location_code
+    === 'CA'
   ){
     return (
       '<span class="badge ca">CA</span>'
@@ -1191,7 +1591,9 @@ function locationBadge(
   }
 
   if (
-    launch.location_code === 'FL'
+    launch
+    .location_code
+    === 'FL'
   ){
     return (
       '<span class="badge fl">FL</span>'
@@ -1199,48 +1601,57 @@ function locationBadge(
   }
 
   return '';
-
 }
 
 
 function getNextUpcomingLaunch(){
-
   const now =
     new Date();
 
   return launchFeed
     .filter(
-      launch =>
-        launch.launch_time_utc
-        &&
-        new Date(
-          launch.launch_time_utc
-        ) > now
+      launch => {
+        const launchDate =
+          parseDate(
+            launch
+            .launch_time_utc
+          );
+
+        return (
+          launchDate
+          && launchDate
+          > now
+        );
+      }
     )
     .sort(
-      (a,b) =>
-        new Date(
-          a.launch_time_utc
+      (
+        first,
+        second
+      ) =>
+        parseDate(
+          first
+          .launch_time_utc
         )
         -
-        new Date(
-          b.launch_time_utc
+        parseDate(
+          second
+          .launch_time_utc
         )
     )[0];
-
 }
 
 
-function renderHero(next){
-
+function renderHero(
+  next
+){
   const hero =
-    document.getElementById(
+    document
+    .getElementById(
       'hero'
     );
 
-  if (
-    heroTimer
-  ){
+  if (heroTimer){
     clearInterval(
       heroTimer
     );
@@ -1248,14 +1659,21 @@ function renderHero(next){
     heroTimer = null;
   }
 
-  if (
-    !next
-  ){
-    hero.innerHTML =
-      '';
+  if (!next){
+    currentHeroUid = null;
+    hero.innerHTML = '';
 
     return;
   }
+
+  currentHeroUid = (
+    next.uid
+    || (
+      `${next.rocket}-`
+      + `${next.mission}-`
+      + `${next.launch_time_utc}`
+    )
+  );
 
   hero.innerHTML = `
     <div class="hero-card">
@@ -1290,32 +1708,43 @@ function renderHero(next){
     </div>
   `;
 
-  const clockEl =
-    document.getElementById(
+  const clockElement =
+    document
+    .getElementById(
       'hero-clock'
     );
 
   function tick(){
+    const launchDate =
+      parseDate(
+        next
+        .launch_time_utc
+      );
+
+    if (!launchDate){
+      clockElement.innerHTML =
+        '<span class="unit">EXACT TIME TBD</span>';
+
+      return;
+    }
 
     const delta =
       fmtDelta(
-        new Date(
-          next.launch_time_utc
-        )
-        -
-        new Date()
+        launchDate
+        - new Date()
       );
 
     if (
-      delta.launched
+      delta
+      .launched
     ){
-      clockEl.innerHTML =
+      clockElement.innerHTML =
         '<span class="unit">LIFTOFF WINDOW OPEN</span>';
 
       return;
     }
 
-    clockEl.innerHTML = `
+    clockElement.innerHTML = `
 
       <span>
         <span class="unit">
@@ -1346,7 +1775,6 @@ function renderHero(next){
       </span>
 
     `;
-
   }
 
   tick();
@@ -1356,18 +1784,19 @@ function renderHero(next){
       tick,
       1000
     );
-
 }
 
 
-function localDateKey(date){
-
+function localDateKey(
+  date
+){
   const year =
     date.getFullYear();
 
   const month =
     String(
-      date.getMonth() + 1
+      date.getMonth()
+      + 1
     ).padStart(
       2,
       '0'
@@ -1384,74 +1813,71 @@ function localDateKey(date){
   return (
     `${year}-${month}-${day}`
   );
-
 }
 
 
 function currentMonthKey(){
-
   const now =
     new Date();
 
   return (
     `${now.getFullYear()}-${
       String(
-        now.getMonth() + 1
+        now.getMonth()
+        + 1
       ).padStart(
         2,
         '0'
       )
     }`
   );
-
 }
 
 
 function launchIsInCurrentMonth(
   launch
 ){
-
-  if (
-    !launch.scheduled_date
-  ){
-    return false;
-  }
-
-  return (
+  return Boolean(
     launch.scheduled_date
-    .slice(
-      0,
-      7
-    )
+    &&
+    launch
+      .scheduled_date
+      .slice(
+        0,
+        7
+      )
     ===
     currentMonthKey()
   );
-
 }
 
 
 function launchIsStillUpcoming(
   launch
 ){
-
   const now =
     new Date();
 
-  if (
-    launch.launch_time_utc
-  ){
+  const launchDate =
+    parseDate(
+      launch
+      .launch_time_utc
+    );
+
+  if (launchDate){
     return (
-      new Date(
-        launch.launch_time_utc
-      ) > now
+      launchDate
+      > now
     );
   }
 
   if (
-    launch.scheduled_date
+    launch
+    .scheduled_date
   ){
     return (
-      launch.scheduled_date
+      launch
+      .scheduled_date
       >=
       localDateKey(
         now
@@ -1460,21 +1886,21 @@ function launchIsStillUpcoming(
   }
 
   return false;
-
 }
 
 
 function renderList(
   launches
 ){
-
   const list =
-    document.getElementById(
+    document
+    .getElementById(
       'list'
     );
 
   if (
-    !launches.length
+    !launches
+    .length
   ){
     list.innerHTML =
       '<div class="empty">No tracked launches scheduled for the rest of this month yet.</div>';
@@ -1486,42 +1912,46 @@ function renderList(
     launches
     .map(
       launch => {
-
-        let tminus =
+        let tMinus =
           '&mdash;';
 
-        if (
-          launch.launch_time_utc
-        ){
+        const launchDate =
+          parseDate(
+            launch
+            .launch_time_utc
+          );
 
+        if (launchDate){
           const delta =
             fmtDelta(
-              new Date(
-                launch.launch_time_utc
-              )
-              -
-              new Date()
+              launchDate
+              - new Date()
             );
 
-          tminus =
+          tMinus =
             delta.launched
               ? 'Now'
               : (
-                  delta.days > 0
-                    ? `T&minus;${delta.days}d ${delta.hours}h`
-                    : `T&minus;${delta.hours}h ${delta.mins}m`
+                  delta.days
+                  > 0
+                    ? (
+                        `T&minus;${delta.days}d `
+                        + `${delta.hours}h`
+                      )
+                    : (
+                        `T&minus;${delta.hours}h `
+                        + `${delta.mins}m`
+                      )
                 );
-
         }
 
         return `
-
           <div class="card">
 
             <div class="t-minus">
 
               <b>
-                ${tminus}
+                ${tMinus}
               </b>
 
               ${escapeHtml(
@@ -1561,10 +1991,13 @@ function renderList(
 
                 ${
                   launch.time_description
-                    ? ' — '
-                      + escapeHtml(
-                          launch.time_description
-                        )
+                    ? (
+                        ' — '
+                        + escapeHtml(
+                            launch
+                            .time_description
+                          )
+                      )
                     : ''
                 }
 
@@ -1573,77 +2006,77 @@ function renderList(
             </div>
 
           </div>
-
         `;
-
       }
     )
     .join('');
-
 }
 
 
 function renderCurrentMonthUpcoming(){
-
-  const now =
-    new Date();
-
   const launches =
     launchFeed
     .filter(
-      launch =>
-        launchIsInCurrentMonth(
-          launch
-        )
+      launchIsInCurrentMonth
     )
     .filter(
-      launch =>
-        launchIsStillUpcoming(
-          launch
-        )
+      launchIsStillUpcoming
     )
     .sort(
-      (a,b) =>
-        (
-          a.launch_time_utc
-          || a.scheduled_date
+      (
+        first,
+        second
+      ) => {
+        const firstTime = (
+          first.launch_time_utc
+          || first.scheduled_date
           || ''
-        )
-        .localeCompare(
-          b.launch_time_utc
-          || b.scheduled_date
+        );
+
+        const secondTime = (
+          second.launch_time_utc
+          || second.scheduled_date
           || ''
-        )
+        );
+
+        return firstTime
+          .localeCompare(
+            secondTime
+          );
+      }
     );
 
   const monthName =
     new Intl.DateTimeFormat(
       'en-US',
+
       {
-        month:'long'
+        month:
+          'long'
       }
     ).format(
-      now
+      new Date()
     );
 
-  document.getElementById(
-    'upcomingTitle'
-  ).textContent =
-    `Upcoming — ${monthName}`;
+  document
+    .getElementById(
+      'upcomingTitle'
+    )
+    .textContent =
+      `Upcoming — ${monthName}`;
 
   renderList(
     launches
   );
-
 }
 
 
 function topicsForPreference(
   preference
 ){
-
   if (
-    preference === 'CA'
+    preference
+    === 'CA'
   ){
     return [
       `${BASE_TOPIC}-CA`
@@ -1651,7 +2084,8 @@ function topicsForPreference(
   }
 
   if (
-    preference === 'FL'
+    preference
+    === 'FL'
   ){
     return [
       `${BASE_TOPIC}-FL`
@@ -1662,19 +2096,16 @@ function topicsForPreference(
     `${BASE_TOPIC}-CA`,
     `${BASE_TOPIC}-FL`
   ];
-
 }
 
 
 function updatePrefsResult(){
-
-  const select =
-    document.getElementById(
-      'locationSelect'
-    );
-
   const preference =
-    select.value;
+    document
+    .getElementById(
+      'locationSelect'
+    )
+    .value;
 
   localStorage.setItem(
     'watchALaunchLocationPreference',
@@ -1686,14 +2117,13 @@ function updatePrefsResult(){
       preference
     );
 
-  let instructions = '';
+  let instructions;
 
   if (
     preference === 'CA'
     ||
     preference === 'FL'
   ){
-
     instructions = `
       Go to the NTFY utility app on your phone and tap
       <strong>Add new subscription</strong>
@@ -1701,10 +2131,8 @@ function updatePrefsResult(){
       <strong>${escapeHtml(topics[0])}</strong>,
       and subscribe to it.
     `;
-
   }
   else{
-
     instructions = `
       Go to the NTFY utility app on your phone and tap
       <strong>Add new subscription</strong>
@@ -1713,26 +2141,27 @@ function updatePrefsResult(){
       and
       <strong>${escapeHtml(topics[1])}</strong>.
     `;
-
   }
 
-  document.getElementById(
-    'prefsResult'
-  ).innerHTML = `
+  document
+    .getElementById(
+      'prefsResult'
+    )
+    .innerHTML = `
 
-    ${instructions}
+      ${instructions}
 
-    <div class="tiny-note">
-      This menu remembers your choice on this device. If you change which state's launches you want, remove any old subscription in NTFY that you no longer want.
-    </div>
+      <div class="tiny-note">
+        This menu remembers your choice on this device. If you change which state's launches you want, remove any old subscription in NTFY that you no longer want.
+      </div>
 
-  `;
-
+    `;
 }
 
 
 const locationSelect =
-  document.getElementById(
+  document
+  .getElementById(
     'locationSelect'
   );
 
@@ -1754,10 +2183,12 @@ if (
     savedPreference;
 }
 
+
 locationSelect.addEventListener(
   'change',
   updatePrefsResult
 );
+
 
 updatePrefsResult();
 
@@ -1765,7 +2196,6 @@ updatePrefsResult();
 function renderCalendar(
   launches
 ){
-
   const now =
     new Date();
 
@@ -1778,49 +2208,66 @@ function renderCalendar(
   renderedMonthKey =
     `${year}-${month}`;
 
-  document.getElementById(
-    'calendarMonth'
-  ).textContent =
-    new Intl.DateTimeFormat(
-      'en-US',
-      {
-        month:'long',
-        year:'numeric'
-      }
-    ).format(
-      now
-    );
-
-  document.getElementById(
-    'calendarToday'
-  ).textContent =
-    `Today: ${
+  document
+    .getElementById(
+      'calendarMonth'
+    )
+    .textContent =
       new Intl.DateTimeFormat(
         'en-US',
+
         {
-          weekday:'long',
-          month:'short',
-          day:'numeric',
-          year:'numeric'
+          month:
+            'long',
+
+          year:
+            'numeric'
         }
       ).format(
         now
-      )
-    }`;
+      );
+
+  document
+    .getElementById(
+      'calendarToday'
+    )
+    .textContent =
+      `Today: ${
+        new Intl.DateTimeFormat(
+          'en-US',
+
+          {
+            weekday:
+              'long',
+
+            month:
+              'short',
+
+            day:
+              'numeric',
+
+            year:
+              'numeric'
+          }
+        ).format(
+          now
+        )
+      }`;
 
   const marks = {};
 
   launches.forEach(
     launch => {
-
       if (
-        !launch.scheduled_date
+        !launch
+        .scheduled_date
         ||
         ![
           'CA',
           'FL'
         ].includes(
-          launch.location_code
+          launch
+          .location_code
         )
       ){
         return;
@@ -1828,11 +2275,13 @@ function renderCalendar(
 
       if (
         !marks[
-          launch.scheduled_date
+          launch
+          .scheduled_date
         ]
       ){
         marks[
-          launch.scheduled_date
+          launch
+          .scheduled_date
         ] = {
           CA:0,
           FL:0
@@ -1840,11 +2289,12 @@ function renderCalendar(
       }
 
       marks[
-        launch.scheduled_date
+        launch
+        .scheduled_date
       ][
-        launch.location_code
+        launch
+        .location_code
       ] += 1;
-
     }
   );
 
@@ -1881,7 +2331,7 @@ function renderCalendar(
   for (
     let blank = 0;
     blank < firstDay;
-    blank++
+    blank += 1
   ){
     cells.push(
       '<div class="day blank" aria-hidden="true"></div>'
@@ -1896,10 +2346,9 @@ function renderCalendar(
   for (
     let day = 1;
     day <= daysInMonth;
-    day++
+    day += 1
   ){
-
-    const key =
+    const key = (
       `${year}-${
         String(
           month + 1
@@ -1914,24 +2363,27 @@ function renderCalendar(
           2,
           '0'
         )
-      }`;
+      }`
+    );
 
-    const dayMarks =
+    const dayMarks = (
       marks[key]
       || {
         CA:0,
         FL:0
-      };
+      }
+    );
 
-    const total =
+    const total = (
       dayMarks.CA
-      +
-      dayMarks.FL;
+      + dayMarks.FL
+    );
 
     const xMarks = [];
 
     if (
-      dayMarks.CA > 0
+      dayMarks.CA
+      > 0
     ){
       xMarks.push(
         '<span class="launch-x ca" title="California launch">X</span>'
@@ -1939,7 +2391,8 @@ function renderCalendar(
     }
 
     if (
-      dayMarks.FL > 0
+      dayMarks.FL
+      > 0
     ){
       xMarks.push(
         '<span class="launch-x fl" title="Florida launch">X</span>'
@@ -1947,7 +2400,6 @@ function renderCalendar(
     }
 
     cells.push(`
-
       <div class="day${key === todayKey ? ' today' : ''}">
 
         <span class="day-number">
@@ -1956,49 +2408,45 @@ function renderCalendar(
 
         ${
           xMarks.length
-            ? `
-                <span class="launch-marks">
-                  ${xMarks.join('')}
-                </span>
-              `
+            ? (
+                `<span class="launch-marks">`
+                + `${xMarks.join('')}`
+                + `</span>`
+              )
             : ''
         }
 
         ${
           total > 2
-            ? `
-                <span class="launch-count">
-                  ${total}
-                </span>
-              `
+            ? (
+                `<span class="launch-count">`
+                + `${total}`
+                + `</span>`
+              )
             : ''
         }
 
       </div>
-
     `);
-
   }
 
-  document.getElementById(
-    'calendarGrid'
-  ).innerHTML =
-    cells.join('');
-
+  document
+    .getElementById(
+      'calendarGrid'
+    )
+    .innerHTML =
+      cells.join('');
 }
 
 
 function refreshLocalDisplay(){
-
   const now =
     new Date();
 
-  const calendarKey =
-    `${
-      now.getFullYear()
-    }-${
-      now.getMonth()
-    }`;
+  const calendarKey = (
+    `${now.getFullYear()}-`
+    + `${now.getMonth()}`
+  );
 
   if (
     calendarKey
@@ -2014,28 +2462,27 @@ function refreshLocalDisplay(){
   const nextLaunch =
     getNextUpcomingLaunch();
 
-  const heroClock =
-    document.getElementById(
-      'hero-clock'
-    );
+  const nextUid = (
+    nextLaunch
+      ? (
+          nextLaunch.uid
+          || (
+            `${nextLaunch.rocket}-`
+            + `${nextLaunch.mission}-`
+            + `${nextLaunch.launch_time_utc}`
+          )
+        )
+      : null
+  );
 
   if (
-    nextLaunch
-    &&
-    (
-      !heroClock
-      ||
-      heroClock.textContent
-        .includes(
-          'LIFTOFF WINDOW OPEN'
-        )
-    )
+    nextUid
+    !== currentHeroUid
   ){
     renderHero(
       nextLaunch
     );
   }
-
 }
 
 
@@ -2046,34 +2493,34 @@ setInterval(
 
 
 function loadFeed(){
-
   fetch(
     `${FEED_URL}?t=${Date.now()}`,
+
     {
-      cache:'no-store'
+      cache:
+        'no-store'
     }
   )
   .then(
     response => {
-
-      if (
-        !response.ok
-      ){
+      if (!response.ok){
         throw new Error(
           `HTTP ${response.status}`
         );
       }
 
       return response.json();
-
     }
   )
   .then(
     data => {
-
-      launchFeed =
-        data.launches
-        || [];
+      launchFeed = (
+        Array.isArray(
+          data.launches
+        )
+          ? data.launches
+          : []
+      );
 
       renderHero(
         getNextUpcomingLaunch()
@@ -2086,58 +2533,60 @@ function loadFeed(){
       );
 
       const calendarUpdated =
-        document.getElementById(
+        document
+        .getElementById(
           'calendarLastUpdated'
         );
 
-      if (
-        data.generated_at_utc
-      ){
+      const updatedDate =
+        parseDate(
+          data
+          .generated_at_utc
+        );
 
-        const updatedDate =
-          new Date(
-            data.generated_at_utc
-          );
-
+      if (updatedDate){
         calendarUpdated.innerHTML =
           `Last updated: <strong>${escapeHtml(
             formatLastUpdated(
               updatedDate
             )
           )}</strong>`;
-
       }
       else{
-
         calendarUpdated.textContent =
           'Last updated: unavailable';
-
       }
 
-      document.getElementById(
-        'feed-meta'
-      ).textContent =
-        'Launch data is checked automatically once per hour.';
-
+      document
+        .getElementById(
+          'feed-meta'
+        )
+        .textContent =
+          'Launch data is checked automatically once per hour.';
     }
   )
   .catch(
     error => {
+      document
+        .getElementById(
+          'list'
+        )
+        .innerHTML =
+          '<div class="empty">Could not load the launch schedule right now.</div>';
 
-      document.getElementById(
-        'list'
-      ).innerHTML =
-        '<div class="empty">Could not load the launch schedule right now.</div>';
+      document
+        .getElementById(
+          'feed-meta'
+        )
+        .textContent =
+          '';
 
-      document.getElementById(
-        'feed-meta'
-      ).textContent =
-        '';
-
-      document.getElementById(
-        'calendarLastUpdated'
-      ).textContent =
-        'Last updated: unavailable';
+      document
+        .getElementById(
+          'calendarLastUpdated'
+        )
+        .textContent =
+          'Last updated: unavailable';
 
       renderCalendar(
         []
@@ -2146,10 +2595,8 @@ function loadFeed(){
       console.error(
         error
       );
-
     }
   );
-
 }
 
 
@@ -2168,17 +2615,16 @@ if (
 ){
   window.addEventListener(
     'load',
+
     () => {
-
       navigator
-      .serviceWorker
-      .register(
-        'sw.js'
-      )
-      .catch(
-        () => {}
-      );
-
+        .serviceWorker
+        .register(
+          'sw.js'
+        )
+        .catch(
+          () => {}
+        );
     }
   );
 }
