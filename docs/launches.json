@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-20T18:56:08.127168+00:00",
+  "generated_at_utc": "2026-08-20T19:40:25.205534+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -25,9 +25,9 @@
       "scheduled_date": "2026-08-21",
       "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
       "location_code": "FL",
-      "time_description": "Friday, August 21 at 10:57 AM EDT",
-      "launch_time_utc": "2026-08-21T14:57:00+00:00",
-      "updated_text": "2026-08-20T15:49:29Z",
+      "time_description": "Friday, August 21 at 11:14 AM EDT",
+      "launch_time_utc": "2026-08-21T15:14:16+00:00",
+      "updated_text": "2026-08-20T19:36:24Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": [
         24
