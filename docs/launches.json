@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-21T14:49:27.948603+00:00",
+  "generated_at_utc": "2026-08-21T15:45:18.483906+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -16,24 +16,6 @@
   ],
   "launching_now_notifications": true,
   "launches": [
-    {
-      "uid": "bbdc4d47-1de3-428e-9fe1-bbf45d9b1e04",
-      "rocket": "Falcon 9",
-      "mission": "Starlink Group 10-39",
-      "is_net": false,
-      "date_text": "August 21",
-      "scheduled_date": "2026-08-21",
-      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
-      "time_description": "Friday, August 21 at 11:14 AM EDT",
-      "launch_time_utc": "2026-08-21T15:14:22+00:00",
-      "updated_text": "2026-08-21T14:14:58Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": [
-        3,
-        24
-      ]
-    },
     {
       "uid": "6208f972-18ec-490f-bbe5-6f5c6cfcd48c",
       "rocket": "Falcon 9",
@@ -112,6 +94,21 @@
       "notified_lead_hours": []
     },
     {
+      "uid": "153ef8ef-b12b-43f4-a4bf-05b225c0cd37",
+      "rocket": "Falcon 9",
+      "mission": "Starlink Group 15-24",
+      "is_net": false,
+      "date_text": "September 4",
+      "scheduled_date": "2026-09-04",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Friday, September 4 at 4:28 AM PDT",
+      "launch_time_utc": "2026-09-04T11:28:00+00:00",
+      "updated_text": "2026-08-21T15:12:24Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
       "uid": "18441371-8b2e-457c-afb5-1ec1b11ab630",
       "rocket": "Falcon 9",
       "mission": "Crew-13",
@@ -172,21 +169,6 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "ad358a4d-c541-409b-9366-9c2f2da4aeb9",
-      "rocket": "Falcon 9",
-      "mission": "O3b mPower 11-13",
-      "is_net": true,
-      "date_text": "September 29",
-      "scheduled_date": "2026-09-29",
-      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for September 29; exact launch time TBD (month-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2026-08-06T23:57:58Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": []
-    },
-    {
       "uid": "da43dc2c-00af-4cc1-8ef1-90a60b2eb9e5",
       "rocket": "Falcon 9",
       "mission": "SDA Tranche 1 Transport Layer A",
@@ -198,6 +180,21 @@
       "time_description": "Currently scheduled for September 29; exact launch time TBD (quarter 3-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2026-06-19T11:31:15Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "ad358a4d-c541-409b-9366-9c2f2da4aeb9",
+      "rocket": "Falcon 9",
+      "mission": "O3b mPower 11-13",
+      "is_net": true,
+      "date_text": "September 29",
+      "scheduled_date": "2026-09-29",
+      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for September 29; exact launch time TBD (month-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-08-06T23:57:58Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -262,21 +259,6 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "3b430f81-0ff1-4d85-8a1a-cef0de326198",
-      "rocket": "Falcon 9",
-      "mission": "Bandwagon 5 (Dedicated Mid-Inclination Rideshare)",
-      "is_net": true,
-      "date_text": "October 30",
-      "scheduled_date": "2026-10-30",
-      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for October 30; exact launch time TBD (month-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2026-08-20T21:15:21Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": []
-    },
-    {
       "uid": "67213393-7983-4c06-8b44-b8c785a5ed79",
       "rocket": "Falcon 9",
       "mission": "Transporter 18 (Dedicated SSO Rideshare)",
@@ -288,6 +270,21 @@
       "time_description": "Currently scheduled for October 30; exact launch time TBD (month-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2025-06-03T23:40:03Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "3b430f81-0ff1-4d85-8a1a-cef0de326198",
+      "rocket": "Falcon 9",
+      "mission": "Bandwagon 5 (Dedicated Mid-Inclination Rideshare)",
+      "is_net": true,
+      "date_text": "October 30",
+      "scheduled_date": "2026-10-30",
+      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for October 30; exact launch time TBD (month-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-08-20T21:15:21Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
