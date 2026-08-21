@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-21T07:03:59.438273+00:00",
+  "generated_at_utc": "2026-08-21T07:54:23.910206+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -46,7 +46,9 @@
       "launch_time_utc": "2026-08-22T07:25:00+00:00",
       "updated_text": "2026-08-17T20:04:49Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "ad501ebd-a357-4305-90c1-c46c6feb2ecf",
