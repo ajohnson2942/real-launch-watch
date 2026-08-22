@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-22T06:56:27.309609+00:00",
+  "generated_at_utc": "2026-08-22T07:41:08.211586+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -16,24 +16,6 @@
   ],
   "launching_now_notifications": true,
   "launches": [
-    {
-      "uid": "6208f972-18ec-490f-bbe5-6f5c6cfcd48c",
-      "rocket": "Falcon 9",
-      "mission": "Starlink Group 15-20",
-      "is_net": false,
-      "date_text": "August 22",
-      "scheduled_date": "2026-08-22",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Saturday, August 22 at 12:25 AM PDT",
-      "launch_time_utc": "2026-08-22T07:25:16+00:00",
-      "updated_text": "2026-08-22T06:55:47Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": [
-        3,
-        24
-      ]
-    },
     {
       "uid": "ad501ebd-a357-4305-90c1-c46c6feb2ecf",
       "rocket": "Falcon 9",
@@ -121,36 +103,6 @@
       "time_description": "Saturday, September 12 at 6:34 PM EDT",
       "launch_time_utc": "2026-09-12T22:34:00+00:00",
       "updated_text": "2026-08-03T16:17:11Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "7d1afb26-6f9c-429b-9ccf-29012fd1e519",
-      "rocket": "Starship",
-      "mission": "Flight 14",
-      "is_net": true,
-      "date_text": "September 29",
-      "scheduled_date": "2026-09-29",
-      "site": "Orbital Launch Pad 2, SpaceX Starbase, TX, USA",
-      "location_code": null,
-      "time_description": "Currently scheduled for September 29; exact launch time TBD (month-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2026-08-14T19:14:56Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "fcbc4550-e69e-4458-a9e6-4a5b6b6b15a5",
-      "rocket": "Falcon 9",
-      "mission": "SDA Tranche 1 Tracking Layer E",
-      "is_net": true,
-      "date_text": "September 29",
-      "scheduled_date": "2026-09-29",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Currently scheduled for September 29; exact launch time TBD (quarter 3-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2026-06-19T11:30:09Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -245,17 +197,47 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "67213393-7983-4c06-8b44-b8c785a5ed79",
+      "uid": "fcbc4550-e69e-4458-a9e6-4a5b6b6b15a5",
       "rocket": "Falcon 9",
-      "mission": "Transporter 18 (Dedicated SSO Rideshare)",
+      "mission": "SDA Tranche 1 Tracking Layer E",
+      "is_net": true,
+      "date_text": "September 29",
+      "scheduled_date": "2026-09-29",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Currently scheduled for September 29; exact launch time TBD (quarter 3-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-06-19T11:30:09Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "7d1afb26-6f9c-429b-9ccf-29012fd1e519",
+      "rocket": "Starship",
+      "mission": "Flight 14",
+      "is_net": true,
+      "date_text": "September 29",
+      "scheduled_date": "2026-09-29",
+      "site": "Orbital Launch Pad 2, SpaceX Starbase, TX, USA",
+      "location_code": null,
+      "time_description": "Currently scheduled for September 29; exact launch time TBD (month-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-08-14T19:14:56Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "bf2c3027-a314-403e-a416-2bfd5d165ad1",
+      "rocket": "Falcon 9",
+      "mission": "Dragon CRS-2 SpX-35",
       "is_net": true,
       "date_text": "October 30",
       "scheduled_date": "2026-10-30",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
+      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
       "time_description": "Currently scheduled for October 30; exact launch time TBD (month-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2025-06-03T23:40:03Z",
+      "updated_text": "2026-08-16T15:28:13Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -275,17 +257,17 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "bf2c3027-a314-403e-a416-2bfd5d165ad1",
+      "uid": "67213393-7983-4c06-8b44-b8c785a5ed79",
       "rocket": "Falcon 9",
-      "mission": "Dragon CRS-2 SpX-35",
+      "mission": "Transporter 18 (Dedicated SSO Rideshare)",
       "is_net": true,
       "date_text": "October 30",
       "scheduled_date": "2026-10-30",
-      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
       "time_description": "Currently scheduled for October 30; exact launch time TBD (month-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2026-08-16T15:28:13Z",
+      "updated_text": "2025-06-03T23:40:03Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -1516,6 +1498,21 @@
       "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year half 2-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2024-08-20T08:07:23Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "40d980c0-caea-4851-b668-9055cd676732",
+      "rocket": "Falcon 9",
+      "mission": "SEOPS Waymaker-1",
+      "is_net": true,
+      "date_text": "March 30, 2028",
+      "scheduled_date": "2028-03-30",
+      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for March 30, 2028; exact launch time TBD (quarter 1-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-08-17T19:57:55Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     }
