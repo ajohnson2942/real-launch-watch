@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-23T21:32:50.683603+00:00",
+  "generated_at_utc": "2026-08-23T22:34:13.796111+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -36,13 +36,13 @@
       "rocket": "Falcon 9",
       "mission": "Starlink Group 15-22",
       "is_net": false,
-      "date_text": "August 25",
-      "scheduled_date": "2026-08-25",
+      "date_text": "August 26",
+      "scheduled_date": "2026-08-26",
       "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
       "location_code": "CA",
-      "time_description": "Tuesday, August 25 at 2:42 AM PDT",
-      "launch_time_utc": "2026-08-25T09:42:00+00:00",
-      "updated_text": "2026-08-17T21:26:09Z",
+      "time_description": "Wednesday, August 26 at 2:27 AM PDT",
+      "launch_time_utc": "2026-08-26T09:27:00+00:00",
+      "updated_text": "2026-08-23T21:34:22Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
