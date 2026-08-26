@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-26T08:58:19.365573+00:00",
+  "generated_at_utc": "2026-08-26T09:53:51.312532+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -16,24 +16,6 @@
   ],
   "launching_now_notifications": true,
   "launches": [
-    {
-      "uid": "95653d52-bb77-4860-a815-dd7141778d17",
-      "rocket": "Falcon 9",
-      "mission": "Starlink Group 15-22",
-      "is_net": false,
-      "date_text": "August 26",
-      "scheduled_date": "2026-08-26",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Wednesday, August 26 at 2:35 AM PDT",
-      "launch_time_utc": "2026-08-26T09:35:11+00:00",
-      "updated_text": "2026-08-25T23:18:47Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": [
-        3,
-        24
-      ]
-    },
     {
       "uid": "521f3a1c-f977-4306-9b7f-495858719adf",
       "rocket": "Falcon Heavy",
@@ -91,6 +73,21 @@
       "time_description": "Saturday, September 12 at 6:34 PM EDT",
       "launch_time_utc": "2026-09-12T22:34:00+00:00",
       "updated_text": "2026-08-03T16:17:11Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "fcbc4550-e69e-4458-a9e6-4a5b6b6b15a5",
+      "rocket": "Falcon 9",
+      "mission": "SDA Tranche 1 Tracking Layer E",
+      "is_net": true,
+      "date_text": "September 29",
+      "scheduled_date": "2026-09-29",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Currently scheduled for September 29; exact launch time TBD (quarter 3-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-06-19T11:30:09Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -185,21 +182,6 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "fcbc4550-e69e-4458-a9e6-4a5b6b6b15a5",
-      "rocket": "Falcon 9",
-      "mission": "SDA Tranche 1 Tracking Layer E",
-      "is_net": true,
-      "date_text": "September 29",
-      "scheduled_date": "2026-09-29",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Currently scheduled for September 29; exact launch time TBD (quarter 3-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2026-06-19T11:30:09Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": []
-    },
-    {
       "uid": "c5783e2b-d458-4b99-9936-4043c236190b",
       "rocket": "Falcon 9",
       "mission": "SDA Tranche 1 Transport Layer F",
@@ -271,6 +253,21 @@
       "time_description": "Currently scheduled for November 29; exact launch time TBD (month-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2026-06-02T15:03:17Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "c1bd775a-2fff-45bb-9726-765b69817c19",
+      "rocket": "Falcon Heavy",
+      "mission": "USSF-75",
+      "is_net": true,
+      "date_text": "December 30",
+      "scheduled_date": "2026-12-30",
+      "site": "Launch Complex 39A, Kennedy Space Center, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2023-11-01T20:35:10Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -635,21 +632,6 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "c1bd775a-2fff-45bb-9726-765b69817c19",
-      "rocket": "Falcon Heavy",
-      "mission": "USSF-75",
-      "is_net": true,
-      "date_text": "December 30",
-      "scheduled_date": "2026-12-30",
-      "site": "Launch Complex 39A, Kennedy Space Center, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2023-11-01T20:35:10Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": []
-    },
-    {
       "uid": "4c78e865-8f03-4f47-a081-b507da270d19",
       "rocket": "Falcon 9",
       "mission": "USSF-31",
@@ -935,9 +917,9 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "1c4ac109-3f35-42a0-9105-3205ae4a38d4",
+      "uid": "11e5e716-ba29-4472-815b-0ebf4a126c6e",
       "rocket": "Falcon Heavy",
-      "mission": "USSF-155",
+      "mission": "NROL-86",
       "is_net": true,
       "date_text": "June 29, 2027",
       "scheduled_date": "2027-06-29",
@@ -945,7 +927,7 @@
       "location_code": "FL",
       "time_description": "Currently scheduled for June 29, 2027; exact launch time TBD (fiscal year-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2025-10-04T17:44:47Z",
+      "updated_text": "2025-10-04T17:45:36Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -1070,9 +1052,9 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "11e5e716-ba29-4472-815b-0ebf4a126c6e",
+      "uid": "1c4ac109-3f35-42a0-9105-3205ae4a38d4",
       "rocket": "Falcon Heavy",
-      "mission": "NROL-86",
+      "mission": "USSF-155",
       "is_net": true,
       "date_text": "June 29, 2027",
       "scheduled_date": "2027-06-29",
@@ -1080,7 +1062,7 @@
       "location_code": "FL",
       "time_description": "Currently scheduled for June 29, 2027; exact launch time TBD (fiscal year-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2025-10-04T17:45:36Z",
+      "updated_text": "2025-10-04T17:44:47Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     },
@@ -1516,6 +1498,21 @@
       "time_description": "Currently scheduled for June 29, 2028; exact launch time TBD (month-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2025-05-31T09:51:37Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "c6e0ad16-8a78-46bc-a693-fbbf5ea4db6f",
+      "rocket": "Falcon Heavy",
+      "mission": "Dragonfly",
+      "is_net": true,
+      "date_text": "July 4, 2028",
+      "scheduled_date": "2028-07-04",
+      "site": "Launch Complex 39A, Kennedy Space Center, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for July 4, 2028; exact launch time TBD (day-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2024-11-26T02:46:33Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "notified_lead_hours": []
     }
