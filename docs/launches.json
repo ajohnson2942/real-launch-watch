@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-29T09:58:43.588557+00:00",
+  "generated_at_utc": "2026-08-29T18:24:14.061078+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -25,11 +25,13 @@
       "scheduled_date": "2026-08-30",
       "site": "Launch Complex 39A, Kennedy Space Center, FL, USA",
       "location_code": "FL",
-      "time_description": "Sunday, August 30 at 7:26 AM EDT",
-      "launch_time_utc": "2026-08-30T11:26:00+00:00",
-      "updated_text": "2026-08-28T14:50:34Z",
+      "time_description": "Sunday, August 30 at 7:25 AM EDT",
+      "launch_time_utc": "2026-08-30T11:25:49+00:00",
+      "updated_text": "2026-08-29T15:22:33Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "63181269-b125-4c36-951c-c9bd9bbc4b55",
