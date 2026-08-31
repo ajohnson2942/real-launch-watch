@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import calendar
 import datetime as dt
 import hashlib
 import json
@@ -53,15 +54,9 @@ def load_json(path: Path, default):
 
 
 def save_json(path: Path, data):
-    path.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
+    path.parent.mkdir(parents=True, exist_ok=True)
 
-    with path.open(
-        "w",
-        encoding="utf-8",
-    ) as handle:
+    with path.open("w", encoding="utf-8") as handle:
         json.dump(
             data,
             handle,
@@ -93,10 +88,7 @@ def parse_utc_datetime(
 
     try:
         parsed = dt.datetime.fromisoformat(
-            value.replace(
-                "Z",
-                "+00:00",
-            )
+            value.replace("Z", "+00:00")
         )
     except (TypeError, ValueError):
         return None
@@ -111,17 +103,13 @@ def parse_utc_datetime(
     )
 
 
-def utc_iso(
-    value: dt.datetime,
-) -> str:
+def utc_iso(value: dt.datetime) -> str:
     return value.astimezone(
         dt.timezone.utc
     ).isoformat()
 
 
-def timezone_for_location(
-    location_code: str,
-):
+def timezone_for_location(location_code: str):
     return (
         EASTERN
         if location_code == "FL"
@@ -129,9 +117,7 @@ def timezone_for_location(
     )
 
 
-def state_name(
-    location_code: str,
-) -> str:
+def state_name(location_code: str) -> str:
     if location_code == "CA":
         return "California"
 
@@ -153,16 +139,10 @@ def format_exact_time(
         return "Exact launch time unavailable"
 
     local = launch_dt.astimezone(
-        timezone_for_location(
-            location_code
-        )
+        timezone_for_location(location_code)
     )
 
-    hour = (
-        local.strftime("%I")
-        .lstrip("0")
-        or "0"
-    )
+    hour = local.strftime("%I").lstrip("0") or "0"
 
     return (
         f"{local.strftime('%A, %B')} "
@@ -174,9 +154,7 @@ def format_exact_time(
     )
 
 
-def describe_launch_time(
-    launch,
-) -> str:
+def describe_launch_time(launch) -> str:
     if (
         launch.launch_time_utc
         and launch.location_code
@@ -201,20 +179,77 @@ def describe_launch_time(
         except ValueError:
             pass
 
-    return (
-        launch.date_text
-        or "Date/time TBD"
+    return launch.date_text or "Date/time TBD"
+
+
+def one_calendar_month_ahead(
+    value: dt.datetime,
+) -> dt.datetime:
+    """Return the same local/UTC instant fields one calendar month later."""
+    if value.month == 12:
+        year = value.year + 1
+        month = 1
+    else:
+        year = value.year
+        month = value.month + 1
+
+    last_day = calendar.monthrange(
+        year,
+        month,
+    )[1]
+
+    day = min(
+        value.day,
+        last_day,
     )
+
+    return value.replace(
+        year=year,
+        month=month,
+        day=day,
+    )
+
+
+def launch_is_within_change_notification_window(
+    launch,
+    now: dt.datetime,
+) -> bool:
+    """
+    Time-change alerts are intentionally limited to launches no more than
+    one calendar month ahead. Far-future schedule changes still update the
+    website and state, but do not create noisy push notifications.
+    """
+    limit = one_calendar_month_ahead(now)
+
+    launch_dt = parse_utc_datetime(
+        launch.launch_time_utc
+    )
+
+    if launch_dt is not None:
+        return now <= launch_dt <= limit
+
+    if launch.scheduled_date:
+        try:
+            launch_date = dt.date.fromisoformat(
+                launch.scheduled_date
+            )
+        except ValueError:
+            return False
+
+        return (
+            now.date()
+            <= launch_date
+            <= limit.date()
+        )
+
+    return False
 
 
 def topic_for_location(
     base_topic: str,
     location_code: str,
 ) -> str:
-    return (
-        f"{base_topic}-"
-        f"{location_code}"
-    )
+    return f"{base_topic}-{location_code}"
 
 
 def ntfy_url(
@@ -245,9 +280,7 @@ def send_ntfy(
     try:
         response = requests.post(
             ntfy_url(topic),
-            data=message.encode(
-                "utf-8"
-            ),
+            data=message.encode("utf-8"),
             headers={
                 "Title": title,
                 "Priority": priority,
@@ -259,8 +292,7 @@ def send_ntfy(
         response.raise_for_status()
 
         log.info(
-            "Notification sent "
-            "to %s: %s",
+            "Notification sent to %s: %s",
             topic,
             title,
         )
@@ -269,8 +301,7 @@ def send_ntfy(
 
     except Exception as exc:
         log.error(
-            "Could not send "
-            "notification to %s: %s",
+            "Could not send notification to %s: %s",
             topic,
             exc,
         )
@@ -297,17 +328,13 @@ def schedule_ntfy(
                 topic,
                 sequence_id,
             ),
-            data=message.encode(
-                "utf-8"
-            ),
+            data=message.encode("utf-8"),
             headers={
                 "Title": title,
                 "Priority": priority,
                 "Tags": tags,
                 "At": str(
-                    int(
-                        deliver_at.timestamp()
-                    )
+                    int(deliver_at.timestamp())
                 ),
             },
             timeout=20,
@@ -316,8 +343,7 @@ def schedule_ntfy(
         response.raise_for_status()
 
         log.info(
-            "Scheduled %s "
-            "for %s at %s",
+            "Scheduled %s for %s at %s",
             title,
             topic,
             utc_iso(deliver_at),
@@ -327,8 +353,7 @@ def schedule_ntfy(
 
     except Exception as exc:
         log.error(
-            "Could not schedule "
-            "%s for %s at %s: %s",
+            "Could not schedule %s for %s at %s: %s",
             title,
             topic,
             utc_iso(deliver_at),
@@ -351,16 +376,13 @@ def cancel_ntfy_sequence(
             timeout=20,
         )
 
-        # If it is already gone, it is
-        # effectively canceled.
         if response.status_code == 404:
             return True
 
         response.raise_for_status()
 
         log.info(
-            "Canceled scheduled "
-            "notification: %s/%s",
+            "Canceled scheduled notification: %s/%s",
             topic,
             sequence_id,
         )
@@ -369,9 +391,7 @@ def cancel_ntfy_sequence(
 
     except Exception as exc:
         log.warning(
-            "Could not cancel "
-            "scheduled notification "
-            "%s/%s: %s",
+            "Could not cancel scheduled notification %s/%s: %s",
             topic,
             sequence_id,
             exc,
@@ -380,57 +400,31 @@ def cancel_ntfy_sequence(
         return False
 
 
-def schedule_signature(
-    launch,
-) -> dict:
+def schedule_signature(launch) -> dict:
     return {
-        "scheduled_date":
-            launch.scheduled_date,
-
-        "launch_time_utc":
-            launch.launch_time_utc,
-
-        "site":
-            launch.site,
-
-        "location_code":
-            launch.location_code,
+        "scheduled_date": launch.scheduled_date,
+        "launch_time_utc": launch.launch_time_utc,
+        "site": launch.site,
+        "location_code": launch.location_code,
     }
 
 
-def previous_signature(
-    previous: dict,
-):
-    if previous.get(
-        "schedule_signature"
-    ):
-        return previous[
-            "schedule_signature"
-        ]
+def previous_signature(previous: dict):
+    if previous.get("schedule_signature"):
+        return previous["schedule_signature"]
 
-    # Compatibility with older
-    # data/state.json files.
     if previous:
         return {
-            "scheduled_date":
-                previous.get(
-                    "scheduled_date"
-                ),
-
-            "launch_time_utc":
-                previous.get(
-                    "launch_time_utc"
-                ),
-
-            "site":
-                previous.get(
-                    "site"
-                ),
-
-            "location_code":
-                previous.get(
-                    "location_code"
-                ),
+            "scheduled_date": previous.get(
+                "scheduled_date"
+            ),
+            "launch_time_utc": previous.get(
+                "launch_time_utc"
+            ),
+            "site": previous.get("site"),
+            "location_code": previous.get(
+                "location_code"
+            ),
         }
 
     return None
@@ -453,11 +447,7 @@ def make_sequence_id(
         raw.encode("utf-8")
     ).hexdigest()[:24]
 
-    return (
-        f"wal-"
-        f"{event_kind}-"
-        f"{digest}"
-    )
+    return f"wal-{event_kind}-{digest}"
 
 
 def make_payload_hash(
@@ -467,12 +457,7 @@ def make_payload_hash(
     tags: str,
 ) -> str:
     raw = "\n".join(
-        [
-            title,
-            message,
-            priority,
-            tags,
-        ]
+        [title, message, priority, tags]
     )
 
     return hashlib.sha256(
@@ -491,10 +476,7 @@ def notification_spec(
     if (
         launch_dt is None
         or launch.location_code
-        not in {
-            "CA",
-            "FL",
-        }
+        not in {"CA", "FL"}
     ):
         return None
 
@@ -505,92 +487,63 @@ def notification_spec(
 
     location = (
         launch.site
-        or state_name(
-            launch.location_code
-        )
+        or state_name(launch.location_code)
     )
 
     if event_kind == "24h":
         return {
-            "deliver_at":
+            "deliver_at": (
                 launch_dt
-                - dt.timedelta(
-                    hours=24
-                ),
-
-            "title":
+                - dt.timedelta(hours=24)
+            ),
+            "title": (
                 f"Launch in 24 hours: "
-                f"{launch.mission}",
-
-            "message":
-                (
-                    f"{launch.rocket} • "
-                    f"{launch.mission}\n"
-                    f"Launch in 24 hours "
-                    f"at {exact_time}.\n"
-                    f"Location: "
-                    f"{location}"
-                ),
-
-            "priority":
-                "default",
-
-            "tags":
-                "rocket",
+                f"{launch.mission}"
+            ),
+            "message": (
+                f"{launch.rocket} • "
+                f"{launch.mission}\n"
+                f"Launch in 24 hours "
+                f"at {exact_time}.\n"
+                f"Location: {location}"
+            ),
+            "priority": "default",
+            "tags": "rocket",
         }
 
     if event_kind == "3h":
         return {
-            "deliver_at":
+            "deliver_at": (
                 launch_dt
-                - dt.timedelta(
-                    hours=3
-                ),
-
-            "title":
+                - dt.timedelta(hours=3)
+            ),
+            "title": (
                 f"Launch in 3 hours: "
-                f"{launch.mission}",
-
-            "message":
-                (
-                    f"{launch.rocket} • "
-                    f"{launch.mission}\n"
-                    f"Launch in 3 hours "
-                    f"at {exact_time}.\n"
-                    f"Location: "
-                    f"{location}"
-                ),
-
-            "priority":
-                "high",
-
-            "tags":
-                "rocket,alarm_clock",
+                f"{launch.mission}"
+            ),
+            "message": (
+                f"{launch.rocket} • "
+                f"{launch.mission}\n"
+                f"Launch in 3 hours "
+                f"at {exact_time}.\n"
+                f"Location: {location}"
+            ),
+            "priority": "high",
+            "tags": "rocket,alarm_clock",
         }
 
     if event_kind == "now":
         return {
-            "deliver_at":
-                launch_dt,
-
-            "title":
-                "LAUNCHING NOW!",
-
-            "message":
-                (
-                    f"{launch.rocket} • "
-                    f"{launch.mission}\n"
-                    f"Launch time: "
-                    f"{exact_time}.\n"
-                    f"Location: "
-                    f"{location}"
-                ),
-
-            "priority":
-                "urgent",
-
-            "tags":
-                "rocket,rotating_light",
+            "deliver_at": launch_dt,
+            "title": "LAUNCHING NOW!",
+            "message": (
+                f"{launch.rocket} • "
+                f"{launch.mission}\n"
+                f"Launch time: {exact_time}.\n"
+                f"Location: {location}"
+            ),
+            "priority": "urgent",
+            "tags": "rocket,rotating_light",
         }
 
     return None
@@ -608,8 +561,7 @@ def record_is_same(
     )
 
     return all(
-        existing.get(key)
-        == expected.get(key)
+        existing.get(key) == expected.get(key)
         for key in keys
     )
 
@@ -619,18 +571,13 @@ def record_is_still_future(
     now: dt.datetime,
 ) -> bool:
     deliver_at = parse_utc_datetime(
-        record.get(
-            "deliver_at_utc"
-        )
+        record.get("deliver_at_utc")
     )
 
     return bool(
         deliver_at
         and deliver_at
-        > now
-        + dt.timedelta(
-            seconds=5
-        )
+        > now + dt.timedelta(seconds=5)
     )
 
 
@@ -638,18 +585,12 @@ def cancel_future_records(
     records: dict,
     now: dt.datetime,
 ):
-    if not isinstance(
-        records,
-        dict,
-    ):
+    if not isinstance(records, dict):
         return
 
     for record in records.values():
         if (
-            not isinstance(
-                record,
-                dict,
-            )
+            not isinstance(record, dict)
             or not record_is_still_future(
                 record,
                 now,
@@ -657,13 +598,8 @@ def cancel_future_records(
         ):
             continue
 
-        topic = record.get(
-            "topic"
-        )
-
-        sequence_id = record.get(
-            "sequence_id"
-        )
+        topic = record.get("topic")
+        sequence_id = record.get("sequence_id")
 
         if topic and sequence_id:
             cancel_ntfy_sequence(
@@ -678,31 +614,15 @@ def sync_scheduled_notifications(
     previous_records: dict,
     now: dt.datetime,
 ) -> dict:
-    """
-    Register, replace, or cancel exact
-    future ntfy notifications.
-    """
-
-    if not isinstance(
-        previous_records,
-        dict,
-    ):
+    """Register, replace, or cancel exact future ntfy notifications."""
+    if not isinstance(previous_records, dict):
         previous_records = {}
 
-    expected_records: dict[
-        str,
-        dict,
-    ] = {}
-
-    expected_specs: dict[
-        str,
-        dict,
-    ] = {}
+    expected_records: dict[str, dict] = {}
+    expected_specs: dict[str, dict] = {}
 
     if notification_topic:
-        for event_kind in (
-            SCHEDULE_EVENT_ORDER
-        ):
+        for event_kind in SCHEDULE_EVENT_ORDER:
             spec = notification_spec(
                 launch,
                 event_kind,
@@ -711,116 +631,66 @@ def sync_scheduled_notifications(
             if spec is None:
                 continue
 
-            deliver_at = (
-                spec["deliver_at"]
-                .astimezone(
-                    dt.timezone.utc
-                )
-            )
+            deliver_at = spec[
+                "deliver_at"
+            ].astimezone(dt.timezone.utc)
 
-            delay = (
-                deliver_at
-                - now
-            )
+            delay = deliver_at - now
 
-            # Never send a late notification
-            # that falsely says "in 3 hours."
             if delay <= dt.timedelta(0):
                 continue
 
-            # The hourly workflow will
-            # register it later when it
-            # enters ntfy's three-day window.
-            if (
-                delay
-                > NTFY_MAX_SCHEDULE_DELAY
-            ):
+            if delay > NTFY_MAX_SCHEDULE_DELAY:
                 continue
 
-            old_record = (
-                previous_records.get(
-                    event_kind,
-                    {},
-                )
+            old_record = previous_records.get(
+                event_kind,
+                {},
             )
 
-            # Reuse a future sequence on the
-            # same topic. Posting it again
-            # makes ntfy replace the old time.
             if (
-                isinstance(
-                    old_record,
-                    dict,
-                )
+                isinstance(old_record, dict)
                 and record_is_still_future(
                     old_record,
                     now,
                 )
-                and old_record.get(
-                    "topic"
-                )
+                and old_record.get("topic")
                 == notification_topic
-                and old_record.get(
-                    "sequence_id"
-                )
+                and old_record.get("sequence_id")
             ):
                 sequence_id = old_record[
                     "sequence_id"
                 ]
             else:
-                sequence_id = (
-                    make_sequence_id(
-                        launch.uid,
-                        event_kind,
-                        notification_topic,
-                        deliver_at,
-                    )
+                sequence_id = make_sequence_id(
+                    launch.uid,
+                    event_kind,
+                    notification_topic,
+                    deliver_at,
                 )
 
-            expected_records[
-                event_kind
-            ] = {
-                "sequence_id":
-                    sequence_id,
-
-                "topic":
-                    notification_topic,
-
-                "deliver_at_utc":
-                    utc_iso(
-                        deliver_at
-                    ),
-
-                "payload_hash":
-                    make_payload_hash(
-                        spec["title"],
-                        spec["message"],
-                        spec["priority"],
-                        spec["tags"],
-                    ),
+            expected_records[event_kind] = {
+                "sequence_id": sequence_id,
+                "topic": notification_topic,
+                "deliver_at_utc": utc_iso(
+                    deliver_at
+                ),
+                "payload_hash": make_payload_hash(
+                    spec["title"],
+                    spec["message"],
+                    spec["priority"],
+                    spec["tags"],
+                ),
             }
 
-            expected_specs[
-                event_kind
-            ] = spec
+            expected_specs[event_kind] = spec
 
-    # Cancel obsolete future schedules.
-    # If the topic and sequence ID are
-    # unchanged, the later POST replaces it.
-    for (
-        event_kind,
-        old_record,
-    ) in previous_records.items():
-        if not isinstance(
-            old_record,
-            dict,
-        ):
+    for event_kind, old_record in previous_records.items():
+        if not isinstance(old_record, dict):
             continue
 
-        expected = (
-            expected_records.get(
-                event_kind
-            )
+        expected = expected_records.get(
+            event_kind
         )
 
         if (
@@ -832,26 +702,16 @@ def sync_scheduled_notifications(
         ):
             continue
 
-        old_topic = old_record.get(
-            "topic"
-        )
-
-        old_sequence_id = (
-            old_record.get(
-                "sequence_id"
-            )
+        old_topic = old_record.get("topic")
+        old_sequence_id = old_record.get(
+            "sequence_id"
         )
 
         if (
             expected
-            and old_topic
-            == expected.get(
-                "topic"
-            )
+            and old_topic == expected.get("topic")
             and old_sequence_id
-            == expected.get(
-                "sequence_id"
-            )
+            == expected.get("sequence_id")
         ):
             continue
 
@@ -868,83 +728,46 @@ def sync_scheduled_notifications(
                 old_sequence_id,
             )
 
-    active_records: dict[
-        str,
-        dict,
-    ] = {}
+    active_records: dict[str, dict] = {}
 
-    for event_kind in (
-        SCHEDULE_EVENT_ORDER
-    ):
-        expected = (
-            expected_records.get(
-                event_kind
-            )
-        )
-
-        spec = expected_specs.get(
+    for event_kind in SCHEDULE_EVENT_ORDER:
+        expected = expected_records.get(
             event_kind
         )
+        spec = expected_specs.get(event_kind)
 
-        if (
-            not expected
-            or not spec
-        ):
+        if not expected or not spec:
             continue
 
-        old_record = (
-            previous_records.get(
-                event_kind,
-                {},
-            )
+        old_record = previous_records.get(
+            event_kind,
+            {},
         )
 
         if (
-            isinstance(
-                old_record,
-                dict,
-            )
+            isinstance(old_record, dict)
             and record_is_same(
                 old_record,
                 expected,
             )
         ):
-            active_records[
-                event_kind
-            ] = expected
-
+            active_records[event_kind] = expected
             continue
 
-        deliver_at = (
-            spec["deliver_at"]
-            .astimezone(
-                dt.timezone.utc
-            )
-        )
+        deliver_at = spec[
+            "deliver_at"
+        ].astimezone(dt.timezone.utc)
 
-        delay = (
-            deliver_at
-            - now
-        )
+        delay = deliver_at - now
 
-        # ntfy's minimum scheduled delay
-        # is 10 seconds. If the workflow
-        # happens to run inside that tiny
-        # window, send immediately.
-        if (
-            delay
-            < NTFY_MIN_SCHEDULE_DELAY
-        ):
+        if delay < NTFY_MIN_SCHEDULE_DELAY:
             send_ntfy(
                 expected["topic"],
                 title=spec["title"],
                 message=spec["message"],
-                priority=(
-                    spec["priority"]
-                ),
+                priority=spec["priority"],
                 tags=spec["tags"],
             )
-
             continue
 
         scheduled = schedule_ntfy(
@@ -953,16 +776,12 @@ def sync_scheduled_notifications(
             deliver_at,
             title=spec["title"],
             message=spec["message"],
-            priority=(
-                spec["priority"]
-            ),
+            priority=spec["priority"],
             tags=spec["tags"],
         )
 
         if scheduled:
-            active_records[
-                event_kind
-            ] = expected
+            active_records[event_kind] = expected
 
     return active_records
 
@@ -974,12 +793,8 @@ def main():
     )
 
     base_topic = (
-        os.environ.get(
-            "NTFY_TOPIC"
-        )
-        or config.get(
-            "ntfy_topic"
-        )
+        os.environ.get("NTFY_TOPIC")
+        or config.get("ntfy_topic")
     )
 
     if (
@@ -993,88 +808,60 @@ def main():
             "Settings -> Secrets and "
             "variables -> Actions."
         )
-
         sys.exit(1)
 
-    rocket_keywords = (
-        config.get(
-            "rocket_keywords",
-            [
-                "Falcon 9",
-                "Falcon Heavy",
-                "Starship",
-            ],
-        )
+    rocket_keywords = config.get(
+        "rocket_keywords",
+        [
+            "Falcon 9",
+            "Falcon Heavy",
+            "Starship",
+        ],
     )
 
-    notify_on_new = (
-        config.get(
-            "notify_on_new_launch_added",
-            True,
-        )
+    notify_on_new = config.get(
+        "notify_on_new_launch_added",
+        True,
     )
 
-    notify_on_change = (
-        config.get(
-            "notify_on_time_change",
-            True,
-        )
+    notify_on_change = config.get(
+        "notify_on_time_change",
+        True,
     )
 
     state = load_json(
         STATE_PATH,
-        {
-            "launches": {}
-        },
+        {"launches": {}},
     )
-
-    state.setdefault(
-        "launches",
-        {},
-    )
+    state.setdefault("launches", {})
 
     first_successful_bootstrap = (
-        len(
-            state["launches"]
-        )
-        == 0
+        len(state["launches"]) == 0
     )
 
     try:
-        (
-            all_launches,
-            data_source,
-        ) = (
-            launch_source
-            .get_launches()
+        all_launches, data_source = (
+            launch_source.get_launches()
         )
-
     except Exception as exc:
         log.error(
-            "Launch-data refresh "
-            "failed: %s",
+            "Launch-data refresh failed: %s",
             exc,
         )
-
-        # Do not overwrite good website
-        # data if the source fails.
         sys.exit(1)
 
     log.info(
         "Launch source: %s",
         data_source,
     )
-
     log.info(
-        "Received %d "
-        "upcoming launches",
+        "Received %d upcoming launches",
         len(all_launches),
     )
 
     launches = [
         launch
-        for launch
-        in all_launches
+        for launch in all_launches
         if rocket_matches_filter(
             launch.rocket,
             rocket_keywords,
@@ -1082,74 +869,46 @@ def main():
     ]
 
     log.info(
-        "%d launches remain "
-        "after rocket filtering",
+        "%d launches remain after rocket filtering",
         len(launches),
     )
 
-    now = dt.datetime.now(
-        dt.timezone.utc
-    )
-
+    now = dt.datetime.now(dt.timezone.utc)
     public_feed = []
     currently_present_uids = set()
 
     for launch in launches:
         uid = launch.uid
+        currently_present_uids.add(uid)
 
-        currently_present_uids.add(
-            uid
+        previous = state["launches"].get(
+            uid,
+            {},
         )
 
-        previous = (
-            state["launches"]
-            .get(
-                uid,
-                {},
-            )
-        )
+        is_new = uid not in state["launches"]
 
-        is_new = (
-            uid
-            not in state[
-                "launches"
-            ]
+        old_signature = previous_signature(
+            previous
         )
-
-        old_signature = (
-            previous_signature(
-                previous
-            )
-        )
-
-        new_signature = (
-            schedule_signature(
-                launch
-            )
+        new_signature = schedule_signature(
+            launch
         )
 
         schedule_changed = (
             not is_new
-            and old_signature
-            is not None
-            and old_signature
-            != new_signature
+            and old_signature is not None
+            and old_signature != new_signature
         )
 
-        location_code = (
-            launch.location_code
-        )
+        location_code = launch.location_code
 
         notification_topic = (
             topic_for_location(
                 base_topic,
                 location_code,
             )
-            if location_code
-            in {
-                "CA",
-                "FL",
-            }
+            if location_code in {"CA", "FL"}
             else None
         )
 
@@ -1165,89 +924,85 @@ def main():
 
         if (
             is_new
-            and not
-            first_successful_bootstrap
+            and not first_successful_bootstrap
             and notify_on_new
             and notification_topic
         ):
             send_ntfy(
                 notification_topic,
-
                 title=(
-                    f"New "
-                    f"{state_name(location_code)} "
+                    f"New {state_name(location_code)} "
                     f"launch scheduled"
                 ),
-
                 message=(
                     f"{launch.rocket} • "
                     f"{launch.mission}\n"
                     f"Launch: "
                     f"{describe_launch_time(launch)}\n"
-                    f"Location: "
-                    f"{launch.site}"
+                    f"Location: {launch.site}"
                 ),
             )
 
-        if (
+        change_alert_allowed = (
             schedule_changed
             and notify_on_change
             and notification_topic
-        ):
-            old_launch_time = (
-                previous.get(
-                    "launch_time_utc"
-                )
+            and launch_is_within_change_notification_window(
+                launch,
+                now,
+            )
+        )
+
+        if change_alert_allowed:
+            old_launch_time = previous.get(
+                "launch_time_utc"
             )
 
             if old_launch_time:
                 old_location = (
-                    previous.get(
-                        "location_code"
-                    )
+                    previous.get("location_code")
                     or location_code
                 )
 
-                old_when = (
-                    format_exact_time(
-                        old_launch_time,
-                        old_location,
-                    )
+                old_when = format_exact_time(
+                    old_launch_time,
+                    old_location,
                 )
             else:
                 old_when = (
-                    previous.get(
-                        "date_text"
-                    )
-                    or
-                    "the previous schedule"
+                    previous.get("date_text")
+                    or "the previous schedule"
                 )
 
             send_ntfy(
                 notification_topic,
-
                 title=(
                     "Launch time changed: "
                     f"{launch.mission}"
                 ),
-
                 message=(
                     f"{launch.rocket} • "
                     f"{launch.mission}\n"
                     f"NEW: "
                     f"{describe_launch_time(launch)}\n"
-                    f"Previously: "
-                    f"{old_when}\n"
-                    f"Location: "
-                    f"{launch.site}"
+                    f"Previously: {old_when}\n"
+                    f"Location: {launch.site}"
                 ),
-
                 priority="high",
-
                 tags=(
                     "rocket,"
                     "arrows_counterclockwise"
                 ),
+            )
+
+        elif (
+            schedule_changed
+            and notify_on_change
+            and notification_topic
+        ):
+            log.info(
+                "Suppressed far-future launch-time change alert: %s",
+                launch.mission,
             )
 
         scheduled_notifications = (
@@ -1262,17 +1017,12 @@ def main():
             )
         )
 
-        # Kept for compatibility with the
-        # existing website data. It no
-        # longer controls delivery timing.
         launch_dt = parse_utc_datetime(
             launch.launch_time_utc
         )
 
         if launch_dt:
-            for lead_hours in (
-                REMINDER_HOURS
-            ):
+            for lead_hours in REMINDER_HOURS:
                 target = (
                     launch_dt
                     - dt.timedelta(
@@ -1286,82 +1036,40 @@ def main():
                     )
 
         state["launches"][uid] = {
-            "rocket":
-                launch.rocket,
-
-            "mission":
-                launch.mission,
-
-            "date_text":
-                launch.date_text,
-
-            "scheduled_date":
-                launch.scheduled_date,
-
-            "launch_time_utc":
-                launch.launch_time_utc,
-
-            "time_description":
-                launch.time_description,
-
-            "site":
-                launch.site,
-
-            "location_code":
-                launch.location_code,
-
-            "source_url":
-                launch.source_url,
-
-            "schedule_signature":
-                new_signature,
-
-            "scheduled_notifications":
-                scheduled_notifications,
-
-            "notified_lead_hours":
-                sorted(
-                    notified_leads
-                ),
-
-            "last_seen_utc":
-                now.isoformat(),
+            "rocket": launch.rocket,
+            "mission": launch.mission,
+            "date_text": launch.date_text,
+            "scheduled_date": launch.scheduled_date,
+            "launch_time_utc": launch.launch_time_utc,
+            "time_description": launch.time_description,
+            "site": launch.site,
+            "location_code": launch.location_code,
+            "source_url": launch.source_url,
+            "schedule_signature": new_signature,
+            "scheduled_notifications": (
+                scheduled_notifications
+            ),
+            "notified_lead_hours": sorted(
+                notified_leads
+            ),
+            "last_seen_utc": now.isoformat(),
         }
 
         public_feed.append(
             {
                 **launch.to_dict(),
-
-                "notified_lead_hours":
-                    sorted(
-                        notified_leads
-                    ),
+                "notified_lead_hours": sorted(
+                    notified_leads
+                ),
             }
         )
 
     cleaned_state = {}
+    stale_cutoff = now - dt.timedelta(days=7)
 
-    stale_cutoff = (
-        now
-        - dt.timedelta(
-            days=7
-        )
-    )
-
-    for (
-        uid,
-        record,
-    ) in state[
-        "launches"
-    ].items():
-        if (
-            uid
-            in currently_present_uids
-        ):
-            cleaned_state[
-                uid
-            ] = record
-
+    for uid, record in state["launches"].items():
+        if uid in currently_present_uids:
+            cleaned_state[uid] = record
             continue
 
         cancel_future_records(
@@ -1373,48 +1081,31 @@ def main():
         )
 
         old_dt = parse_utc_datetime(
-            record.get(
-                "launch_time_utc"
-            )
+            record.get("launch_time_utc")
         )
 
-        if (
-            old_dt
-            and old_dt
-            > stale_cutoff
-        ):
+        if old_dt and old_dt > stale_cutoff:
             cleaned_state[uid] = {
                 **record,
-
-                "scheduled_notifications":
-                    {},
+                "scheduled_notifications": {},
             }
 
-    state["launches"] = (
-        cleaned_state
-    )
+    state["launches"] = cleaned_state
 
     public_feed.sort(
         key=lambda launch: (
-            launch.get(
-                "launch_time_utc"
-            )
-            or launch.get(
-                "scheduled_date"
-            )
+            launch.get("launch_time_utc")
+            or launch.get("scheduled_date")
             or "9999"
         )
     )
 
     if not public_feed:
         log.error(
-            "The launch source "
-            "succeeded but zero launches "
-            "survived the rocket filter. "
-            "Refusing to overwrite the "
-            "existing public feed."
+            "The launch source succeeded but zero launches "
+            "survived the rocket filter. Refusing to "
+            "overwrite the existing public feed."
         )
-
         sys.exit(1)
 
     save_json(
@@ -1425,48 +1116,32 @@ def main():
     save_json(
         PUBLIC_FEED_PATH,
         {
-            "generated_at_utc":
-                now.isoformat(),
-
-            "source":
-                data_source,
-
-            "rocket_keywords_filter":
-                rocket_keywords,
-
-            "notification_locations":
-                [
-                    "CA",
-                    "FL",
-                ],
-
-            "notification_lead_times_hours":
-                REMINDER_HOURS,
-
-            "launching_now_notifications":
-                True,
-
-            "launches":
-                public_feed,
+            "generated_at_utc": now.isoformat(),
+            "source": data_source,
+            "rocket_keywords_filter": rocket_keywords,
+            "notification_locations": [
+                "CA",
+                "FL",
+            ],
+            "notification_lead_times_hours": (
+                REMINDER_HOURS
+            ),
+            "launching_now_notifications": True,
+            "time_change_notification_window": (
+                "one_calendar_month"
+            ),
+            "launches": public_feed,
         },
     )
 
     california_count = sum(
-        launch.get(
-            "location_code"
-        )
-        == "CA"
-        for launch
-        in public_feed
+        launch.get("location_code") == "CA"
+        for launch in public_feed
     )
 
     florida_count = sum(
-        launch.get(
-            "location_code"
-        )
-        == "FL"
-        for launch
-        in public_feed
+        launch.get("location_code") == "FL"
+        for launch in public_feed
     )
 
     scheduled_count = sum(
@@ -1476,33 +1151,24 @@ def main():
                 {},
             )
         )
-        for record
-        in state[
-            "launches"
-        ].values()
+        for record in state["launches"].values()
     )
 
     log.info(
-        "Calendar feed "
-        "written successfully."
+        "Calendar feed written successfully."
     )
-
     log.info(
         "California launches: %d",
         california_count,
     )
-
     log.info(
         "Florida launches: %d",
         florida_count,
     )
-
     log.info(
-        "Active exact ntfy "
-        "schedules: %d",
+        "Active exact ntfy schedules: %d",
         scheduled_count,
     )
-
     log.info(
         "Total website launches: %d",
         len(public_feed),
