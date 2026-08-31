@@ -1,0 +1,1 @@
+.card{grid-template-columns:84px 1fr;column-gap:1.1rem}.card-main{min-width:0}@media(max-width:480px){.card{grid-template-columns:74px 1fr;column-gap:.85rem}}
