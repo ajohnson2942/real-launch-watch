@@ -13,8 +13,8 @@
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Orbitron:wght@500;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--bg-blue:#151B54;--bg-orange:#d16002;--panel:#121A30;--panel-2:#182242;--hairline:#3a3160;--text:#F3F1FA;--muted:#C9C3E0}
-*{box-sizing:border-box}html,body{margin:0;padding:0}html,body{min-height:100%;background-color:var(--bg-blue);animation:solidColorShift 12s ease-in-out infinite alternate}body{min-height:100vh;position:relative;overflow-x:hidden;color:var(--text);font-family:'Work Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}@keyframes solidColorShift{0%{background-color:var(--bg-blue)}100%{background-color:var(--bg-orange)}}@media(prefers-reduced-motion:reduce){html,body{animation:none;background-color:var(--bg-blue)}}
-.page{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:1.15rem 1.5rem 4rem}.topbar{display:flex;align-items:center;min-height:44px}.back{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .75rem;border:1px solid var(--hairline);border-radius:8px;color:var(--text);background:rgba(18,26,48,.75);font-family:'JetBrains Mono',monospace;font-size:.78rem;text-decoration:none}.back:active{transform:translateY(1px)}h1{margin:1.5rem 0 1rem;font-family:'EB Garamond',Garamond,Georgia,serif;font-size:clamp(2.6rem,10vw,4.1rem);font-weight:600;letter-spacing:.01em;line-height:1}.subtitle{margin:0 0 1.7rem;color:#ffb37a;font-family:'Orbitron',sans-serif;font-size:.9rem;letter-spacing:.12em;text-transform:uppercase}.card{border:1px solid var(--hairline);border-radius:14px;background:linear-gradient(160deg,var(--panel-2),var(--panel));overflow:hidden}.entry{padding:1.15rem 1.2rem;border-bottom:1px solid var(--hairline)}.entry:last-child{border-bottom:none}.version{margin:0 0 .35rem;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700}.date{color:#ffb37a;font-family:'JetBrains Mono',monospace;font-size:.72rem}.notes{margin:.45rem 0 0;color:var(--muted);font-family:'Lora',serif;font-size:.92rem;line-height:1.55}
+*{box-sizing:border-box}html,body{margin:0;padding:0}html,body{min-height:100%;background-color:var(--bg-blue);animation:solidColorShift 21s ease-in-out infinite alternate}body{min-height:100vh;position:relative;overflow-x:hidden;color:var(--text);font-family:'Work Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}@keyframes solidColorShift{0%{background-color:var(--bg-blue)}100%{background-color:var(--bg-orange)}}@media(prefers-reduced-motion:reduce){html,body{animation:none;background-color:var(--bg-blue)}}
+.page{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:1.15rem 1.5rem 4rem}.topbar{display:flex;align-items:center;min-height:44px}.back{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .75rem;border:1px solid var(--hairline);border-radius:8px;color:var(--text);background:rgba(18,26,48,.75);font-family:'JetBrains Mono',monospace;font-size:.78rem;text-decoration:none}.back:active{transform:translateY(1px)}h1{margin:1.5rem 0 1rem;font-family:'EB Garamond',Garamond,Georgia,serif;font-size:clamp(2.6rem,10vw,4.1rem);font-weight:600;letter-spacing:.01em;line-height:1}.subtitle{margin:0 0 1.7rem;color:#ffb37a;font-family:'Orbitron',sans-serif;font-size:.9rem;letter-spacing:.12em;text-transform:uppercase}.version-group{margin:0 0 .8rem;border:1px solid var(--hairline);border-radius:14px;background:linear-gradient(160deg,var(--panel-2),var(--panel));overflow:hidden}.version-group:last-child{margin-bottom:0}.entry{padding:1.15rem 1.2rem;border-bottom:1px solid var(--hairline)}.entry:last-child{border-bottom:none}.version{margin:0 0 .35rem;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700}.date{color:#ffb37a;font-family:'JetBrains Mono',monospace;font-size:.72rem}.notes{margin:.45rem 0 0;color:var(--muted);font-family:'Lora',serif;font-size:.92rem;line-height:1.55}
 </style>
 </head>
 <body>
@@ -22,15 +22,26 @@
   <div class="topbar"><a class="back" href="index.html" aria-label="Back to Watch-A-Launch">← Back</a></div>
   <h1>Changelog</h1>
   <p class="subtitle">Watch-A-Launch</p>
-  <section class="card">
+
+  <!-- Keep future changelog entries grouped by version family: 1.4.x together, 1.5.x together, etc. Newest version family stays at the top. -->
+  <section class="version-group" aria-label="Version 1.4 updates">
     <div class="entry"><div class="version">v1.4.1</div><div class="date">9/1/2026</div><p class="notes">Made the changelog a new in-app page.</p></div>
     <div class="entry"><div class="version">v1.4.0</div><div class="date">8/30/2026</div><p class="notes">Changed the Upcoming Launches section to include the launches for the next month if there are NO launches within the last five days of the month. Also changed the launch time changed notifications to show less.</p></div>
+  </section>
+
+  <section class="version-group" aria-label="Version 1.3 updates">
     <div class="entry"><div class="version">v1.3.1</div><div class="date">8/18/2026</div><p class="notes">Added wording about NTFY app.</p></div>
     <div class="entry"><div class="version">v1.3.0</div><div class="date">8/18/2026</div><p class="notes">Added the LAUNCHING NOW! notifications.</p></div>
+  </section>
+
+  <section class="version-group" aria-label="Version 1.2 updates">
     <div class="entry"><div class="version">v1.2.1</div><div class="date">8/18/2026</div><p class="notes">Added the word Utility after NTFY.</p></div>
     <div class="entry"><div class="version">v1.2.0</div><div class="date">8/18/2026</div><p class="notes">Changed the icon of the app to a night photo that the creator got of a SpaceX launch off the coast of California.</p></div>
-    <div class="entry"><div class="version">v1.0.2</div><div class="date">8/16/2026</div><p class="notes">Added the text that shows the last time that the calendar was updated.</p></div>
-    <div class="entry"><div class="version">v1.0.1</div><div class="date">8/16/2026</div><p class="notes">Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches.</p></div>
+  </section>
+
+  <section class="version-group" aria-label="Version 1.1 updates">
+    <div class="entry"><div class="version">v1.1.2</div><div class="date">8/16/2026</div><p class="notes">Added the text that shows the last time that the calendar was updated.</p></div>
+    <div class="entry"><div class="version">v1.1.1</div><div class="date">8/16/2026</div><p class="notes">Changed the color scheme and fonts of the app, as well as changed the name from Launch-Watch to Watch-A-Launch. Added the ability to select what state's launches you want to get notified for, as well as added a calendar that shows the dates and times of the next launches.</p></div>
   </section>
 </main>
 </body>
