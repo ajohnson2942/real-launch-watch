@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="v1.5.0-jellyfish.css">
 <style>
 :root{--bg-top:#151B54;--bg-bottom:#d16002;--panel:#121A30;--panel-2:#182242;--hairline:#3a3160;--text:#F3F1FA;--muted:#C9C3E0;--confirmed:#3DDC97;--net:#FFC857;--tbd:#a89fc9;--ca:#FFE600;--fl:#55D8FF}
 *{box-sizing:border-box}html,body{margin:0;padding:0}body{min-height:100vh;position:relative;padding-bottom:5rem;color:var(--text);background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg-bottom) 100%);font-family:'Work Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
@@ -35,7 +36,7 @@ footer{margin-top:2.5rem;padding:1.5rem;border-top:1px solid var(--hairline);col
 <div class="calendar-wrap"><div class="calendar-last-updated" id="calendarLastUpdated">Last updated: loading…</div><div class="calendar-card"><div class="calendar-title-row"><div class="section-title">Launch calendar</div><div class="calendar-nav" aria-label="Calendar month navigation"><button class="calendar-arrow" id="calendarPrev" type="button" aria-label="Previous month">&#8592;</button><button class="calendar-arrow" id="calendarNext" type="button" aria-label="Next month">&#8594;</button></div></div><div class="calendar-head"><div class="calendar-month" id="calendarMonth">Loading…</div><div class="calendar-today" id="calendarToday"></div></div><div class="calendar-grid" id="calendarGrid"></div><p class="calendar-legend"><span class="ca-text">Yellow X</span> = at least one tracked launch is currently scheduled or predicted for that date in California. <span class="fl-text">Light Blue X</span> = at least one tracked launch is currently scheduled or predicted for that date in Florida. The schedule can still move, and the Xs will move on a later refresh if it does.</p></div></div>
 <main><div class="section-title" id="upcomingTitle">Upcoming</div><div id="list"></div></main>
 <footer><div id="feed-meta">Loading schedule…</div><div>Push notifications are sent separately via <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy.sh</a>. Choose California, Florida, or both above, then subscribe to the topic or topics shown. Make sure notifications are enabled for NTFY.</div><p class="install-help"><strong>iPhone:</strong> To add this as an app to your iPhone, go to Safari and click the three dots on the bottom right, then click Share and Add to Home Screen.<br><br><strong>Android:</strong> To add this as an app to your Android phone, open this page in Chrome, tap the three-dot menu, then tap Add to Home screen or Install app.</p></footer>
-<div class="version-badge" id="versionBadge" tabindex="0" role="button" aria-label="Open changelog">v1.4.2</div>
+<div class="version-badge" id="versionBadge" tabindex="0" role="button" aria-label="Open changelog">v1.5.0</div>
 <script>
 const FEED_URL='launches.json';
 const BASE_TOPIC='CoolRockets';
@@ -101,5 +102,6 @@ loadFeed();
 setInterval(loadFeed,60*60*1000);
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
 </script>
+<script src="v1.5.0-jellyfish.js"></script>
 </body>
 </html>

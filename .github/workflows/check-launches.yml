@@ -35,7 +35,7 @@ jobs:
       - name: Run notifier
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-        run: python notifier.py
+        run: python notifier_v150.py
 
       - name: Commit updated state
         run: |
