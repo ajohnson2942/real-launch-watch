@@ -1,13 +1,19 @@
 {
   "name": "Watch-A-Launch",
   "short_name": "Watch-A-Launch",
-  "description": "Shows when the next SpaceX launch will occur and sends you notifications before it happens.", 
-  "start_url": ".",
+  "id": "./",
+  "description": "Shows when the next SpaceX launch will occur and sends you notifications before it happens.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#151B54",
   "theme_color": "#151B54",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "launch-photo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
   ]
 }
