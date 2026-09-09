@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Add to Phone - Watch-A-Launch</title>
+<meta name="theme-color" content="#151B54">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="launch-photo.png" type="image/png">
+<link rel="apple-touch-icon" href="launch-photo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Orbitron:wght@500;700&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg-top:#151B54;--bg-bottom:#d16002;--panel:#121A30;--panel-2:#182242;--hairline:#3a3160;--text:#F3F1FA;--muted:#C9C3E0;--purple:#c9a7ff}
+*{box-sizing:border-box}html,body{margin:0;padding:0}body{min-height:100vh;color:var(--text);background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg-bottom) 100%);font-family:'Work Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}.page{max-width:760px;margin:0 auto;padding:1.15rem 1.5rem 4rem}.topbar{display:flex;align-items:center;min-height:44px}.back{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .75rem;border:1px solid var(--hairline);border-radius:8px;color:var(--text);background:rgba(18,26,48,.78);font-family:'JetBrains Mono',monospace;font-size:.78rem;text-decoration:none;transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease}.back:hover,.back:focus-visible{border-color:var(--purple);box-shadow:0 0 16px rgba(201,167,255,.55);outline:none}.back:active{transform:translateY(1px)}h1{margin:1.5rem 0 .65rem;font-family:'EB Garamond',Garamond,Georgia,serif;font-size:clamp(2.4rem,9vw,4rem);font-weight:600;line-height:1}.subtitle{margin:0 0 1.6rem;color:#ffb37a;font-family:'Orbitron',sans-serif;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase}.card{padding:1.25rem;border:1px solid var(--hairline);border-radius:14px;background:linear-gradient(160deg,var(--panel-2),var(--panel));box-shadow:0 10px 28px rgba(0,0,0,.15)}.platform-tabs{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}.tab-button,.ntfy-button{appearance:none;border:1px solid var(--hairline);border-radius:9px;color:var(--text);background:rgba(21,27,84,.7);font-family:'JetBrains Mono',monospace;font-size:.84rem;font-weight:600;cursor:pointer;transition:box-shadow .2s ease,border-color .2s ease,background .2s ease,transform .2s ease}.tab-button{padding:.8rem 1rem}.tab-button:hover,.tab-button:focus-visible,.ntfy-button:hover,.ntfy-button:focus-visible{border-color:var(--purple);box-shadow:0 0 16px rgba(201,167,255,.55);outline:none}.tab-button.active{border-color:var(--purple);background:rgba(90,54,130,.5);box-shadow:0 0 10px rgba(201,167,255,.28)}.tab-button:active,.ntfy-button:active{transform:translateY(1px)}.instructions{margin-top:1rem;padding:1rem 1.05rem;border:1px solid rgba(201,195,224,.2);border-radius:10px;background:rgba(0,0,0,.16);color:var(--text);font-family:'Lora',serif;font-size:1rem;line-height:1.65}.instructions h2{margin:0 0 .55rem;color:#ffb37a;font-family:'Orbitron',sans-serif;font-size:.88rem;letter-spacing:.07em;text-transform:uppercase}.instructions p{margin:0}.ntfy-wrap{display:flex;justify-content:center;margin-top:1.25rem}.ntfy-button{padding:.75rem 1.05rem}.ntfy-panel{display:none;margin-top:1rem;padding:1rem 1.05rem;border:1px solid rgba(201,195,224,.2);border-radius:10px;background:rgba(0,0,0,.16);color:var(--text);font-family:'Lora',serif;font-size:.98rem;line-height:1.65}.ntfy-panel.show{display:block}.small-note{margin-top:1.15rem;color:var(--muted);font-family:'Lora',serif;font-size:.82rem;line-height:1.5}@media(max-width:480px){.page{padding-left:1rem;padding-right:1rem}.card{padding:1rem}.platform-tabs{gap:.55rem}.tab-button{padding:.72rem .7rem;font-size:.78rem}}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="topbar"><a class="back" href="index.html" aria-label="Back to Watch-A-Launch">← Back</a></div>
+  <h1>How do I add this to my phone?</h1>
+  <p class="subtitle">Watch-A-Launch</p>
+
+  <section class="card" aria-label="Phone installation instructions">
+    <div class="platform-tabs" role="tablist" aria-label="Choose your phone type">
+      <button class="tab-button active" id="appleTab" type="button" role="tab" aria-selected="true" aria-controls="platformInstructions">Apple</button>
+      <button class="tab-button" id="androidTab" type="button" role="tab" aria-selected="false" aria-controls="platformInstructions">Android</button>
+    </div>
+
+    <div class="instructions" id="platformInstructions" role="tabpanel" aria-live="polite">
+      <h2>Apple</h2>
+      <p>Open the Watch-A-Launch website on Safari. Click the three dots on the bottom right, and at the top click Share. Then click Add to Home Screen.</p>
+    </div>
+
+    <div class="ntfy-wrap">
+      <button class="ntfy-button" id="ntfyButton" type="button" aria-expanded="false" aria-controls="ntfyPanel">About the NTFY app</button>
+    </div>
+
+    <div class="ntfy-panel" id="ntfyPanel">
+      NTFY is a utility that you can add to your phone from your device's application downloading service. Once downloaded, make sure to follow the instructions in the homepage under Notification Location in order to get the notifications.
+    </div>
+
+    <p class="small-note">The exact wording of the install option can vary slightly by phone or browser version.</p>
+  </section>
+</main>
+<script>
+const appleTab=document.getElementById('appleTab');
+const androidTab=document.getElementById('androidTab');
+const instructions=document.getElementById('platformInstructions');
+const ntfyButton=document.getElementById('ntfyButton');
+const ntfyPanel=document.getElementById('ntfyPanel');
+
+function showPlatform(platform){
+  const isApple=platform==='apple';
+  appleTab.classList.toggle('active',isApple);
+  androidTab.classList.toggle('active',!isApple);
+  appleTab.setAttribute('aria-selected',String(isApple));
+  androidTab.setAttribute('aria-selected',String(!isApple));
+
+  if(isApple){
+    instructions.innerHTML='<h2>Apple</h2><p>Open the Watch-A-Launch website on Safari. Click the three dots on the bottom right, and at the top click Share. Then click Add to Home Screen.</p>';
+  }else{
+    instructions.innerHTML='<h2>Android</h2><p>Open the Watch-A-Launch website in Chrome. Tap the three-dot menu in the top right. Then tap Add to Home screen or Install app. Follow the prompt to add Watch-A-Launch to your Home screen.</p>';
+  }
+}
+
+appleTab.addEventListener('click',()=>showPlatform('apple'));
+androidTab.addEventListener('click',()=>showPlatform('android'));
+ntfyButton.addEventListener('click',()=>{
+  const isOpen=ntfyPanel.classList.toggle('show');
+  ntfyButton.setAttribute('aria-expanded',String(isOpen));
+});
+</script>
+</body>
+</html>
