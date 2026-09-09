@@ -28,7 +28,7 @@ main.innerHTML=`<div class="upcoming-columns">
 </div>`;
 
 const version=document.getElementById('versionBadge');
-if(version)version.textContent='v1.5.0';
+if(version)version.textContent='v1.6.0';
 
 const prefsHelp=document.querySelector('.prefs-help');
 if(prefsHelp&&!/space jellyfish/i.test(prefsHelp.textContent)){
