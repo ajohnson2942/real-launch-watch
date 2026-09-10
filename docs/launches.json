@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-10T01:01:14.122169+00:00",
+  "generated_at_utc": "2026-09-10T05:54:51.240896+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -26,16 +26,16 @@
       "scheduled_date": "2026-09-10",
       "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
       "location_code": "CA",
-      "time_description": "Thursday, September 10 at 8:37 AM PDT",
-      "launch_time_utc": "2026-09-10T15:37:00+00:00",
-      "updated_text": "2026-09-04T07:04:42Z",
+      "time_description": "Thursday, September 10 at 8:42 AM PDT",
+      "launch_time_utc": "2026-09-10T15:42:00+00:00",
+      "updated_text": "2026-09-10T01:25:31Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
         "confidence": "unavailable",
         "phase": null,
         "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": 22.72,
+        "solar_elevation_deg": 23.73,
         "required_sunlit_altitude_km": 0.0,
         "sunset_utc": "2026-09-11T02:15:54.581941+00:00",
         "sunrise_utc": "2026-09-10T13:41:49.061755+00:00",
