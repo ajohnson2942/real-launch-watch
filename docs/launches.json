@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-13T11:43:42.766900+00:00",
+  "generated_at_utc": "2026-09-13T16:11:16.889052+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -47,6 +47,7 @@
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": [
+        3,
         24
       ]
     },
