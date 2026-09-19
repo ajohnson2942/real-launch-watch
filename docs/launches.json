@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-19T00:15:11.123462+00:00",
+  "generated_at_utc": "2026-09-19T05:47:07.078914+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -46,7 +46,9 @@
         "reason": "The sky is expected to be too bright for a strong twilight-plume contrast.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "7330d83b-c478-426c-8859-f9e3a335876d",
