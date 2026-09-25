@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-25T07:41:57.142225+00:00",
+  "generated_at_utc": "2026-09-25T13:41:09.247952+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -46,7 +46,9 @@
         "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "7d1afb26-6f9c-429b-9ccf-29012fd1e519",
