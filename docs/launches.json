@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-27T08:03:02.779783+00:00",
+  "generated_at_utc": "2026-09-27T13:54:32.844091+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -46,7 +46,9 @@
         "reason": "Jellyfish prediction is currently limited to California and Florida launch sites.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "18441371-8b2e-457c-afb5-1ec1b11ab630",
