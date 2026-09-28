@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-28T15:21:21.808587+00:00",
+  "generated_at_utc": "2026-09-28T21:54:07.302173+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -90,7 +90,7 @@
       "location_code": "FL",
       "time_description": "Thursday, October 1 at 11:53 PM EDT",
       "launch_time_utc": "2026-10-02T03:53:00+00:00",
-      "updated_text": "2026-09-24T18:26:34Z",
+      "updated_text": "2026-09-28T20:05:24Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
