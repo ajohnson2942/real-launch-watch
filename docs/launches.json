@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-30T13:37:18.992178+00:00",
+  "generated_at_utc": "2026-09-30T19:12:10.338408+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -28,7 +28,7 @@
       "location_code": "FL",
       "time_description": "Thursday, October 1 at 11:10 AM EDT",
       "launch_time_utc": "2026-10-01T15:10:06+00:00",
-      "updated_text": "2026-09-30T12:24:41Z",
+      "updated_text": "2026-09-30T16:30:25Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -46,7 +46,9 @@
         "reason": "The sky is expected to be too bright for a strong twilight-plume contrast.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "67213393-7983-4c06-8b44-b8c785a5ed79",
@@ -77,7 +79,9 @@
         "reason": "The sky is expected to be too bright for a strong twilight-plume contrast.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "4651fd8a-43de-4166-bf8f-c168b3bd1d2c",
@@ -90,7 +94,7 @@
       "location_code": "FL",
       "time_description": "Thursday, October 1 at 11:53 PM EDT",
       "launch_time_utc": "2026-10-02T03:53:00+00:00",
-      "updated_text": "2026-09-30T12:26:05Z",
+      "updated_text": "2026-09-30T15:23:54Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -114,26 +118,26 @@
       "uid": "da43dc2c-00af-4cc1-8ef1-90a60b2eb9e5",
       "rocket": "Falcon 9",
       "mission": "SDA Tranche 1 Transport Layer A",
-      "is_net": true,
+      "is_net": false,
       "date_text": "October 5",
       "scheduled_date": "2026-10-05",
       "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
       "location_code": "CA",
-      "time_description": "Monday, October 5 at 1:06 AM PDT",
-      "launch_time_utc": "2026-10-05T08:06:00+00:00",
-      "updated_text": "2026-09-25T21:06:03Z",
+      "time_description": "Monday, October 5 at 1:16 AM PDT",
+      "launch_time_utc": "2026-10-05T08:16:00+00:00",
+      "updated_text": "2026-09-30T16:02:44Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
         "confidence": "unavailable",
         "phase": null,
         "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": -59.83,
-        "required_sunlit_altitude_km": 6307.2,
+        "solar_elevation_deg": -59.48,
+        "required_sunlit_altitude_km": 6173.6,
         "sunset_utc": "2026-10-06T01:40:29.972102+00:00",
         "sunrise_utc": "2026-10-05T14:00:09.550173+00:00",
         "minutes_after_sunset": null,
-        "minutes_before_sunrise": 354.2,
+        "minutes_before_sunrise": 344.2,
         "window_start_utc": null,
         "window_end_utc": null,
         "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
