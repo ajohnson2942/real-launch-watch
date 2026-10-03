@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-03T17:53:55.726981+00:00",
+  "generated_at_utc": "2026-10-03T21:09:44.591369+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -28,7 +28,7 @@
       "location_code": "CA",
       "time_description": "Monday, October 5 at 1:17 AM PDT",
       "launch_time_utc": "2026-10-05T08:17:00+00:00",
-      "updated_text": "2026-10-01T22:25:38Z",
+      "updated_text": "2026-10-03T21:02:07Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -90,7 +90,7 @@
       "location_code": "FL",
       "time_description": "Tuesday, October 13 at 6:33 AM EDT",
       "launch_time_utc": "2026-10-13T10:33:44+00:00",
-      "updated_text": "2026-10-02T17:25:21Z",
+      "updated_text": "2026-10-03T21:02:08Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": true,
@@ -121,7 +121,7 @@
       "location_code": "FL",
       "time_description": "Currently scheduled for October 30; exact launch time TBD (month-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2026-08-20T21:15:21Z",
+      "updated_text": "2026-10-03T21:02:10Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
