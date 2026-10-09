@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-08T23:17:00.366748+00:00",
+  "generated_at_utc": "2026-10-09T13:08:22.305670+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -46,7 +46,9 @@
         "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "97c6f5e1-299e-4652-b72d-9618ac047076",
@@ -204,6 +206,37 @@
       "notified_lead_hours": []
     },
     {
+      "uid": "d3bd7fb2-fac6-49fc-ae52-cee07d2fde67",
+      "rocket": "Falcon Heavy",
+      "mission": "Griffin Mission One",
+      "is_net": true,
+      "date_text": "December 30",
+      "scheduled_date": "2026-12-30",
+      "site": "Launch Complex 39A, Kennedy Space Center, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for December 30; exact launch time TBD (month-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-10-01T14:26:48Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
       "uid": "c5783e2b-d458-4b99-9936-4043c236190b",
       "rocket": "Falcon 9",
       "mission": "SDA Tranche 1 Transport Layer F",
@@ -266,23 +299,23 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "d3bd7fb2-fac6-49fc-ae52-cee07d2fde67",
-      "rocket": "Falcon Heavy",
-      "mission": "Griffin Mission One",
+      "uid": "dfd444f9-ddda-4b35-8f51-cda7cd801809",
+      "rocket": "Falcon 9",
+      "mission": "Rivada 1",
       "is_net": true,
       "date_text": "December 30",
       "scheduled_date": "2026-12-30",
-      "site": "Launch Complex 39A, Kennedy Space Center, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for December 30; exact launch time TBD (month-level estimate)",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2026-10-01T14:26:48Z",
+      "updated_text": "2025-11-14T13:55:36Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
         "confidence": "unavailable",
         "phase": null,
-        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "reference_location": "Vandenberg Space Force Base",
         "solar_elevation_deg": null,
         "required_sunlit_altitude_km": null,
         "sunset_utc": null,
@@ -314,37 +347,6 @@
         "confidence": "unavailable",
         "phase": null,
         "reference_location": "Cape Canaveral / Kennedy Space Center",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "dfd444f9-ddda-4b35-8f51-cda7cd801809",
-      "rocket": "Falcon 9",
-      "mission": "Rivada 1",
-      "is_net": true,
-      "date_text": "December 30",
-      "scheduled_date": "2026-12-30",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2025-11-14T13:55:36Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Vandenberg Space Force Base",
         "solar_elevation_deg": null,
         "required_sunlit_altitude_km": null,
         "sunset_utc": null,
@@ -700,17 +702,17 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "cb1762f0-90f4-4902-a5f6-655a7ade25bf",
+      "uid": "e61d353c-db55-4a57-8184-0fab187231e6",
       "rocket": "Falcon 9",
-      "mission": "SDA Tranche 2 Tracking Layer B",
+      "mission": "Globalstar 2-R Mission 2 (x 9)",
       "is_net": true,
       "date_text": "December 30",
       "scheduled_date": "2026-12-30",
-      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
+      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
       "location_code": "FL",
-      "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
+      "time_description": "Currently scheduled for December 30; exact launch time TBD (year half 2-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2026-07-17T13:38:06Z",
+      "updated_text": "2026-08-16T02:19:39Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -731,17 +733,17 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "e61d353c-db55-4a57-8184-0fab187231e6",
+      "uid": "cb1762f0-90f4-4902-a5f6-655a7ade25bf",
       "rocket": "Falcon 9",
-      "mission": "Globalstar 2-R Mission 2 (x 9)",
+      "mission": "SDA Tranche 2 Tracking Layer B",
       "is_net": true,
       "date_text": "December 30",
       "scheduled_date": "2026-12-30",
-      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
+      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
       "location_code": "FL",
-      "time_description": "Currently scheduled for December 30; exact launch time TBD (year half 2-level estimate)",
+      "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2026-08-16T02:19:39Z",
+      "updated_text": "2026-07-17T13:38:06Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
