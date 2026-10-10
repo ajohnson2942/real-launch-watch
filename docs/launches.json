@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-10T12:23:49.926639+00:00",
+  "generated_at_utc": "2026-10-10T17:48:22.368476+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -1754,6 +1754,37 @@
       "notified_lead_hours": []
     },
     {
+      "uid": "0d7dd3ae-0750-49be-a6ef-db40fd6ec5a5",
+      "rocket": "Falcon 9",
+      "mission": "AYAP-1",
+      "is_net": true,
+      "date_text": "April 29, 2027",
+      "scheduled_date": "2027-04-29",
+      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for April 29, 2027; exact launch time TBD (month-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-10-10T15:21:59Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
       "uid": "d89815f1-7cc8-4dad-b3c4-5db80a9f4c01",
       "rocket": "Falcon 9",
       "mission": "Bandwagon 6 (Dedicated Mid-Inclination Rideshare)",
@@ -3067,37 +3098,6 @@
       "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2026-08-15T05:16:27Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Cape Canaveral / Kennedy Space Center",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "01642f58-d8a9-4322-87b9-f051591ee165",
-      "rocket": "Falcon 9",
-      "mission": "Nova-C IM-4 & 2 Lunar Data Relay Satellites",
-      "is_net": true,
-      "date_text": "December 30, 2027",
-      "scheduled_date": "2027-12-30",
-      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year half 2-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2025-08-07T12:00:33Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
