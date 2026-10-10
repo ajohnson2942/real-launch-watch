@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-10T05:43:35.913392+00:00",
+  "generated_at_utc": "2026-10-10T12:23:49.926639+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -17,40 +17,6 @@
   "launching_now_notifications": true,
   "time_change_notification_window": "one_calendar_month",
   "launches": [
-    {
-      "uid": "da43dc2c-00af-4cc1-8ef1-90a60b2eb9e5",
-      "rocket": "Falcon 9",
-      "mission": "SDA Tranche 1 Transport Layer A",
-      "is_net": false,
-      "date_text": "October 10",
-      "scheduled_date": "2026-10-10",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Saturday, October 10 at 12:39 AM PDT",
-      "launch_time_utc": "2026-10-10T07:39:44+00:00",
-      "updated_text": "2026-10-10T00:49:04Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": -61.86,
-        "required_sunlit_altitude_km": 7135.5,
-        "sunset_utc": "2026-10-11T01:33:46.610057+00:00",
-        "sunrise_utc": "2026-10-10T14:04:05.230368+00:00",
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": 384.4,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": [
-        3,
-        24
-      ]
-    },
     {
       "uid": "97c6f5e1-299e-4652-b72d-9618ac047076",
       "rocket": "Falcon 9",
@@ -3101,6 +3067,37 @@
       "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2026-08-15T05:16:27Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "01642f58-d8a9-4322-87b9-f051591ee165",
+      "rocket": "Falcon 9",
+      "mission": "Nova-C IM-4 & 2 Lunar Data Relay Satellites",
+      "is_net": true,
+      "date_text": "December 30, 2027",
+      "scheduled_date": "2027-12-30",
+      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year half 2-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2025-08-07T12:00:33Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
