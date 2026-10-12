@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-12T02:18:38.668925+00:00",
+  "generated_at_utc": "2026-10-12T10:38:58.496322+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -28,7 +28,7 @@
       "location_code": "CA",
       "time_description": "Monday, October 12 at 5:11 PM PDT",
       "launch_time_utc": "2026-10-13T00:11:47+00:00",
-      "updated_text": "2026-10-12T01:21:05Z",
+      "updated_text": "2026-10-12T05:18:39Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -61,7 +61,7 @@
       "location_code": "FL",
       "time_description": "Tuesday, October 13 at 6:33 AM EDT",
       "launch_time_utc": "2026-10-13T10:33:44+00:00",
-      "updated_text": "2026-10-11T15:55:40Z",
+      "updated_text": "2026-10-12T02:29:08Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": true,
@@ -79,7 +79,9 @@
         "reason": "Liftoff falls inside the strong pre-sunrise twilight window: the observer-level sky is still dark while a typical high-altitude ascent plume can already be illuminated by the Sun.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "df88cfbf-f504-4e11-8370-e33dd6280b5b",
