@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-13T02:32:40.027752+00:00",
+  "generated_at_utc": "2026-10-13T10:26:35.105738+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -28,7 +28,7 @@
       "location_code": "FL",
       "time_description": "Tuesday, October 13 at 6:33 AM EDT",
       "launch_time_utc": "2026-10-13T10:33:44+00:00",
-      "updated_text": "2026-10-12T21:26:29Z",
+      "updated_text": "2026-10-13T10:14:50Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": true,
@@ -47,6 +47,7 @@
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": [
+        3,
         24
       ]
     },
