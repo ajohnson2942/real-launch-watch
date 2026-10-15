@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-15T19:04:47.089749+00:00",
+  "generated_at_utc": "2026-10-15T22:12:53.279716+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -26,16 +26,16 @@
       "scheduled_date": "2026-10-15",
       "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
       "location_code": "CA",
-      "time_description": "Thursday, October 15 at 4:57 PM PDT",
-      "launch_time_utc": "2026-10-15T23:57:05+00:00",
-      "updated_text": "2026-10-15T15:36:15Z",
+      "time_description": "Thursday, October 15 at 5:01 PM PDT",
+      "launch_time_utc": "2026-10-16T00:01:05+00:00",
+      "updated_text": "2026-10-15T21:41:35Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
         "confidence": "unavailable",
         "phase": null,
         "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": 16.88,
+        "solar_elevation_deg": 16.13,
         "required_sunlit_altitude_km": 0.0,
         "sunset_utc": "2026-10-16T01:27:19.081642+00:00",
         "sunrise_utc": "2026-10-15T14:08:09.060105+00:00",
@@ -47,6 +47,7 @@
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": [
+        3,
         24
       ]
     },
@@ -2469,6 +2470,37 @@
       "notified_lead_hours": []
     },
     {
+      "uid": "d18f2e53-7085-442a-bdc4-31c8a27d905e",
+      "rocket": "Falcon 9",
+      "mission": "COMSATBw 3 Sparrow",
+      "is_net": true,
+      "date_text": "December 30, 2027",
+      "scheduled_date": "2027-12-30",
+      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-10-15T21:44:12Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
       "uid": "d259059a-52f0-41fe-88eb-da4f17ae0da2",
       "rocket": "Falcon 9",
       "mission": "Thaicom 10",
@@ -2517,37 +2549,6 @@
         "confidence": "unavailable",
         "phase": null,
         "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "c019749b-6db8-406b-9704-098a246318dd",
-      "rocket": "Falcon Heavy",
-      "mission": "Gateway PPE & HALO",
-      "is_net": true,
-      "date_text": "December 30, 2027",
-      "scheduled_date": "2027-12-30",
-      "site": "Launch Complex 39A, Kennedy Space Center, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2024-08-02T06:50:06Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Cape Canaveral / Kennedy Space Center",
         "solar_elevation_deg": null,
         "required_sunlit_altitude_km": null,
         "sunset_utc": null,
