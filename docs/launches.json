@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-19T07:41:45.902391+00:00",
+  "generated_at_utc": "2026-10-19T15:32:22.610882+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -28,7 +28,7 @@
       "location_code": "FL",
       "time_description": "Tuesday, October 20 at 6:30 AM EDT",
       "launch_time_utc": "2026-10-20T10:30:00+00:00",
-      "updated_text": "2026-10-19T07:34:10Z",
+      "updated_text": "2026-10-19T14:55:38Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -46,7 +46,9 @@
         "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "f6af629d-39b5-4f86-bc0c-f8776444a858",
@@ -102,6 +104,37 @@
         "sunset_utc": "2026-10-24T01:17:41.561821+00:00",
         "sunrise_utc": "2026-10-23T14:14:57.830771+00:00",
         "minutes_after_sunset": 251.3,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "57ce0a39-d035-4f16-a418-bd6108f78199",
+      "rocket": "Falcon 9",
+      "mission": "Starlink Group 15-18",
+      "is_net": false,
+      "date_text": "October 27",
+      "scheduled_date": "2026-10-27",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Tuesday, October 27 at 9:31 PM PDT",
+      "launch_time_utc": "2026-10-28T04:31:00+00:00",
+      "updated_text": "2026-10-19T14:24:48Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Vandenberg Space Force Base",
+        "solar_elevation_deg": -41.05,
+        "required_sunlit_altitude_km": 2076.8,
+        "sunset_utc": "2026-10-28T01:13:16.668508+00:00",
+        "sunrise_utc": "2026-10-27T14:18:30.991353+00:00",
+        "minutes_after_sunset": 197.7,
         "minutes_before_sunrise": null,
         "window_start_utc": null,
         "window_end_utc": null,
@@ -3067,37 +3100,6 @@
       "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2026-08-15T05:16:27Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Cape Canaveral / Kennedy Space Center",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "271b3134-d5a2-40f6-bc20-83cffb9414c3",
-      "rocket": "Falcon 9",
-      "mission": "Telesat Lightspeed 13",
-      "is_net": true,
-      "date_text": "December 30, 2027",
-      "scheduled_date": "2027-12-30",
-      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2023-09-11T12:47:15Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
