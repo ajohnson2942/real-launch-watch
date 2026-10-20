@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-20T20:31:57.638551+00:00",
+  "generated_at_utc": "2026-10-20T23:48:59.453715+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -22,23 +22,23 @@
       "rocket": "Falcon 9",
       "mission": "Starlink Group 15-15",
       "is_net": false,
-      "date_text": "October 20",
-      "scheduled_date": "2026-10-20",
+      "date_text": "October 21",
+      "scheduled_date": "2026-10-21",
       "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
       "location_code": "CA",
-      "time_description": "Tuesday, October 20 at 4:10 PM PDT",
-      "launch_time_utc": "2026-10-20T23:10:02+00:00",
-      "updated_text": "2026-10-20T18:05:30Z",
+      "time_description": "Wednesday, October 21 at 2:59 PM PDT",
+      "launch_time_utc": "2026-10-21T21:59:00+00:00",
+      "updated_text": "2026-10-20T23:06:03Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
         "confidence": "unavailable",
         "phase": null,
         "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": 23.95,
+        "solar_elevation_deg": 34.62,
         "required_sunlit_altitude_km": 0.0,
-        "sunset_utc": "2026-10-21T01:21:11.221316+00:00",
-        "sunrise_utc": "2026-10-20T14:12:21.783699+00:00",
+        "sunset_utc": "2026-10-22T01:20:00.350889+00:00",
+        "sunrise_utc": "2026-10-21T14:13:13.430653+00:00",
         "minutes_after_sunset": null,
         "minutes_before_sunrise": null,
         "window_start_utc": null,
@@ -47,7 +47,6 @@
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": [
-        3,
         24
       ]
     },
