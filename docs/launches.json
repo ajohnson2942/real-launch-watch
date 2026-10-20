@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-20T05:57:41.914874+00:00",
+  "generated_at_utc": "2026-10-20T11:26:57.080100+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -18,39 +18,6 @@
   "time_change_notification_window": "one_calendar_month",
   "launches": [
     {
-      "uid": "3b430f81-0ff1-4d85-8a1a-cef0de326198",
-      "rocket": "Falcon 9",
-      "mission": "Bandwagon 5 (Dedicated Mid-Inclination Rideshare)",
-      "is_net": false,
-      "date_text": "October 20",
-      "scheduled_date": "2026-10-20",
-      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
-      "time_description": "Tuesday, October 20 at 6:30 AM EDT",
-      "launch_time_utc": "2026-10-20T10:30:00+00:00",
-      "updated_text": "2026-10-19T23:34:44Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Cape Canaveral / Kennedy Space Center",
-        "solar_elevation_deg": -13.04,
-        "required_sunlit_altitude_km": 168.6,
-        "sunset_utc": "2026-10-20T22:47:34.115768+00:00",
-        "sunrise_utc": "2026-10-20T11:26:09.782306+00:00",
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": 56.2,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": [
-        24
-      ]
-    },
-    {
       "uid": "f6af629d-39b5-4f86-bc0c-f8776444a858",
       "rocket": "Falcon 9",
       "mission": "Starlink Group 15-15",
@@ -61,7 +28,7 @@
       "location_code": "CA",
       "time_description": "Tuesday, October 20 at 4:10 PM PDT",
       "launch_time_utc": "2026-10-20T23:10:02+00:00",
-      "updated_text": "2026-10-20T04:38:09Z",
+      "updated_text": "2026-10-20T07:33:01Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -3102,6 +3069,37 @@
       "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2026-08-15T05:16:27Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "28df7f2b-11ef-468f-b269-1b174ebaaabd",
+      "rocket": "Falcon 9",
+      "mission": "Telesat Lightspeed 11",
+      "is_net": true,
+      "date_text": "December 30, 2027",
+      "scheduled_date": "2027-12-30",
+      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2023-09-11T12:46:05Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
