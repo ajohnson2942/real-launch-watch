@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-22T15:13:28.271043+00:00",
+  "generated_at_utc": "2026-10-22T23:17:39.219644+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -17,39 +17,6 @@
   "launching_now_notifications": true,
   "time_change_notification_window": "one_calendar_month",
   "launches": [
-    {
-      "uid": "f6af629d-39b5-4f86-bc0c-f8776444a858",
-      "rocket": "Falcon 9",
-      "mission": "Starlink Group 15-15",
-      "is_net": false,
-      "date_text": "October 22",
-      "scheduled_date": "2026-10-22",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Thursday, October 22 at 3:51 PM PDT",
-      "launch_time_utc": "2026-10-22T22:51:18+00:00",
-      "updated_text": "2026-10-22T14:35:00Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": 26.51,
-        "required_sunlit_altitude_km": 0.0,
-        "sunset_utc": "2026-10-23T01:18:50.453944+00:00",
-        "sunrise_utc": "2026-10-22T14:14:05.446706+00:00",
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "The sky is expected to be too bright for a strong twilight-plume contrast.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": [
-        24
-      ]
-    },
     {
       "uid": "e2886a96-5ce9-4f45-872f-4e25a00be837",
       "rocket": "Falcon 9",
@@ -113,6 +80,37 @@
       "notified_lead_hours": []
     },
     {
+      "uid": "3cdb9dee-b5cb-406c-bbd1-06a219930fb7",
+      "rocket": "Falcon 9",
+      "mission": "Starlink Group 15-21",
+      "is_net": false,
+      "date_text": "November 4",
+      "scheduled_date": "2026-11-04",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Wednesday, November 4 at 9:14 PM PST",
+      "launch_time_utc": "2026-11-05T05:14:00+00:00",
+      "updated_text": "2026-10-22T16:39:24Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Vandenberg Space Force Base",
+        "solar_elevation_deg": -51.05,
+        "required_sunlit_altitude_km": 3764.0,
+        "sunset_utc": "2026-11-05T01:05:24.611363+00:00",
+        "sunrise_utc": "2026-11-04T14:25:53.331902+00:00",
+        "minutes_after_sunset": 248.6,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
       "uid": "56ca6058-7ccc-4ec0-b1b0-fb49f3bfee49",
       "rocket": "Falcon 9",
       "mission": "NROL-195",
@@ -139,37 +137,6 @@
         "window_start_utc": null,
         "window_end_utc": null,
         "reason": "The sky is expected to be too bright for a strong twilight-plume contrast.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "3cdb9dee-b5cb-406c-bbd1-06a219930fb7",
-      "rocket": "Falcon 9",
-      "mission": "Starlink Group 15-21",
-      "is_net": true,
-      "date_text": "November 9",
-      "scheduled_date": "2026-11-09",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Currently scheduled for November 9; exact launch time TBD (day-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2026-10-20T03:57:28Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": []
@@ -3100,6 +3067,37 @@
       "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2023-09-11T12:47:15Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "3c0ec64f-8692-44fc-a249-318450b89b7f",
+      "rocket": "Falcon 9",
+      "mission": "Telesat Lightspeed 12",
+      "is_net": true,
+      "date_text": "December 30, 2027",
+      "scheduled_date": "2027-12-30",
+      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2023-09-11T12:46:39Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
