@@ -13,7 +13,7 @@ const liftoffSubtitle=document.querySelector('.liftoff-subtitle');
 if(liftoffSubtitle)liftoffSubtitle.remove();
 
 const version=document.getElementById('versionBadge');
-if(version)version.textContent='v1.6.1';
+if(version)version.textContent='v1.6.2';
 
 renderHero=function(next){
   const hero=document.getElementById('hero');
