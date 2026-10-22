@@ -6,6 +6,9 @@
 <title>Watch-A-Launch</title>
 <meta name="description" content="Track upcoming SpaceX launches and get California or Florida launch notifications.">
 <meta name="theme-color" content="#151B54">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="launch-photo.png" type="image/png">
 <link rel="apple-touch-icon" href="launch-photo.png">
@@ -102,6 +105,6 @@ loadFeed();
 setInterval(loadFeed,60*60*1000);
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
 </script>
-<script src="v1.5.0-jellyfish.js"></script>
+<script src="v1.6.2-app.js?v=1.6.2"></script>
 </body>
 </html>
