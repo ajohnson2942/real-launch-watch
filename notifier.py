@@ -834,6 +834,7 @@ def main():
         {"launches": {}},
     )
     state.setdefault("launches", {})
+    state.setdefault("source_health", {})
 
     first_successful_bootstrap = (
         len(state["launches"]) == 0
@@ -843,12 +844,77 @@ def main():
         all_launches, data_source = (
             launch_source.get_launches()
         )
-    except Exception as exc:
-        log.error(
-            "Launch-data refresh failed: %s",
+    except launch_source.LaunchSourceUnavailable as exc:
+        failure_now = dt.datetime.now(
+            dt.timezone.utc
+        )
+
+        source_health = state.setdefault(
+            "source_health",
+            {},
+        )
+
+        try:
+            previous_failures = int(
+                source_health.get(
+                    "consecutive_failures",
+                    0,
+                )
+                or 0
+            )
+        except (TypeError, ValueError):
+            previous_failures = 0
+
+        consecutive_failures = (
+            previous_failures + 1
+        )
+
+        source_health.update(
+            {
+                "consecutive_failures": (
+                    consecutive_failures
+                ),
+                "last_failure_utc": (
+                    failure_now.isoformat()
+                ),
+                "current_error": str(exc),
+            }
+        )
+
+        # Persist the health counter even though the public launch feed
+        # intentionally stays on the last known-good data.
+        save_json(
+            STATE_PATH,
+            state,
+        )
+
+        if not PUBLIC_FEED_PATH.exists():
+            log.error(
+                "Launch sources are unavailable and there is no "
+                "previous public feed to preserve: %s",
+                exc,
+            )
+            sys.exit(1)
+
+        if consecutive_failures >= 3:
+            log.error(
+                "Launch sources have failed %d consecutive times. "
+                "The previous public feed was preserved, but this "
+                "run is failing so GitHub sends a real alert. "
+                "Latest error: %s",
+                consecutive_failures,
+                exc,
+            )
+            sys.exit(1)
+
+        log.warning(
+            "Temporary launch-source outage (%d/3). "
+            "Keeping the previous public feed and allowing this "
+            "run to succeed. Latest error: %s",
+            consecutive_failures,
             exc,
         )
-        sys.exit(1)
+        return
 
     log.info(
         "Launch source: %s",
@@ -874,6 +940,20 @@ def main():
     )
 
     now = dt.datetime.now(dt.timezone.utc)
+
+    source_health = state.setdefault(
+        "source_health",
+        {},
+    )
+    source_health.update(
+        {
+            "consecutive_failures": 0,
+            "last_success_utc": now.isoformat(),
+            "last_source": data_source,
+            "current_error": None,
+        }
+    )
+
     public_feed = []
     currently_present_uids = set()
 

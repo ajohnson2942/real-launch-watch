@@ -22,6 +22,7 @@ jobs:
 
     steps:
       - name: Check out repo
+        id: checkout
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -38,6 +39,7 @@ jobs:
         run: python notifier_v150.py
 
       - name: Commit updated state
+        if: ${{ always() && steps.checkout.outcome == 'success' }}
         run: |
           git config user.name "launch-notifier-bot"
           git config user.email "actions@users.noreply.github.com"

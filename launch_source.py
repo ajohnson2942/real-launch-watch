@@ -25,7 +25,9 @@ objects regardless of which source succeeded.
 from __future__ import annotations
 
 import datetime as dt
+import logging
 import re
+import time
 from dataclasses import asdict, dataclass
 from typing import Optional
 from zoneinfo import ZoneInfo
@@ -47,6 +49,178 @@ USER_AGENT = (
     "Chrome/124.0 Safari/537.36 "
     "Watch-A-Launch/1.0"
 )
+
+
+# ---------------------------------------------------------------------
+# Source reliability
+# ---------------------------------------------------------------------
+
+log = logging.getLogger("Watch-A-Launch.sources")
+
+RETRYABLE_STATUS_CODES = {
+    429,
+    500,
+    502,
+    503,
+    504,
+}
+
+REQUEST_CONNECT_TIMEOUT_SECONDS = 8
+REQUEST_READ_TIMEOUT_SECONDS = 15
+MAX_RETRY_DELAY_SECONDS = 10
+
+
+class LaunchSourceUnavailable(RuntimeError):
+    """Expected temporary/unavailable launch-data source failure."""
+
+
+def _retry_delay_seconds(
+    response,
+    attempt: int,
+) -> float:
+    retry_after = (
+        response.headers.get("Retry-After")
+        if response is not None
+        else None
+    )
+
+    if retry_after:
+        try:
+            return min(
+                MAX_RETRY_DELAY_SECONDS,
+                max(1.0, float(retry_after)),
+            )
+        except (TypeError, ValueError):
+            pass
+
+    return min(
+        MAX_RETRY_DELAY_SECONDS,
+        float(2 ** (attempt - 1)),
+    )
+
+
+def _request_with_retries(
+    url: str,
+    *,
+    source_name: str,
+    headers: dict | None = None,
+    params: dict | None = None,
+    attempts: int = 3,
+):
+    """
+    Fetch an external launch-data source with bounded retries.
+
+    Only network/HTTP availability problems are converted into
+    LaunchSourceUnavailable. Programming errors still propagate normally.
+    """
+    last_error = None
+
+    for attempt in range(1, attempts + 1):
+        response = None
+
+        try:
+            response = requests.get(
+                url,
+                params=params,
+                headers=headers,
+                timeout=(
+                    REQUEST_CONNECT_TIMEOUT_SECONDS,
+                    REQUEST_READ_TIMEOUT_SECONDS,
+                ),
+            )
+
+            if (
+                response.status_code
+                in RETRYABLE_STATUS_CODES
+                and attempt < attempts
+            ):
+                delay = _retry_delay_seconds(
+                    response,
+                    attempt,
+                )
+
+                log.warning(
+                    "%s returned HTTP %s; retrying in %.1f seconds "
+                    "(attempt %d/%d).",
+                    source_name,
+                    response.status_code,
+                    delay,
+                    attempt,
+                    attempts,
+                )
+
+                time.sleep(delay)
+                continue
+
+            response.raise_for_status()
+            return response
+
+        except (
+            requests.Timeout,
+            requests.ConnectionError,
+        ) as exc:
+            last_error = exc
+
+            if attempt >= attempts:
+                break
+
+            delay = _retry_delay_seconds(
+                response,
+                attempt,
+            )
+
+            log.warning(
+                "%s request failed: %s; retrying in %.1f seconds "
+                "(attempt %d/%d).",
+                source_name,
+                exc,
+                delay,
+                attempt,
+                attempts,
+            )
+
+            time.sleep(delay)
+
+        except requests.HTTPError as exc:
+            last_error = exc
+            status_code = (
+                exc.response.status_code
+                if exc.response is not None
+                else "unknown"
+            )
+
+            if (
+                status_code in RETRYABLE_STATUS_CODES
+                and attempt < attempts
+            ):
+                delay = _retry_delay_seconds(
+                    exc.response,
+                    attempt,
+                )
+
+                log.warning(
+                    "%s returned HTTP %s; retrying in %.1f seconds "
+                    "(attempt %d/%d).",
+                    source_name,
+                    status_code,
+                    delay,
+                    attempt,
+                    attempts,
+                )
+
+                time.sleep(delay)
+                continue
+
+            break
+
+        except requests.RequestException as exc:
+            last_error = exc
+            break
+
+    raise LaunchSourceUnavailable(
+        f"{source_name} was unavailable after "
+        f"{attempts} attempt(s): {last_error}"
+    ) from last_error
 
 
 # ---------------------------------------------------------------------
@@ -229,19 +403,23 @@ def fetch_launch_library() -> list[Launch]:
         "hide_recent_previous": "true",
     }
 
-    response = requests.get(
+    response = _request_with_retries(
         LL2_URL,
+        source_name="Launch Library 2",
         params=params,
         headers={
             "User-Agent": USER_AGENT,
             "Accept": "application/json",
         },
-        timeout=30,
+        attempts=3,
     )
 
-    response.raise_for_status()
-
-    payload = response.json()
+    try:
+        payload = response.json()
+    except ValueError as exc:
+        raise LaunchSourceUnavailable(
+            "Launch Library 2 returned invalid JSON."
+        ) from exc
 
     results = payload.get(
         "results",
@@ -252,7 +430,7 @@ def fetch_launch_library() -> list[Launch]:
         results,
         list,
     ):
-        raise RuntimeError(
+        raise LaunchSourceUnavailable(
             "Launch Library returned an unexpected response."
         )
 
@@ -742,15 +920,14 @@ DATE_RE = re.compile(
 
 
 def fetch_spaceflight_now() -> list[Launch]:
-    response = requests.get(
+    response = _request_with_retries(
         SPACEFLIGHT_NOW_URL,
+        source_name="Spaceflight Now",
         headers={
             "User-Agent": USER_AGENT
         },
-        timeout=30,
+        attempts=2,
     )
-
-    response.raise_for_status()
 
     return parse_spaceflight_now(
         response.text
@@ -1120,7 +1297,7 @@ def get_launches() -> tuple[
             "zero launches."
         )
 
-    except Exception as exc:
+    except LaunchSourceUnavailable as exc:
         primary_error = str(
             exc
         )
@@ -1136,8 +1313,8 @@ def get_launches() -> tuple[
                 "Spaceflight Now fallback",
             )
 
-    except Exception as exc:
-        raise RuntimeError(
+    except LaunchSourceUnavailable as exc:
+        raise LaunchSourceUnavailable(
             "Both launch sources failed. "
             f"Launch Library error: "
             f"{primary_error}. "
@@ -1145,7 +1322,7 @@ def get_launches() -> tuple[
             f"{exc}"
         ) from exc
 
-    raise RuntimeError(
+    raise LaunchSourceUnavailable(
         "Both launch sources returned "
         "zero launches. "
         f"Launch Library error: "
