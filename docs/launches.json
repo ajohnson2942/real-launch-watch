@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-29T14:11:04.725593+00:00",
+  "generated_at_utc": "2026-10-29T20:14:16.216121+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -28,7 +28,7 @@
       "location_code": "CA",
       "time_description": "Friday, October 30 at 8:48 PM PDT",
       "launch_time_utc": "2026-10-31T03:48:00+00:00",
-      "updated_text": "2026-10-29T06:12:36Z",
+      "updated_text": "2026-10-29T18:34:20Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -59,7 +59,7 @@
       "location_code": "CA",
       "time_description": "Monday, November 2 at 5:42 PM PST",
       "launch_time_utc": "2026-11-03T01:42:00+00:00",
-      "updated_text": "2026-10-28T19:26:10Z",
+      "updated_text": "2026-10-29T17:31:04Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": true,
@@ -90,7 +90,7 @@
       "location_code": "CA",
       "time_description": "Thursday, November 5 at 6:21 PM PST",
       "launch_time_utc": "2026-11-06T02:21:00+00:00",
-      "updated_text": "2026-10-28T19:26:40Z",
+      "updated_text": "2026-10-29T17:31:03Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -137,6 +137,37 @@
         "window_start_utc": null,
         "window_end_utc": null,
         "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "d74afbc7-0de5-491c-be05-4e9c31f736ac",
+      "rocket": "Falcon 9",
+      "mission": "Cygnus CRS-2 NG-25",
+      "is_net": true,
+      "date_text": "November 29",
+      "scheduled_date": "2026-11-29",
+      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for November 29; exact launch time TBD (hour-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-10-29T17:44:30Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": []
@@ -230,37 +261,6 @@
         "window_start_utc": null,
         "window_end_utc": null,
         "reason": "Jellyfish prediction is currently limited to California and Florida launch sites.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "d74afbc7-0de5-491c-be05-4e9c31f736ac",
-      "rocket": "Falcon 9",
-      "mission": "Cygnus CRS-2 NG-25",
-      "is_net": true,
-      "date_text": "November 29",
-      "scheduled_date": "2026-11-29",
-      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for November 29; exact launch time TBD (month-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2026-10-04T15:15:02Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Cape Canaveral / Kennedy Space Center",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": []
