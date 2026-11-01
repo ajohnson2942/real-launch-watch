@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-01T07:28:06.336412+00:00",
+  "generated_at_utc": "2026-11-01T15:00:39.745281+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -28,7 +28,7 @@
       "location_code": "CA",
       "time_description": "Monday, November 2 at 5:42 PM PST",
       "launch_time_utc": "2026-11-03T01:42:00+00:00",
-      "updated_text": "2026-11-01T06:28:40Z",
+      "updated_text": "2026-11-01T11:02:55Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": true,
@@ -59,7 +59,7 @@
       "location_code": "CA",
       "time_description": "Thursday, November 5 at 6:21 PM PST",
       "launch_time_utc": "2026-11-06T02:21:00+00:00",
-      "updated_text": "2026-10-29T17:31:03Z",
+      "updated_text": "2026-11-01T11:02:58Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
