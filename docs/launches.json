@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-05T21:56:46.449644+00:00",
+  "generated_at_utc": "2026-11-06T02:20:17.027236+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -46,7 +46,9 @@
         "reason": "The sky is expected to be too bright for a strong twilight-plume contrast.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "6aa7b90b-e5ed-45d8-a52e-04fbf399d178",
@@ -2219,17 +2221,17 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "acf48226-23d4-4c9f-b9d2-5c3e0bf08108",
+      "uid": "4548bcd5-4e69-46f7-a40e-d4717a0949f8",
       "rocket": "Falcon 9",
-      "mission": "Telesat Lightspeed 8",
+      "mission": "FOO Fighter (F2)",
       "is_net": true,
       "date_text": "December 30, 2027",
       "scheduled_date": "2027-12-30",
       "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
       "location_code": "FL",
-      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year half 2-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2023-09-11T12:44:14Z",
+      "updated_text": "2026-01-11T10:43:27Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -2250,17 +2252,17 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "4548bcd5-4e69-46f7-a40e-d4717a0949f8",
+      "uid": "acf48226-23d4-4c9f-b9d2-5c3e0bf08108",
       "rocket": "Falcon 9",
-      "mission": "FOO Fighter (F2)",
+      "mission": "Telesat Lightspeed 8",
       "is_net": true,
       "date_text": "December 30, 2027",
       "scheduled_date": "2027-12-30",
       "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
       "location_code": "FL",
-      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year half 2-level estimate)",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2026-01-11T10:43:27Z",
+      "updated_text": "2023-09-11T12:44:14Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -2436,68 +2438,6 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "9bb0b2d4-8553-44a4-bb02-488499ec9698",
-      "rocket": "Falcon 9",
-      "mission": "Telesat Lightspeed 9",
-      "is_net": true,
-      "date_text": "December 30, 2027",
-      "scheduled_date": "2027-12-30",
-      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2023-09-11T12:44:49Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Cape Canaveral / Kennedy Space Center",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "7ec9195a-d85f-4e01-9ec9-a17f6912c44c",
-      "rocket": "Falcon 9",
-      "mission": "JSAT-32",
-      "is_net": true,
-      "date_text": "December 30, 2027",
-      "scheduled_date": "2027-12-30",
-      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
-      "location_code": "FL",
-      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2025-12-08T15:10:25Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Cape Canaveral / Kennedy Space Center",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
       "uid": "d88a9bd5-76c4-4c55-b2eb-8cd3e071b02c",
       "rocket": "Falcon 9",
       "mission": "JPSS 4 (Joint Polar Satellite System spacecraft No. 4)",
@@ -2529,6 +2469,37 @@
       "notified_lead_hours": []
     },
     {
+      "uid": "9bb0b2d4-8553-44a4-bb02-488499ec9698",
+      "rocket": "Falcon 9",
+      "mission": "Telesat Lightspeed 9",
+      "is_net": true,
+      "date_text": "December 30, 2027",
+      "scheduled_date": "2027-12-30",
+      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2023-09-11T12:44:49Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
       "uid": "67787be2-7b6b-44df-ab10-8c828900868b",
       "rocket": "Falcon 9",
       "mission": "GEO-KOMPSAT-3",
@@ -2540,6 +2511,37 @@
       "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year half 2-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2024-08-20T08:07:23Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "7ec9195a-d85f-4e01-9ec9-a17f6912c44c",
+      "rocket": "Falcon 9",
+      "mission": "JSAT-32",
+      "is_net": true,
+      "date_text": "December 30, 2027",
+      "scheduled_date": "2027-12-30",
+      "site": "Unknown Pad, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2025-12-08T15:10:25Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
