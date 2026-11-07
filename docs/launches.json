@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-07T09:57:19.831329+00:00",
+  "generated_at_utc": "2026-11-07T16:21:56.668939+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -49,37 +49,6 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "0f867f0c-5422-4d44-93b8-d7faaae7019b",
-      "rocket": "Starship",
-      "mission": "Flight 15",
-      "is_net": true,
-      "date_text": "November 12",
-      "scheduled_date": "2026-11-12",
-      "site": "Orbital Launch Pad 2, SpaceX Starbase, TX, USA",
-      "location_code": null,
-      "time_description": "Currently scheduled for November 12; exact launch time TBD (day-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2026-11-05T21:52:18Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": null,
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Jellyfish prediction is currently limited to California and Florida launch sites.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
       "uid": "76617033-4dc0-4448-b50c-e5b0d5a18539",
       "rocket": "Falcon 9",
       "mission": "USSF-317",
@@ -106,6 +75,37 @@
         "window_start_utc": null,
         "window_end_utc": null,
         "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "0f867f0c-5422-4d44-93b8-d7faaae7019b",
+      "rocket": "Starship",
+      "mission": "Starlink Group 31-2 (Starship Flight 15)",
+      "is_net": true,
+      "date_text": "November 13",
+      "scheduled_date": "2026-11-13",
+      "site": "Orbital Launch Pad 2, SpaceX Starbase, TX, USA",
+      "location_code": null,
+      "time_description": "Friday, November 13 at 4:45 PM CST",
+      "launch_time_utc": "2026-11-13T22:45:00+00:00",
+      "updated_text": "2026-11-07T16:14:28Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": null,
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Jellyfish prediction is currently limited to California and Florida launch sites.",
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": []
