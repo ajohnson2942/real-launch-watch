@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-06T23:02:40.175790+00:00",
+  "generated_at_utc": "2026-11-07T02:44:16.155328+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -17,40 +17,6 @@
   "launching_now_notifications": true,
   "time_change_notification_window": "one_calendar_month",
   "launches": [
-    {
-      "uid": "54d471e8-695c-4fa7-a3cf-dbd8b389e8ae",
-      "rocket": "Falcon 9",
-      "mission": "USSF-432",
-      "is_net": false,
-      "date_text": "November 6",
-      "scheduled_date": "2026-11-06",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Friday, November 6 at 4:48 PM PST",
-      "launch_time_utc": "2026-11-07T00:48:42+00:00",
-      "updated_text": "2026-11-06T14:59:36Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": 2.05,
-        "required_sunlit_altitude_km": 0.0,
-        "sunset_utc": "2026-11-07T01:03:40.058721+00:00",
-        "sunrise_utc": "2026-11-06T14:27:46.738368+00:00",
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "The sky is expected to be too bright for a strong twilight-plume contrast.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": [
-        3,
-        24
-      ]
-    },
     {
       "uid": "6aa7b90b-e5ed-45d8-a52e-04fbf399d178",
       "rocket": "Falcon 9",
@@ -610,9 +576,9 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "5ce7e9b6-b471-4a88-891f-2a6f21cb369f",
+      "uid": "ab932c60-d808-4825-ab71-b6fe0a745f15",
       "rocket": "Falcon 9",
-      "mission": "Rivada 9",
+      "mission": "Rivada 3",
       "is_net": true,
       "date_text": "December 30",
       "scheduled_date": "2026-12-30",
@@ -620,7 +586,7 @@
       "location_code": "CA",
       "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2026-05-06T23:21:22Z",
+      "updated_text": "2025-11-14T13:56:06Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -641,9 +607,9 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "ab932c60-d808-4825-ab71-b6fe0a745f15",
+      "uid": "5ce7e9b6-b471-4a88-891f-2a6f21cb369f",
       "rocket": "Falcon 9",
-      "mission": "Rivada 3",
+      "mission": "Rivada 9",
       "is_net": true,
       "date_text": "December 30",
       "scheduled_date": "2026-12-30",
@@ -651,7 +617,7 @@
       "location_code": "CA",
       "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
-      "updated_text": "2025-11-14T13:56:06Z",
+      "updated_text": "2026-05-06T23:21:22Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -2439,37 +2405,6 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "d88a9bd5-76c4-4c55-b2eb-8cd3e071b02c",
-      "rocket": "Falcon 9",
-      "mission": "JPSS 4 (Joint Polar Satellite System spacecraft No. 4)",
-      "is_net": true,
-      "date_text": "December 30, 2027",
-      "scheduled_date": "2027-12-30",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (month-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2024-07-23T07:00:38Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
       "uid": "9bb0b2d4-8553-44a4-bb02-488499ec9698",
       "rocket": "Falcon 9",
       "mission": "Telesat Lightspeed 9",
@@ -2518,6 +2453,37 @@
         "confidence": "unavailable",
         "phase": null,
         "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "d88a9bd5-76c4-4c55-b2eb-8cd3e071b02c",
+      "rocket": "Falcon 9",
+      "mission": "JPSS 4 (Joint Polar Satellite System spacecraft No. 4)",
+      "is_net": true,
+      "date_text": "December 30, 2027",
+      "scheduled_date": "2027-12-30",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (month-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2024-07-23T07:00:38Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Vandenberg Space Force Base",
         "solar_elevation_deg": null,
         "required_sunlit_altitude_km": null,
         "sunset_utc": null,
@@ -3101,6 +3067,37 @@
       "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year half 2-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2025-08-07T12:00:33Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Cape Canaveral / Kennedy Space Center",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "01ca3653-126a-4c01-94fb-a9467b39cdac",
+      "rocket": "Falcon 9",
+      "mission": "Inmarsat-7 F1 (GX-7)",
+      "is_net": true,
+      "date_text": "December 30, 2027",
+      "scheduled_date": "2027-12-30",
+      "site": "Space Launch Complex 40, Cape Canaveral SFS, FL, USA",
+      "location_code": "FL",
+      "time_description": "Currently scheduled for December 30, 2027; exact launch time TBD (year-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2026-11-05T21:50:49Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
