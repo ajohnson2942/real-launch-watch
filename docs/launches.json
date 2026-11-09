@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-08T23:39:50.254803+00:00",
+  "generated_at_utc": "2026-11-09T06:10:39.497437+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -46,7 +46,9 @@
         "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "76617033-4dc0-4448-b50c-e5b0d5a18539",
@@ -576,6 +578,37 @@
       "notified_lead_hours": []
     },
     {
+      "uid": "fa895702-687b-4ba3-95fb-9462a2c9844b",
+      "rocket": "Falcon 9",
+      "mission": "Rivada 5",
+      "is_net": true,
+      "date_text": "December 30",
+      "scheduled_date": "2026-12-30",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
+      "launch_time_utc": null,
+      "updated_text": "2025-11-14T13:56:38Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Vandenberg Space Force Base",
+        "solar_elevation_deg": null,
+        "required_sunlit_altitude_km": null,
+        "sunset_utc": null,
+        "sunrise_utc": null,
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
       "uid": "ab932c60-d808-4825-ab71-b6fe0a745f15",
       "rocket": "Falcon 9",
       "mission": "Rivada 3",
@@ -618,37 +651,6 @@
       "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
       "launch_time_utc": null,
       "updated_text": "2026-05-06T23:21:22Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": null,
-        "required_sunlit_altitude_km": null,
-        "sunset_utc": null,
-        "sunrise_utc": null,
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "Exact liftoff time is required before twilight lighting can be predicted.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
-      "uid": "fa895702-687b-4ba3-95fb-9462a2c9844b",
-      "rocket": "Falcon 9",
-      "mission": "Rivada 5",
-      "is_net": true,
-      "date_text": "December 30",
-      "scheduled_date": "2026-12-30",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Currently scheduled for December 30; exact launch time TBD (year-level estimate)",
-      "launch_time_utc": null,
-      "updated_text": "2025-11-14T13:56:38Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
