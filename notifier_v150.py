@@ -15,6 +15,7 @@ _ORIGINAL_GET_LAUNCHES = launch_source.get_launches
 _ORIGINAL_TO_DICT = launch_source.Launch.to_dict
 _ORIGINAL_NOTIFICATION_SPEC = core.notification_spec
 _ORIGINAL_SEND_NTFY = core.send_ntfy
+_ORIGINAL_SEND_ONESIGNAL_UPDATE = core.send_onesignal_update
 
 _PREDICTED_LAUNCHES: list[tuple[object, dict]] = []
 
@@ -100,6 +101,21 @@ def _patched_notification_spec(launch, event_kind: str):
     return spec
 
 
+def _patched_send_onesignal_update(
+    location_code: str,
+    title: str,
+    message: str,
+) -> bool:
+    prediction = _prediction_for_message(message)
+    message = _append_jellyfish_line(message, prediction)
+
+    return _ORIGINAL_SEND_ONESIGNAL_UPDATE(
+        location_code,
+        title,
+        message,
+    )
+
+
 def _patched_send_ntfy(
     topic: str,
     title: str,
@@ -123,6 +139,7 @@ launch_source.get_launches = _patched_get_launches
 launch_source.Launch.to_dict = _patched_to_dict
 core.notification_spec = _patched_notification_spec
 core.send_ntfy = _patched_send_ntfy
+core.send_onesignal_update = _patched_send_onesignal_update
 
 
 if __name__ == "__main__":

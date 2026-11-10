@@ -41,6 +41,95 @@ NTFY_MAX_SCHEDULE_DELAY = (
     - dt.timedelta(minutes=5)
 )
 
+ONESIGNAL_API_URL = "https://api.onesignal.com/notifications"
+
+
+def onesignal_update_delivery_enabled() -> bool:
+    return bool(
+        os.environ.get("ONESIGNAL_APP_ID", "").strip()
+        and os.environ.get("ONESIGNAL_REST_API_KEY", "").strip()
+    )
+
+
+def send_onesignal_update(
+    location_code: str,
+    title: str,
+    message: str,
+) -> bool:
+    """Send an optional schedule-update alert through Watch-A-Launch web push."""
+    app_id = os.environ.get("ONESIGNAL_APP_ID", "").strip()
+    api_key = os.environ.get("ONESIGNAL_REST_API_KEY", "").strip()
+
+    if (
+        not app_id
+        or not api_key
+        or location_code not in {"CA", "FL"}
+    ):
+        return False
+
+    location_tag = (
+        "wal_ca"
+        if location_code == "CA"
+        else "wal_fl"
+    )
+
+    payload = {
+        "app_id": app_id,
+        "target_channel": "push",
+        "headings": {"en": title},
+        "contents": {"en": message},
+        "filters": [
+            {
+                "field": "tag",
+                "key": "wal_updates",
+                "relation": "=",
+                "value": "1",
+            },
+            {
+                "field": "tag",
+                "key": location_tag,
+                "relation": "=",
+                "value": "1",
+            },
+        ],
+    }
+
+    try:
+        response = requests.post(
+            ONESIGNAL_API_URL,
+            json=payload,
+            headers={
+                "Authorization": f"Key {api_key}",
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            timeout=20,
+        )
+        response.raise_for_status()
+        body = response.json()
+
+        if not body.get("id"):
+            log.warning(
+                "OneSignal accepted the update request but did not "
+                "create a notification: %s",
+                body,
+            )
+            return False
+
+        log.info(
+            "OneSignal update notification sent for %s: %s",
+            location_code,
+            title,
+        )
+        return True
+
+    except Exception as exc:
+        log.error(
+            "Could not send OneSignal update notification: %s",
+            exc,
+        )
+        return False
+
 
 def load_json(path: Path, default):
     if not path.exists():
@@ -1054,26 +1143,40 @@ def main():
                     or "the previous schedule"
                 )
 
-            send_ntfy(
-                notification_topic,
-                title=(
-                    "Launch time changed: "
-                    f"{launch.mission}"
-                ),
-                message=(
-                    f"{launch.rocket} • "
-                    f"{launch.mission}\n"
-                    f"NEW: "
-                    f"{describe_launch_time(launch)}\n"
-                    f"Previously: {old_when}\n"
-                    f"Location: {launch.site}"
-                ),
-                priority="high",
-                tags=(
-                    "rocket,"
-                    "arrows_counterclockwise"
-                ),
+            update_title = (
+                "Launch time changed: "
+                f"{launch.mission}"
             )
+            update_message = (
+                f"{launch.rocket} • "
+                f"{launch.mission}\n"
+                f"NEW: "
+                f"{describe_launch_time(launch)}\n"
+                f"Previously: {old_when}\n"
+                f"Location: {launch.site}"
+            )
+
+            if onesignal_update_delivery_enabled():
+                # Do not fall back to NTFY after web push is configured:
+                # that would ignore an individual user's opt-out.
+                send_onesignal_update(
+                    location_code,
+                    update_title,
+                    update_message,
+                )
+            else:
+                # Keep the current NTFY behavior until web push is
+                # actually connected, so existing users lose nothing.
+                send_ntfy(
+                    notification_topic,
+                    title=update_title,
+                    message=update_message,
+                    priority="high",
+                    tags=(
+                        "rocket,"
+                        "arrows_counterclockwise"
+                    ),
+                )
 
         elif (
             schedule_changed
@@ -1209,6 +1312,11 @@ def main():
             "launching_now_notifications": True,
             "time_change_notification_window": (
                 "one_calendar_month"
+            ),
+            "update_notification_delivery": (
+                "watch_a_launch_web_push"
+                if onesignal_update_delivery_enabled()
+                else "ntfy_transition_fallback"
             ),
             "launches": public_feed,
         },

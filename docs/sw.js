@@ -1,6 +1,4 @@
-// Minimal service worker: enables "Add to Home Screen" installability.
-// We deliberately do NOT cache launches.json, so the dashboard always
-// shows fresh data instead of a stale offline copy.
-self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
-self.addEventListener('fetch', () => {}); // pass-through, no caching
+// Watch-A-Launch service worker.
+// OneSignal uses this worker for optional in-app web push notifications.
+// The app does not cache launches.json, so launch data stays fresh.
+importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
