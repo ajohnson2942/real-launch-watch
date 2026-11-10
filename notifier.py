@@ -981,6 +981,16 @@ def main():
             and old_signature != new_signature
         )
 
+        # v1.6.3: when a launch previously had no exact time and an
+        # exact time is later added, update the website/state silently.
+        # True time changes (one exact time changing to another) still
+        # send the normal launch-time-change notification.
+        launch_time_added = (
+            schedule_changed
+            and not previous.get("launch_time_utc")
+            and bool(launch.launch_time_utc)
+        )
+
         location_code = launch.location_code
 
         notification_topic = (
@@ -1025,6 +1035,7 @@ def main():
 
         change_alert_allowed = (
             schedule_changed
+            and not launch_time_added
             and notify_on_change
             and notification_topic
             and launch_is_within_change_notification_window(
@@ -1073,6 +1084,16 @@ def main():
                     "rocket,"
                     "arrows_counterclockwise"
                 ),
+            )
+
+        elif (
+            launch_time_added
+            and notify_on_change
+            and notification_topic
+        ):
+            log.info(
+                "Launch time added silently (notification removed): %s",
+                launch.mission,
             )
 
         elif (
