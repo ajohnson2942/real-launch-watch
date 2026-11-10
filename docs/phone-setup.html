@@ -30,7 +30,7 @@
 
     <div class="instructions" id="platformInstructions" role="tabpanel" aria-live="polite">
       <h2>Apple</h2>
-      <p>Open the Watch-A-Launch website on Safari. Click the three dots on the bottom right, and at the top click Share. Then click Add to Home Screen.</p>
+      <p>Open the Watch-A-Launch website on Safari. Click the three dots on the bottom right, and at the top click Share. Then click Add to Home Screen. Open Watch-A-Launch from your Home Screen and use Enable Update Notifications under Notification Location if you want launch-time update alerts.</p>
     </div>
 
     <div class="ntfy-wrap">
@@ -38,7 +38,7 @@
     </div>
 
     <div class="ntfy-panel" id="ntfyPanel">
-      NTFY is a utility that you can add to your phone from your device's application downloading service. Once downloaded, make sure to follow the instructions in the homepage under Notification Location in order to get the notifications.
+      NTFY is a utility that you can add to your phone from your device's application downloading service. It continues to provide the 24-hour, 3-hour, LAUNCHING NOW!, and new-launch alerts. Once downloaded, follow the instructions on the homepage under Notification Location. Optional launch-time update alerts can be turned on or off directly inside Watch-A-Launch.
     </div>
 
     <p class="small-note">The exact wording of the install option can vary slightly by phone or browser version.</p>
@@ -61,7 +61,7 @@ function showPlatform(platform){
   if(isApple){
     instructions.innerHTML='<h2>Apple</h2><p>Open the Watch-A-Launch website on Safari. Click the three dots on the bottom right, and at the top click Share. Then click Add to Home Screen.</p>';
   }else{
-    instructions.innerHTML='<h2>Android</h2><p>Open the Watch-A-Launch website in Chrome. Tap the three-dot menu in the top right. Then tap Add to Home screen or Install app. Follow the prompt to add Watch-A-Launch to your Home screen.</p>';
+    instructions.innerHTML='<h2>Android</h2><p>Open the Watch-A-Launch website in Chrome. Tap the three-dot menu in the top right. Then tap Add to Home screen or Install app. Follow the prompt to add Watch-A-Launch to your Home screen. Open Watch-A-Launch and use Enable Update Notifications under Notification Location if you want launch-time update alerts.</p>';
   }
 }
 

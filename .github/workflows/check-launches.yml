@@ -33,9 +33,33 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Write web push config
+        env:
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_REST_API_KEY: ${{ secrets.ONESIGNAL_REST_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          app_id = os.environ.get("ONESIGNAL_APP_ID", "").strip()
+          api_key = os.environ.get("ONESIGNAL_REST_API_KEY", "").strip()
+          public_app_id = app_id if app_id and api_key else ""
+
+          Path("docs/push-config.js").write_text(
+              "window.WAL_PUSH_CONFIG = "
+              + json.dumps({"oneSignalAppId": public_app_id})
+              + ";\n",
+              encoding="utf-8",
+          )
+          PY
+
       - name: Run notifier
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_REST_API_KEY: ${{ secrets.ONESIGNAL_REST_API_KEY }}
         run: python notifier_v150.py
 
       - name: Commit updated state
@@ -44,7 +68,7 @@ jobs:
           git config user.name "launch-notifier-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          git add data/state.json docs/launches.json
+          git add data/state.json docs/launches.json docs/push-config.js
 
           if git diff --cached --quiet; then
             echo "No launch data changes to commit."
