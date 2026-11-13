@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-13T16:13:34.761055+00:00",
+  "generated_at_utc": "2026-11-13T22:32:57.404146+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -21,14 +21,14 @@
       "uid": "0f867f0c-5422-4d44-93b8-d7faaae7019b",
       "rocket": "Starship",
       "mission": "Starlink Group 31-2 (Starship Flight 15)",
-      "is_net": true,
+      "is_net": false,
       "date_text": "November 13",
       "scheduled_date": "2026-11-13",
       "site": "Orbital Launch Pad 2, SpaceX Starbase, TX, USA",
       "location_code": null,
-      "time_description": "Friday, November 13 at 4:45 PM CST",
-      "launch_time_utc": "2026-11-13T22:45:00+00:00",
-      "updated_text": "2026-11-10T22:06:46Z",
+      "time_description": "Friday, November 13 at 4:47 PM CST",
+      "launch_time_utc": "2026-11-13T22:47:36+00:00",
+      "updated_text": "2026-11-13T22:07:33Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
@@ -47,6 +47,7 @@
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": [
+        3,
         24
       ]
     },
@@ -82,37 +83,6 @@
       "notified_lead_hours": []
     },
     {
-      "uid": "460d9db7-eaf6-4cd9-b095-cff433534c09",
-      "rocket": "Falcon 9",
-      "mission": "USSF-266",
-      "is_net": false,
-      "date_text": "November 18",
-      "scheduled_date": "2026-11-18",
-      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
-      "location_code": "CA",
-      "time_description": "Wednesday, November 18 at 8:49 AM PST",
-      "launch_time_utc": "2026-11-18T16:49:00+00:00",
-      "updated_text": "2026-11-10T16:26:25Z",
-      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
-      "jellyfish": {
-        "likely": false,
-        "confidence": "unavailable",
-        "phase": null,
-        "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": 21.3,
-        "required_sunlit_altitude_km": 0.0,
-        "sunset_utc": "2026-11-19T00:55:23.589718+00:00",
-        "sunrise_utc": "2026-11-18T14:39:18.844934+00:00",
-        "minutes_after_sunset": null,
-        "minutes_before_sunrise": null,
-        "window_start_utc": null,
-        "window_end_utc": null,
-        "reason": "The sky is expected to be too bright for a strong twilight-plume contrast.",
-        "model": "solar-geometry-v1"
-      },
-      "notified_lead_hours": []
-    },
-    {
       "uid": "951a341f-236b-42fe-a667-4ab2fcf36eac",
       "rocket": "Falcon 9",
       "mission": "NROL-136",
@@ -139,6 +109,37 @@
         "window_start_utc": null,
         "window_end_utc": null,
         "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
+        "model": "solar-geometry-v1"
+      },
+      "notified_lead_hours": []
+    },
+    {
+      "uid": "460d9db7-eaf6-4cd9-b095-cff433534c09",
+      "rocket": "Falcon 9",
+      "mission": "USSF-266",
+      "is_net": false,
+      "date_text": "November 23",
+      "scheduled_date": "2026-11-23",
+      "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
+      "location_code": "CA",
+      "time_description": "Monday, November 23 at 8:04 AM PST",
+      "launch_time_utc": "2026-11-23T16:04:00+00:00",
+      "updated_text": "2026-11-13T17:46:32Z",
+      "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
+      "jellyfish": {
+        "likely": false,
+        "confidence": "unavailable",
+        "phase": null,
+        "reference_location": "Vandenberg Space Force Base",
+        "solar_elevation_deg": 13.28,
+        "required_sunlit_altitude_km": 0.0,
+        "sunset_utc": "2026-11-24T00:53:09.697706+00:00",
+        "sunrise_utc": "2026-11-23T14:44:05.401296+00:00",
+        "minutes_after_sunset": null,
+        "minutes_before_sunrise": null,
+        "window_start_utc": null,
+        "window_end_utc": null,
+        "reason": "The sky is expected to be too bright for a strong twilight-plume contrast.",
         "model": "solar-geometry-v1"
       },
       "notified_lead_hours": []
