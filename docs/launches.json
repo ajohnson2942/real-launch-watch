@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-28T03:51:19.233851+00:00",
+  "generated_at_utc": "2026-11-28T12:53:54.411976+00:00",
   "source": "Launch Library 2",
   "rocket_keywords_filter": [
     "Falcon 9",
@@ -27,16 +27,16 @@
       "site": "Space Launch Complex 4E, Vandenberg SFB, CA, USA",
       "location_code": "CA",
       "time_description": "Saturday, November 28 at 8:39 PM PST",
-      "launch_time_utc": "2026-11-29T04:39:00+00:00",
-      "updated_text": "2026-11-27T18:31:10Z",
+      "launch_time_utc": "2026-11-29T04:39:03+00:00",
+      "updated_text": "2026-11-28T05:57:19Z",
       "source_url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/",
       "jellyfish": {
         "likely": false,
         "confidence": "unavailable",
         "phase": null,
         "reference_location": "Vandenberg Space Force Base",
-        "solar_elevation_deg": -46.19,
-        "required_sunlit_altitude_km": 2831.3,
+        "solar_elevation_deg": -46.2,
+        "required_sunlit_altitude_km": 2833.0,
         "sunset_utc": "2026-11-29T00:51:42.374945+00:00",
         "sunrise_utc": "2026-11-28T14:48:44.215072+00:00",
         "minutes_after_sunset": 227.3,
@@ -46,7 +46,9 @@
         "reason": "The Sun is too far below the horizon for the strongest ascent plume to remain sunlit.",
         "model": "solar-geometry-v1"
       },
-      "notified_lead_hours": []
+      "notified_lead_hours": [
+        24
+      ]
     },
     {
       "uid": "d74afbc7-0de5-491c-be05-4e9c31f736ac",
